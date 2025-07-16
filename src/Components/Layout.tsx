@@ -5,41 +5,26 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Header from "./Header";
 import Footer from "./Footer";
+import styles from "../scss/layout.module.scss";
 
-const mainContent = (
-  <>
-    <Header />
-    <Container disableGutters={true} >
-      <Outlet />
-    </Container>
-    <Footer />
-  </>
-);
-
-export const AuthLayout = () => {
-  var isAuth = useSelector((selector: RootState) => selector.auth.isAuth);
-
-  if (!isAuth) {
-    return (<Navigate to='/auth' replace = {true}/>);
-  }
+const Layout = () => {
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
   return (
     <>
-      {mainContent}
+      {isAuth ? (
+        <>
+          <Header />
+          <Container disableGutters={true} classes={{ root: styles.mainContainer }}>
+            <Outlet />
+          </Container>
+          <Footer />
+        </>
+      ) : (
+        <Navigate to="/auth" replace />
+      )}
     </>
   );
 };
 
-export const Layout = () => {
-  var isAuth = useSelector((selector: RootState) => selector.auth.isAuth);
-
-  if(isAuth) {
-    return (<Navigate to='/' replace = {true}/>);
-  }
-
-  return(
-    <>
-    {mainContent}
-    </>
-  )
-}
+export default Layout;
