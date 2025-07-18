@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: transparent;
+  padding: 0;
+}
+
+.authBox {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rememberMe {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.loginButton {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #1976d2;
+  color: white;
+  font-weight: 500;
+  text-transform: none;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: #1565c0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #D4ECFA;
+}
