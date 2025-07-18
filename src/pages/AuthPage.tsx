@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useActions } from "../Hooks/StoreHook";
 import { ILoginData } from "../types/User";
@@ -5,17 +6,24 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useLoginMutation } from "../services/authService";
 import { IAuthInformation } from "../types/AuthInfo";
 import styles from "../scss/authPage.module.scss";
-import { Button, Checkbox,  FormHelperText,  Paper, TextField, Typography } from "@mui/material";
-import React from "react";
-
+import {
+  Button,
+  Checkbox,
+  FormHelperText,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const AuthPage = () => {
-
   const navigate = useNavigate();
   const [authorize] = useLoginMutation();
   const { userLogin } = useActions();
 
-  const { handleSubmit, register, formState: { errors }} = useForm<ILoginData>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<ILoginData>({
     defaultValues: {
       login: "",
       password: "",
@@ -29,66 +37,68 @@ const AuthPage = () => {
       .unwrap()
       .then((payload: IAuthInformation) => {
         userLogin(payload);
-
         navigate("/");
       })
       .catch((error: string) => {
-        console.log(error)
+        console.log(error);
       });
   };
 
-  const loginLabel = "Login";
-  const passwordLabel = "Password";
-  const rememberMeLabel = "Remember me";
-  const loginButtonLabel = "Login";
-  const auth = "Auth";
-
   return (
     <div className={styles.container}>
-      <Paper elevation={4} classes={{ root: styles.root }}>
-        <Typography classes={{ root: styles.title }} variant='h5'>
-          {auth}
+      <div className={styles.authBox}>
+        <Typography classes={{ root: styles.title }} variant="h5">
+          Auth
         </Typography>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <TextField
             {...register("login", {
-              required: "Login is required"
+              required: "Login is required",
             })}
-            className={styles.field}
-            label={loginLabel}
+            className={styles.input}
+            label="Login"
             fullWidth
             error={!!errors.login}
-            helperText={errors.login && <FormHelperText error>{errors.login.message}</FormHelperText>}
+            helperText={
+              errors.login && (
+                <FormHelperText error>{errors.login.message}</FormHelperText>
+              )
+            }
           />
 
           <TextField
-            type='password'
+            type="password"
             {...register("password", {
-              required: "Password is required"
+              required: "Password is required",
             })}
-            className={styles.field}
-            label={passwordLabel}
+            className={styles.input}
+            label="Password"
             fullWidth
             error={!!errors.password}
-            helperText={errors.password && <FormHelperText error>{errors.password.message}</FormHelperText>}
+            helperText={
+              errors.password && (
+                <FormHelperText error>{errors.password.message}</FormHelperText>
+              )
+            }
           />
 
-          <div className={styles.isRemember}>
+          <div className={styles.rememberMe}>
             <Checkbox {...register("isNeedToRemember")} />
-            <p>{rememberMeLabel}</p>
+            <p>Remember me</p>
           </div>
 
           <Button
-            type='submit'
-            size='large'
-            variant='contained'
+            type="submit"
+            size="large"
+            variant="contained"
             fullWidth
+            className={styles.loginButton}
           >
-            {loginButtonLabel}
+            Login
           </Button>
         </form>
-      </Paper>
+      </div>
     </div>
   );
 };
