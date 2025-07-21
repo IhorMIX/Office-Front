@@ -6,6 +6,9 @@ import AuthPage from './pages/AuthPage';
 import { useSelector } from 'react-redux';
 import Layout from './Components/Layout';
 import { RootState } from './redux/store';
+import EmployeesPage from './pages/EmployeesPage';
+import ManagersPage from './pages/ManagersPage';
+import ProjectsPage from './pages/ProjectsPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -14,6 +17,9 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
+        <Route path='/employees' index element={<EmployeesPage />} />
+        <Route path='/managers' index element={<ManagersPage />} />
+        <Route path='/projects' index element={<ProjectsPage />} />
       </Route>
       <Route path="/auth" element={isAuth ? <Navigate to="/" replace /> : <AuthPage />} />
     </Routes>
