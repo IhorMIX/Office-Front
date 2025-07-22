@@ -6,7 +6,7 @@ export interface ILoginData {
 
 export interface ICurrentUserModel{
   fullName: string,
-  userType: string
+  userType: UserType
 }
 
 export interface ICreateUserModel{
