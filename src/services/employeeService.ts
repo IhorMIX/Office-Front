@@ -6,7 +6,7 @@ export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllEmployees: builder.query<Employee[],null>({
         query: () => ({
-          url: "/api/employee",
+          url: "/api/employee/get-all-employees",
           method: HttpMethodType.GET,
           responseHandler: async (response) => {
               if (!response.ok) {
