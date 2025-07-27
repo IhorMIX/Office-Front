@@ -2,8 +2,6 @@
     display: flex;
     min-height: 93vh;
     justify-content: center;
-    display: block;
-    padding: 20px;
 }
 
 header {
@@ -11,7 +9,7 @@ header {
     align-items: center;
     background-color: rgb(0, 80, 184); /* Darker background color */
     height: 100px;
-    
+
     .headerContent {
         height: 100%;
         display: flex;
