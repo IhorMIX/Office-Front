@@ -3,7 +3,6 @@ import NavigateButtons from "./NavigateButtons";
 import style from "../scss/layout.module.scss"
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { useLogOutMutation } from "../services/authService";
 import { useActions } from "../Hooks/StoreHook";
 
 const Header = () => {
