@@ -12,10 +12,10 @@ const MainPage = () => {
    <Box my={4}>
   <Paper elevation={3} sx={{ padding: 3 }}>
     <Typography variant="h4" component="h1" gutterBottom>
-      {user?.fullName ?? "Имя не указано"}
+      {user?.fullName}
     </Typography>
     <Typography variant="subtitle1" color="text.secondary">
-      User Type: {role ?? "Неизвестно"}
+      {role}
     </Typography>
   </Paper>
 </Box>

@@ -69,9 +69,6 @@ const NavigateButtons = () => {
     return (
         <Toolbar>
             <div className={style.container}>
-                <Typography textAlign={"center"} variant="h6">
-                    Navigation
-                </Typography>
                 <div className={style.buttons}>
                     {buttons}
                 </div>
