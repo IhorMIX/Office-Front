@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import AuthPage from './pages/AuthPage';
+import MainPage from './pages/General/MainPage';
+import AuthPage from './pages/General/AuthPage';
 import { useSelector } from 'react-redux';
 import Layout from './Components/Layout';
 import { RootState } from './redux/store';
-import EmployeesPage from './pages/EmployeesPage';
-import ManagersPage from './pages/ManagersPage';
-import ProjectsPage from './pages/ProjectsPage';
+import EmployeesPage from './pages/General/EmployeesPage';
+import ManagersPage from './pages/General/ManagersPage';
+import ProjectsPage from './pages/General/ProjectsPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);

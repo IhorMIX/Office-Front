@@ -1,38 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllManagersQuery } from "../services/managerService";
-import { BaseManager } from "../types/Employee";
-import ManagerTable from "../Components/Tables/ManagerTable";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { UserType } from "../types/User";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-  Paper,
-} from "@mui/material";
+import ProjectTable from "../../Components/Tables/ProjectTable";
+import { Project } from "../../types/Project";
 import { Link } from "react-router-dom";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { UserType } from "../../types/User";
+import { useGetAllProjetsQuery } from "../../services/projectService";
+import ManagerTable from "../../Components/Tables/ManagerTable";
 
-const ManagersPage: React.FC = () => {
-  const { data: managersList } = useGetAllManagersQuery(null);
-  const [managers, setManagers] = useState<BaseManager[]>([]);
+const ProjectsPage: React.FC = () => {
+
+  const {data: projectsList } = useGetAllProjetsQuery(null);
+  const [projects, setProjects] = useState<Project[]>([])
   const role = useSelector((state: RootState) => state.auth.role);
 
   useEffect(() => {
-    if (managersList) {
-      setManagers(managersList);
+    if (projectsList) {
+      setProjects(projectsList);
     }
-  }, [managersList]);
+  }, [projectsList]);
 
   const handleEdit = (id: number) => {
-    console.log(`Edit manager with id: ${id}`);
+    console.log(`Edit project with id: ${id}`);
   };
 
   const handleDelete = (id: number) => {
-    setManagers((prev) => prev.filter((manager) => manager.id !== id));
+    setProjects((prev) => prev.filter((project) => project.id !== id));
   };
-
+  
   return (
     <Container maxWidth="lg">
       <Paper
@@ -58,7 +54,7 @@ const ManagersPage: React.FC = () => {
             variant="h4"
             sx={{ fontWeight: "bold", color: "black" }}
           >
-            Managers
+            Projects
           </Typography>
 
           {(role === UserType.Admin) && (
@@ -69,14 +65,13 @@ const ManagersPage: React.FC = () => {
               color="primary"
               sx={{ textTransform: "none", borderRadius: 2 }}
             >
-              + Create Manager
+              + Create Project
             </Button>
           )}
         </Box>
 
-        <ManagerTable
-          managers={managers}
-          onEdit={handleEdit}
+        <ProjectTable
+          projects={projects}
           onDelete={handleDelete}
         />
       </Paper>
@@ -84,4 +79,4 @@ const ManagersPage: React.FC = () => {
   );
 };
 
-export default ManagersPage;
+export default ProjectsPage;

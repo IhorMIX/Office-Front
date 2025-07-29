@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllEmployeesQuery } from "../services/employeeService";
-import { Employee } from "../types/Employee";
+import { useGetAllEmployeesQuery } from "../../services/employeeService";
+import { Employee } from "../../types/Employee";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { UserType } from "../types/User";
+import { RootState } from "../../redux/store";
+import { UserType } from "../../types/User";
 import { Box, Button, Container, Typography, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
-import EmployeeTable from "../Components/Tables/EmployeeTable";
+import EmployeeTable from "../../Components/Tables/EmployeeTable";
 
 const EmployeesPage: React.FC = () => {
   const { data: employeesList } = useGetAllEmployeesQuery(null);

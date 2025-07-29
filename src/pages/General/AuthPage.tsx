@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useActions } from "../Hooks/StoreHook";
-import { ILoginData } from "../types/User";
+import { useActions } from "../../Hooks/StoreHook";
+import { ILoginData } from "../../types/User";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLoginMutation } from "../services/authService";
-import { IAuthInformation } from "../types/AuthInfo";
-import styles from "../scss/authPage.module.scss";
+import { useLoginMutation } from "../../services/authService";
+import { IAuthInformation } from "../../types/AuthInfo";
+import styles from "../../scss/authPage.module.scss";
 import {
   Button,
   Checkbox,
