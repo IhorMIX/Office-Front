@@ -1,4 +1,4 @@
-import { Position, Subdivision } from "./Selection";
+import { Selection } from "./Selection";
 import { UserType } from "./User";
 
 export interface BaseEmployee{
@@ -7,8 +7,8 @@ export interface BaseEmployee{
 }
 
 export interface Employee extends BaseEmployee {
-    subdivision: Subdivision;
-    position: Position;
+    subdivision: Selection;
+    position: Selection;
     status: boolean;
     outOfOfficeBalance: number;
     hrManager: BaseManager | null;
@@ -24,4 +24,14 @@ export interface HrManager extends BaseManager{
 
 export interface ProjectManager extends BaseManager{
 
+}
+
+export interface CreateEmployee{
+    login:string
+    password:string
+    fullName: string
+    subdivisionId: number
+    positionId: number
+    status: boolean
+    outOfOfficeBalance: number
 }

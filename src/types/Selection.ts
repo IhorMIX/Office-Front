@@ -1,14 +1,11 @@
-export interface Subdivision {
-    id: number;
-    name: string;
+export interface Selection {
+    id: number
+    name: string
 }
 
-export interface Position {
-    id: number;
-    name: string;
+export interface AbsenceReason {
+    id: number,
+    reasonDescription: string
 }
 
-export interface ProjectType {
-    id: number;
-    name: string;
-}
+export type EntityType = 'Subdivision' | 'Position' | 'ProjectType' | 'AbsenceReason';

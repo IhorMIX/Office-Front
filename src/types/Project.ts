@@ -1,10 +1,10 @@
 import { ProjectManager } from "./Employee";
-import { ProjectType } from "./Selection";
+import { Selection } from "./Selection";
 
 export interface Project {
     id: number,
     projectManager: ProjectManager,
-    projectType: ProjectType,
+    projectType: Selection,
     startDate: Date,
     endDate: Date,
     comment: string,
