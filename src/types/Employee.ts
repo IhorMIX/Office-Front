@@ -35,3 +35,25 @@ export interface CreateEmployee{
     status: boolean
     outOfOfficeBalance: number
 }
+
+export interface UpdateEmployee{
+    id: number
+    login:string
+    password:string
+    fullName: string
+    subdivisionId: number
+    positionId: number
+    status: boolean
+    outOfOfficeBalance: number
+    hrManagerId:number
+}
+
+export interface CreateManager{
+    login:string
+    password:string
+    fullName: string
+}
+
+export interface UpdateManager extends CreateManager{
+    id:number
+}
