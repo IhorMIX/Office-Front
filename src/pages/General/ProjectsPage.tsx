@@ -7,7 +7,6 @@ import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { UserType } from "../../types/User";
 import { useGetAllProjetsQuery } from "../../services/projectService";
-import ManagerTable from "../../Components/Tables/ManagerTable";
 
 const ProjectsPage: React.FC = () => {
 
