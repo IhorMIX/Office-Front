@@ -59,7 +59,7 @@ const ProjectsPage: React.FC = () => {
           {(role === UserType.Admin) && (
             <Button
               component={Link}
-              to="/create-manager"
+              to="/create-project"
               variant="contained"
               color="primary"
               sx={{ textTransform: "none", borderRadius: 2 }}

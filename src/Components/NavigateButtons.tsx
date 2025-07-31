@@ -35,7 +35,6 @@ const NavigateButtons = () => {
                     {buttons}
                     <Button component={RouterLink} to="/employees" color="inherit">Employees</Button>
                     <Button component={RouterLink} to="/managers" color="inherit">Managers</Button>
-                    <Button component={RouterLink} to="/projects" color="inherit">Projects</Button>
                     <Button component={RouterLink} to="/leave-requests" color="inherit">Leave request</Button>
                     <Button component={RouterLink} to="/approval-requests" color="inherit">Approval requests</Button>
                 </>

@@ -11,7 +11,6 @@ interface TableProps {
     onDelete: (id: number) => void;
 }
 
-// Перечисление для полей, по которым можно сортировать
 enum SortField {
     ID = 'id',
     MANAGER = 'projectManager.fullName',
@@ -35,7 +34,6 @@ const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
         const aValue = getFieldByPath(a, sortBy);
         const bValue = getFieldByPath(b, sortBy);
 
-        // Определение направления сортировки
         if (sortDirection === 'asc') {
             return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
         } else {
@@ -43,7 +41,6 @@ const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
         }
     });
 
-    // Обработчик клика по заголовку столбца для сортировки
     const handleSort = (field: SortField) => {
         if (field === sortBy) {
             setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
