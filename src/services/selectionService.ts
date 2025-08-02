@@ -5,9 +5,10 @@ import { AbsenceReason,Selection } from "../types/Selection";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
+    //get
     getAbsenceReason: builder.query<AbsenceReason[], null>({
       query: () => ({
-        url: "/api/AbsenceReason",
+        url: "/api/absencereason/AbsenceReason",
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -20,7 +21,7 @@ export const Api = api.injectEndpoints({
     }),
     getProjectType: builder.query<Selection[], null>({
       query: () => ({
-        url: "/api/ProjectType",
+        url: "/subdivision/ProjectType",
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -57,7 +58,65 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
+    //create
+    createSubdivision: builder.mutation<Selection, Partial<Selection>>({
+            query: (data) => ({
+                url: "/api/subdivision/create-subdivision",
+                method: HttpMethodType.POST,
+                body: data,
+                responseHandler: async (response) => {
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+                    }
+                    return response.json();
+                },
+            }),
+        }),
+        createPosition: builder.mutation<Selection, Partial<Selection>>({
+            query: (data) => ({
+                url: "/position/create-position",
+                method: HttpMethodType.POST,
+                body: data,
+                responseHandler: async (response) => {
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+                    }
+                    return response.json();
+                },
+            }),
+        }),
+        createProjectType: builder.mutation<Selection, Partial<Selection>>({
+            query: (data) => ({
+                url: "/api/projecttype/create-projectType",
+                method: HttpMethodType.POST,
+                body: data,
+                responseHandler: async (response) => {
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+                    }
+                    return response.json();
+                },
+            }),
+        }),
+        createAbsenceReason: builder.mutation<AbsenceReason, Partial<AbsenceReason>>({
+            query: (data) => ({
+                url: "/api/absencereason/create-absenceReason",
+                method: HttpMethodType.POST,
+                body: data,
+                responseHandler: async (response) => {
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+                    }
+                    return response.json();
+                },
+            }),
+        }),
   }),
 });
 
-export const { useGetAbsenceReasonQuery, useGetProjectTypeQuery, useGetPositionsQuery, useGetSubdivisionsQuery } = Api;
+export const { useGetAbsenceReasonQuery, useGetProjectTypeQuery, useGetPositionsQuery, useGetSubdivisionsQuery,
+  useCreateSubdivisionMutation, useCreatePositionMutation, useCreateProjectTypeMutation, useCreateAbsenceReasonMutation, } = Api;
