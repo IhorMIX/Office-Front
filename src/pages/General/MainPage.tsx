@@ -54,7 +54,7 @@ const MainPage = () => {
             {(role === UserType.Admin || role === UserType.ProjectManager) && (
               <Button
                 component={Link}
-                to="/create-project-type"
+                to="/create-projectType"
                 variant="contained"
                 fullWidth
               >

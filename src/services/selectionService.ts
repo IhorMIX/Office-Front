@@ -75,7 +75,7 @@ export const Api = api.injectEndpoints({
         }),
         createPosition: builder.mutation<Selection, Partial<Selection>>({
             query: (data) => ({
-                url: "/position/create-position",
+                url: "/api/position/create-position",
                 method: HttpMethodType.POST,
                 body: data,
                 responseHandler: async (response) => {
