@@ -13,6 +13,9 @@ import { UserType } from './types/User';
 import CreateEmployeePage from './pages/Create/CreateEmployeePage';
 import CreateManagerPage from './pages/Create/CreateManagerPage';
 import CreateAbsenceReason from './pages/Create/CreateAbsenceReason';
+import CreatePositionPage from './pages/Create/CreatePosition';
+import CreateSubdivisionPage from './pages/Create/CreateSubdivision';
+import CreateProjectTypePage from './pages/Create/CreateProjectType';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -33,6 +36,15 @@ function App() {
         
         <Route path="/create-absenceReason" element={<ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}/>}>
           <Route index element={<CreateAbsenceReason />} />
+        </Route>
+        <Route path="/create-position" element={<ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}/>}>
+          <Route index element={<CreatePositionPage />} />
+        </Route>
+        <Route path="/create-subdivision" element={<ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}/>}>
+          <Route index element={<CreateSubdivisionPage />} />
+        </Route>
+        <Route path="/create-projectType" element={<ProtectedRoute allowedRoles={[UserType.Admin, UserType.ProjectManager]}/>}>
+          <Route index element={<CreateProjectTypePage />} />
         </Route>
 
       </Route>
