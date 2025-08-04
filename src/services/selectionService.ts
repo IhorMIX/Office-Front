@@ -8,7 +8,7 @@ export const Api = api.injectEndpoints({
     //get
     getAbsenceReason: builder.query<AbsenceReason[], null>({
       query: () => ({
-        url: "/api/absencereason/AbsenceReason",
+        url: "/api/absenceReason",
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -21,7 +21,7 @@ export const Api = api.injectEndpoints({
     }),
     getProjectType: builder.query<Selection[], null>({
       query: () => ({
-        url: "/subdivision/ProjectType",
+        url: "/api/projecttype",
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -47,7 +47,7 @@ export const Api = api.injectEndpoints({
     }),
     getPositions: builder.query<Selection[], null>({
       query: () => ({
-        url: "/api/Position",
+        url: "/api/position",
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
