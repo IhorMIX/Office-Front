@@ -1,6 +1,6 @@
 import { api } from "../api/api";
 import { HttpMethodType } from "../types/HttpInfo";
-import { Project } from "../types/Project";
+import { CreateProject, Project, ProjectDetail } from "../types/Project";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +17,34 @@ export const Api = api.injectEndpoints({
           },
         }),
     }),
+    getProject: builder.query<ProjectDetail, number>({
+      query: (projectId:number) => ({
+        url: `/api/project/${projectId}`,
+        method: HttpMethodType.GET,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          return response.json();
+        },
+      }),
+    }),
+    CreateProject: builder.mutation({
+      query: (project:CreateProject) => ({
+        url: `/api/project/create-project`,
+        body: project,
+        method: HttpMethodType.POST,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          return response.json();
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProjetsQuery } = Api;
+export const { useGetAllProjetsQuery, useGetProjectQuery, useCreateProjectMutation} = Api;

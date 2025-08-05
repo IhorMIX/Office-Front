@@ -56,7 +56,7 @@ const ProjectsPage: React.FC = () => {
             Projects
           </Typography>
 
-          {(role === UserType.Admin) && (
+          {(role === UserType.Admin || role === UserType.ProjectManager) && (
             <Button
               component={Link}
               to="/create-project"

@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 import { CreateProject } from "../../types/Project";
 import React from "react";
@@ -11,12 +11,19 @@ const CreateProjectForm: React.FC = () => {
 
   const {
     handleSubmit,
-    register,
-    setValue,
+    control,
     formState: { errors },
-  } = useForm<CreateProject>();
+  } = useForm<CreateProject>({
+    defaultValues: {
+      projectTypeId: 0,
+      startDate: "",
+      endDate: "",
+      comment: "",
+      status: true,
+    },
+  });
 
-  const onSubmit: SubmitHandler<CreateProject> = async (data: CreateProject) => {
+  const onSubmit: SubmitHandler<CreateProject> = async (data) => {
     try {
       await createProject(data).unwrap();
       console.log(data);
@@ -38,18 +45,30 @@ const CreateProjectForm: React.FC = () => {
           <Stack spacing={3}>
             {/* Project Type */}
             <FormControl fullWidth error={!!errors.projectTypeId}>
-              <InputLabel>Project Type</InputLabel>
-              <Select
-                {...register("projectTypeId", { required: "Project Type is required" })}
-                label="Project Type"
-                onChange={(e) => setValue("projectTypeId", e.target.value as number)}
-              >
-                {types?.map((type) => (
-                  <MenuItem key={type.id} value={type.id}>
-                    {type.name}
-                  </MenuItem>
-                ))}
-              </Select>
+              <InputLabel id="project-type-label">Project Type</InputLabel>
+              <Controller
+                name="projectTypeId"
+                control={control}
+                rules={{ required: "Project Type is required" }}
+                render={({ field }) => (
+                  <Select
+                    labelId="project-type-label"
+                    label="Project Type"
+                    {...field}
+                    value={field.value || ""}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  >
+                    <MenuItem value="">
+                      <em>Select project type</em>
+                    </MenuItem>
+                    {types?.map((type) => (
+                      <MenuItem key={type.id} value={type.id}>
+                        {type.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
               {errors.projectTypeId && (
                 <Typography variant="caption" color="error">
                   {errors.projectTypeId.message}
@@ -58,42 +77,74 @@ const CreateProjectForm: React.FC = () => {
             </FormControl>
 
             {/* Start Date */}
-            <TextField
-              {...register("startDate", { required: "Start Date is required" })}
-              label="Start Date"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              error={!!errors.startDate}
-              helperText={errors.startDate?.message}
-              fullWidth
+            <Controller
+              name="startDate"
+              control={control}
+              rules={{ required: "Start Date is required" }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Start Date"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  error={!!errors.startDate}
+                  helperText={errors.startDate?.message}
+                  fullWidth
+                />
+              )}
             />
 
             {/* End Date */}
-            <TextField
-              {...register("endDate", { required: "End Date is required" })}
-              label="End Date"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              error={!!errors.endDate}
-              helperText={errors.endDate?.message}
-              fullWidth
+            <Controller
+              name="endDate"
+              control={control}
+              rules={{ required: "End Date is required" }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="End Date"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  error={!!errors.endDate}
+                  helperText={errors.endDate?.message}
+                  fullWidth
+                />
+              )}
             />
 
             {/* Comment */}
-            <TextField
-              {...register("comment")}
-              label="Comment"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
+            <Controller
+              name="comment"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Comment"
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
             />
 
             {/* Status */}
             <FormControl fullWidth>
-              <InputLabel>Status</InputLabel>
-              <Select {...register("status")} label="Status">
-                <MenuItem value="true">Active</MenuItem>
-                <MenuItem value="false">Inactive</MenuItem>
-              </Select>
+              <InputLabel id="status-label">Status</InputLabel>
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    labelId="status-label"
+                    label="Status"
+                    {...field}
+                    value={field.value ? "true" : "false"}
+                    onChange={(e) => field.onChange(e.target.value === "true")}
+                  >
+                    <MenuItem value="true">Active</MenuItem>
+                    <MenuItem value="false">Inactive</MenuItem>
+                  </Select>
+                )}
+              />
             </FormControl>
 
             {/* Submit */}
