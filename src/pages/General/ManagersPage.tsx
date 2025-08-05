@@ -61,7 +61,7 @@ const ManagersPage: React.FC = () => {
             Managers
           </Typography>
 
-          {(role === UserType.Admin) && (
+          {(role === UserType.Admin || role === UserType.HrManager) && (
             <Button
               component={Link}
               to="/create-manager"
