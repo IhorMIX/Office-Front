@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
 const NavigateButtons = () => {
-    const {data: user} = useGetCurrentUserQuery(null); 
     const role = useSelector((state: RootState) => state.auth.role);
     let buttons = (
         <>
