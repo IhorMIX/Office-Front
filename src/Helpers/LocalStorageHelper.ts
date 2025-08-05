@@ -17,4 +17,4 @@ export const setValue = (key: string, value: string, isThrowIfEmpty: Boolean = f
 
     localStorage.setItem(key, value)
 };
-export const removItem = (key : string): void => localStorage.removeItem(key);
+export const removeItem = (key : string): void => localStorage.removeItem(key);

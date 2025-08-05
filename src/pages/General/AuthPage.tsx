@@ -1,15 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useActions } from "../Hooks/StoreHook";
-import { ILoginData } from "../types/User";
+import { useActions } from "../../Hooks/StoreHook";
+import { ILoginData } from "../../types/User";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLoginMutation } from "../services/authService";
-import { IAuthInformation } from "../types/AuthInfo";
-import styles from "../scss/authPage.module.scss";
+import { useLoginMutation } from "../../services/authService";
+import { IAuthInformation } from "../../types/AuthInfo";
+import styles from "../../scss/authPage.module.scss";
 import {
   Button,
   Checkbox,
-  FormHelperText,
   TextField,
   Typography,
 } from "@mui/material";
@@ -60,11 +59,7 @@ const AuthPage = () => {
             label="Login"
             fullWidth
             error={!!errors.login}
-            helperText={
-              errors.login && (
-                <FormHelperText error>{errors.login.message}</FormHelperText>
-              )
-            }
+            helperText={errors.login?.message || ""}
           />
 
           <TextField
@@ -76,16 +71,12 @@ const AuthPage = () => {
             label="Password"
             fullWidth
             error={!!errors.password}
-            helperText={
-              errors.password && (
-                <FormHelperText error>{errors.password.message}</FormHelperText>
-              )
-            }
+            helperText={errors.password?.message || ""}
           />
 
           <div className={styles.rememberMe}>
             <Checkbox {...register("isNeedToRemember")} />
-            <p>Remember me</p>
+            <span>Remember me</span>
           </div>
 
           <Button

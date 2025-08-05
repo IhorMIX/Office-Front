@@ -1,20 +1,18 @@
 import React from "react";
-import NavigateButtons from "./Navigate";
+import NavigateButtons from "./NavigateButtons";
 import style from "../scss/layout.module.scss"
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { useLogOutMutation } from "../services/authService";
+import { useActions } from "../Hooks/StoreHook";
 
 const Header = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuth);
-  const [logout] = useLogOutMutation();
+  const { userLogout } = useActions();
+  
   const handleLogout = async () => {
     try {
-      await logout(null); // Assuming logout mutation doesn't require any parameters
       console.log("Logout successful");
-
-      localStorage.removeItem("accessKey"); 
-      localStorage.removeItem("refreshToken"); 
+      userLogout();
       window.location.reload();
     } catch (error) {
       console.error("Logout failed:", error);

@@ -1,0 +1,104 @@
+import React, { useState } from "react";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableContainer,
+  TableSortLabel,
+  Button,
+} from "@mui/material";
+import { BaseEmployee } from "../../types/Employee";
+
+interface TableProps {
+  managers: BaseEmployee[];
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
+}
+
+enum SortField {
+  ID = "id",
+  FULL_NAME = "fullName",
+}
+
+const ManagerTable: React.FC<TableProps> = ({ managers, onEdit, onDelete }) => {
+  const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+
+  const getFieldByPath = (obj: any, path: string): any => {
+    return path.split(".").reduce((acc, key) => acc?.[key], obj);
+  };
+
+  const sortedManagers = [...managers].sort((a, b) => {
+    const aValue = getFieldByPath(a, sortBy);
+    const bValue = getFieldByPath(b, sortBy);
+
+    if (aValue === undefined || bValue === undefined) return 0;
+
+    if (sortDirection === "asc") {
+      return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+    } else {
+      return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+    }
+  });
+
+  const handleSort = (field: SortField) => {
+    if (field === sortBy) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortBy(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const cellStyle = {
+    fontWeight: "bold",
+    color: "rgb(0, 80, 184)",
+  };
+
+  return (
+    <TableContainer>
+      <Table sx={{ backgroundColor: "white", borderRadius: "10px" }}>
+        <TableHead>
+          <TableRow>
+            {[ 
+              { label: "ID", field: SortField.ID },
+              { label: "Full Name", field: SortField.FULL_NAME },
+            ].map(({ label, field }) => (
+              <TableCell key={field} sx={cellStyle}>
+                <TableSortLabel
+                  active={sortBy === field}
+                  direction={sortBy === field ? sortDirection : "asc"}
+                  onClick={() => handleSort(field)}
+                >
+                  {label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
+            <TableCell sx={cellStyle}>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {sortedManagers.map((manager) => (
+            <TableRow key={manager.id} hover>
+              <TableCell>{manager.id}</TableCell>
+              <TableCell>{manager.fullName}</TableCell>
+              <TableCell>
+                <Button variant="outlined" size="small" onClick={() => onEdit(manager.id)} sx={{ mr: 1 }}>
+                  Edit
+                </Button>
+                <Button variant="outlined" size="small" color="error" onClick={() => onDelete(manager.id)}>
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export default ManagerTable;
