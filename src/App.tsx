@@ -17,6 +17,7 @@ import CreatePositionPage from './pages/Create/CreatePosition';
 import CreateSubdivisionPage from './pages/Create/CreateSubdivision';
 import CreateProjectTypePage from './pages/Create/CreateProjectType';
 import CreateProjectPage from './pages/Create/CreateProjectPage';
+import LeaveRequestPage from './pages/General/LeaveRequestPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -55,6 +56,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/leave-requests" element={<LeaveRequestPage />} />
 
         <Route
           path="/create-absenceReason"

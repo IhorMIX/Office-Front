@@ -21,19 +21,20 @@ export interface LeaveRequest {
 }
 
 export enum LeaveRequestStatus{
-    Submit = "Submit",
-    Cancel = "Cancel"
+    New = "New",
+    Cancel = "Cancel",
+    Submit = "Submit"
 }
 
 export interface ApprovalRequest {
     id: number
     approver: BaseManager
     leaveRequest : LeaveRequest
-    approvalRequestStatus: Status
+    approvalRequestStatus: ApprovalRequestStatus
     comment: string | null
 }
 
-export enum Status {
+export enum ApprovalRequestStatus {
     New = "New",
     Approved = "Approved",
     Rejected = "Rejected"
