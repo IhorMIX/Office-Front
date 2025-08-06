@@ -18,6 +18,7 @@ import CreateSubdivisionPage from './pages/Create/CreateSubdivision';
 import CreateProjectTypePage from './pages/Create/CreateProjectType';
 import CreateProjectPage from './pages/Create/CreateProjectPage';
 import LeaveRequestPage from './pages/General/LeaveRequestPage';
+import CreateLeaveRequestPage from './pages/Create/CreateLeaveRequestPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -58,6 +59,7 @@ function App() {
         />
 
         <Route path="/leave-requests" element={<LeaveRequestPage />} />
+        <Route path="/create-leave-request" element={<CreateLeaveRequestPage  />} />
 
         <Route
           path="/create-absenceReason"
