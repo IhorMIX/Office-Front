@@ -1,5 +1,5 @@
 import React from "react";
-import CreateEmployeeForm from "../../Components/CreateComponents/CreateEmployeeForm";
+import CreateEmployeeForm from "../../Components/CreateForms/CreateEmployeeForm";
 
 const CreateEmployeePage = () => {
 
