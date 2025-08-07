@@ -39,3 +39,8 @@ export enum ApprovalRequestStatus {
     Approved = "Approved",
     Rejected = "Rejected"
 } 
+
+export interface ApprovalUpdateRequest {
+    id: number
+    comment: string | null
+}
