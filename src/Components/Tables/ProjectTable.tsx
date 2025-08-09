@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Project } from '../../types/Project';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, TableSortLabel, Button } from '@mui/material';
+import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, TableSortLabel, Button, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UserType } from '../../types/User';
@@ -133,20 +133,43 @@ const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
                             <TableCell>{project.status ? 'Active' : 'Inactive'}</TableCell>
                             {canEditOrDelete(role) && (
                                 <TableCell>
-                                    <Button
-                                        sx={{ border: "1px solid blue", marginRight: "5px" }}
+                                    <Box sx={{ display: "flex", gap: 1 }}>
+                                        <Button
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
                                         component={Link}
                                         to={`/update-project/${project.id}`}
-                                    >
+                                        >
                                         Edit
-                                    </Button>
-                                    <Button sx={{ border: "1px solid red", color: "red", marginRight: "5px" }} onClick={() => onDelete(project.id)}>Deactivate</Button>
-                                    <Button sx={{ border: "1px solid green", color: "green" }}
+                                        </Button>
+                                        <Button
+                                        variant="outlined"
+                                        size="small"
+                                        color="error"
+                                        sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
+                                        onClick={() => onDelete(project.id)}
+                                        >
+                                        Deactivate
+                                        </Button>
+                                        <Button
+                                        variant="outlined"
+                                        size="small"
+                                        color="success"
+                                        sx={{
+                                            minWidth: 90,
+                                            textAlign: "center",
+                                            whiteSpace: "normal",
+                                            lineHeight: 1.2,
+                                            padding: "4px 8px"
+                                        }}
                                         component={Link}
                                         to={`/project-add-employees/${project.id}`}
-                                    >
-                                        Edit employees</Button>
-                                </TableCell>
+                                        >
+                                        Edit employees
+                                        </Button>
+                                    </Box>
+                                    </TableCell>
                             )}
                         </TableRow>
                     ))}

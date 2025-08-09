@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableSortLabel,
   Button,
+  Box,
 } from "@mui/material";
 import { BaseEmployee } from "../../types/Employee";
 
@@ -62,7 +63,7 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onEdit, onDelete }) => {
       <Table sx={{ backgroundColor: "white", borderRadius: "10px" }}>
         <TableHead>
           <TableRow>
-            {[ 
+            {[
               { label: "ID", field: SortField.ID },
               { label: "Full Name", field: SortField.FULL_NAME },
             ].map(({ label, field }) => (
@@ -86,12 +87,25 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onEdit, onDelete }) => {
               <TableCell>{manager.id}</TableCell>
               <TableCell>{manager.fullName}</TableCell>
               <TableCell>
-                <Button variant="outlined" size="small" onClick={() => onEdit(manager.id)} sx={{ mr: 1 }}>
-                  Edit
-                </Button>
-                <Button variant="outlined" size="small" color="error" onClick={() => onDelete(manager.id)}>
-                  Delete
-                </Button>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={() => onEdit(manager.id)}
+                    sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="error"
+                    onClick={() => onDelete(manager.id)}
+                    sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </TableCell>
             </TableRow>
           ))}

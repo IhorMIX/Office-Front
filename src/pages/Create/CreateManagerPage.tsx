@@ -1,5 +1,5 @@
 import React from "react";
-import CreateManagerForm from "../../Components/CreateComponents/CreateManagerForm";
+import CreateManagerForm from "../../Components/CreateForms/CreateManagerForm";
 
 const CreateManagerPage: React.FC = () => {
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import CreateProjectForm from "../../Components/CreateComponents/CreateProjectForm";
+import CreateProjectForm from "../../Components/CreateForms/CreateProjectForm";
 
 const CreateProjectPage: React.FC = () => {
     return (

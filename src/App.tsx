@@ -13,10 +13,13 @@ import { UserType } from './types/User';
 import CreateEmployeePage from './pages/Create/CreateEmployeePage';
 import CreateManagerPage from './pages/Create/CreateManagerPage';
 import CreateAbsenceReason from './pages/Create/CreateAbsenceReason';
-import CreatePositionPage from './pages/Create/CreatePosition';
+import CreatePositionPage from './pages/Create/CreatePositionPage';
 import CreateSubdivisionPage from './pages/Create/CreateSubdivision';
 import CreateProjectTypePage from './pages/Create/CreateProjectType';
 import CreateProjectPage from './pages/Create/CreateProjectPage';
+import LeaveRequestPage from './pages/General/LeaveRequestPage';
+import CreateLeaveRequestPage from './pages/Create/CreateLeaveRequestPage';
+import ApprovalRequestsPage from './pages/General/ApprovalRequestPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -55,6 +58,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/leave-requests" element={<LeaveRequestPage />} />
+        <Route path="/create-leave-request" element={<CreateLeaveRequestPage  />} />
+        <Route path="/approval-requests" element={<ApprovalRequestsPage   />} />
 
         <Route
           path="/create-absenceReason"

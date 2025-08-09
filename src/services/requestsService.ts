@@ -1,12 +1,13 @@
 import { api } from "../api/api";
-import { BaseManager, CreateManager, HrManager, ProjectManager, UpdateManager } from "../types/Employee";
 import { HttpMethodType } from "../types/HttpInfo";
+import { ApprovalRequest, ApprovalUpdateRequest, CreateLeaveRequest, LeaveRequest } from "../types/Requests";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAllManagers: builder.query<BaseManager[], null>({
+    //LR
+    getAllLeaveRequests: builder.query<LeaveRequest[], null>({
       query: () => ({
-        url: "/api/manager",
+        url: "/api/leaverequest",
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -17,9 +18,9 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
-    getProjectManagers: builder.query<ProjectManager[], null>({
-      query: () => ({
-        url: "/api/manager/project-managers",
+    getLeaveRequest: builder.query<LeaveRequest, number>({
+      query: (requestId) => ({
+        url: `/api/leaverequest/${requestId}`,
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -30,22 +31,9 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
-    getHrManagers: builder.query<HrManager[], null>({
-      query: () => ({
-        url: "/api/manager/hr-managers",
-        method: HttpMethodType.GET,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
-          }
-          return response.json();
-        },
-      }),
-    }),
-    delManager: builder.mutation({
+    delLeaveRequest: builder.mutation({
       query: (requestId:number) => ({
-        url: `/api/manager/${requestId}`,
+        url: `/api/leaverequest/${requestId}`,
         method: HttpMethodType.DELETE,
         responseHandler: async (response) => {
           if (!response.ok) {
@@ -56,11 +44,11 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
-    createProjectManager: builder.mutation({
-      query: (manager:CreateManager) => ({
-        url: `/api/manager/project-manager`,
+    createLeaveRequest: builder.mutation({
+      query: (data:CreateLeaveRequest) => ({
+        url: `/api/leaverequest`,
+        body:data,
         method: HttpMethodType.POST,
-        body:manager,
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
@@ -70,38 +58,39 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
-    createHrManager: builder.mutation({
-      query: (manager:CreateManager) => ({
-        url: `/api/manager/hr-manager`,
-        method: HttpMethodType.POST,
-        body: manager,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
-          }
-          return response.json();
-        },
-      }),
-    }),
-    UpdateManager: builder.mutation({
-      query: (manager:UpdateManager) => ({
-        url: `/api/manager`,
-        method: HttpMethodType.PUT,
-        body: manager,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
-          }
-          return response.json();
-        },
-      }),
-    }),
-    getAdmin: builder.query<BaseManager, null>({
+    //AR
+    getAllApprovalRequest: builder.query<ApprovalRequest[], null>({
       query: () => ({
-        url: "/api/manager/admin",
+        url: "/api/approvalrequest",
         method: HttpMethodType.GET,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          return response.json();
+        },
+      }),
+    }),
+    approveRequest: builder.mutation({
+      query: (data: ApprovalUpdateRequest) => ({
+        body: data,
+        url: "/api/approvalrequest/approve",
+        method: HttpMethodType.PUT,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          return response.json();
+        },
+      }),
+    }),
+    rejectRequest: builder.mutation({
+      query: (data: ApprovalUpdateRequest) => ({
+        body: data,
+        url: "/api/approvalrequest/reject",
+        method: HttpMethodType.PUT,
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
@@ -114,6 +103,6 @@ export const Api = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllManagersQuery, useDelManagerMutation, useGetProjectManagersQuery, useGetHrManagersQuery,
-  useCreateHrManagerMutation, useCreateProjectManagerMutation, useUpdateManagerMutation, useGetAdminQuery
+export const { useGetAllLeaveRequestsQuery, useGetLeaveRequestQuery, useDelLeaveRequestMutation, useCreateLeaveRequestMutation,
+  useGetAllApprovalRequestQuery, useApproveRequestMutation, useRejectRequestMutation
 } = Api;

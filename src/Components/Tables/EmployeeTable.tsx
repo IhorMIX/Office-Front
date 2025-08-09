@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableSortLabel,
   Button,
+  Box,
 } from "@mui/material";
 import { Employee } from "../../types/Employee";
 
@@ -101,10 +102,25 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onEdit, onDelete }) =>
               <TableCell>{employee.outOfOfficeBalance}</TableCell>
               <TableCell>{employee.hrManager?.fullName}</TableCell>
               <TableCell>
-                <Button onClick={() => onEdit(employee.id)}>Edit</Button>
-                <Button sx={{ color: "red" }} onClick={() => onDelete(employee.id)}>
-                  Delete
-                </Button>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={() => onEdit(employee.id)}
+                    sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="error"
+                    onClick={() => onDelete(employee.id)}
+                    sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </TableCell>
             </TableRow>
           ))}
