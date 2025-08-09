@@ -16,7 +16,7 @@ import {
   useGetAllApprovalRequestQuery,
 } from "../../services/requestsService";
 import ApprovalRequestTable from "../../Components/Tables/ApprovalRequestTable";
-import { ApprovalRequest, ApprovalRequestStatus } from "../../types/Requests";
+import { ApprovalRequest, Status } from "../../types/Requests";
 
 const ApprovalRequestsPage: React.FC = () => {
   const { data: fetchedRequests, isLoading } = useGetAllApprovalRequestQuery(null);
@@ -33,7 +33,7 @@ const ApprovalRequestsPage: React.FC = () => {
 
   const updateRequestStatus = (
     id: number,
-    status: ApprovalRequestStatus,
+    status: Status,
     comment: string
   ) => {
     setApprovalRequests((prev) =>
@@ -53,8 +53,8 @@ const ApprovalRequestsPage: React.FC = () => {
       const mutation = action === "approve" ? approveRequest : rejectRequest;
       const newStatus =
         action === "approve"
-          ? ApprovalRequestStatus.Approved
-          : ApprovalRequestStatus.Rejected;
+          ? Status.Approved
+          : Status.Rejected;
 
       await mutation({ id, comment }).unwrap();
       updateRequestStatus(id, newStatus, comment);
@@ -107,7 +107,7 @@ const ApprovalRequestsPage: React.FC = () => {
         <ApprovalRequestTable
           approvalRequests={approvalRequests}
           onApprove={handleApprove}
-          onDecline={handleReject}
+          onReject={handleReject}
           comments={comments}
           setComments={setComments}
         />

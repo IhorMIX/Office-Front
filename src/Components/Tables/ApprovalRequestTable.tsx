@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ApprovalRequest, ApprovalRequestStatus } from "../../types/Requests";
+import { ApprovalRequest, Status } from "../../types/Requests";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { UserType } from "../../types/User";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 interface TableProps {
     approvalRequests: ApprovalRequest[];
     onApprove: (id: number, comment: string) => void;
-    onDecline: (id: number, comment: string) => void;
+    onReject: (id: number, comment: string) => void;
     comments: { [key: number]: string };
     setComments: React.Dispatch<React.SetStateAction<{ [key: number]: string }>>;
 }
@@ -23,7 +23,7 @@ enum SortField {
     LEAVE_REQUEST_ID = 'approvalRequest.leaveRequest.id',
 }
 
-const ApprovalRequestTable: React.FC<TableProps> = ({ approvalRequests, onApprove, onDecline, comments, setComments }) => {
+const ApprovalRequestTable: React.FC<TableProps> = ({ approvalRequests, onApprove, onReject, comments, setComments }) => {
     const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
     const role: string = useSelector((state: RootState) => state.auth.role);
@@ -122,15 +122,15 @@ const ApprovalRequestTable: React.FC<TableProps> = ({ approvalRequests, onApprov
                                 </Link>
                             </TableCell>
 
-                            {approvalRequest.approvalRequestStatus === ApprovalRequestStatus.New && role !== UserType.Employee?
+                            {approvalRequest.approvalRequestStatus === Status.New && role !== UserType.Employee?
                                 (<TableCell><TextField variant="outlined" size="small" placeholder="Enter comment" value={comments[approvalRequest.id] || ""} onChange={(e) => handleCommentChange(approvalRequest.id, e.target.value)} /></TableCell>) :
                                 (<TableCell>{approvalRequest.comment}</TableCell>)}
                             
                             <TableCell>
-                                {canEditOrDelete(role) && approvalRequest.approvalRequestStatus === ApprovalRequestStatus.New && (
+                                {canEditOrDelete(role) && approvalRequest.approvalRequestStatus === Status.New && (
                                     <>
                                         <Button sx={{ color: "green", border: "1px solid green", marginRight: "5px" }} onClick={() => onApprove(approvalRequest.id, comments[approvalRequest.id] || "")}>Approve</Button>
-                                        <Button sx={{ color: "red", border: "1px solid red" }} onClick={() => onDecline(approvalRequest.id, comments[approvalRequest.id] || "")}>Decline</Button>
+                                        <Button sx={{ color: "red", border: "1px solid red" }} onClick={() => onReject(approvalRequest.id, comments[approvalRequest.id] || "")}>Reject</Button>
                                     </>
                                 )}
                             </TableCell>
