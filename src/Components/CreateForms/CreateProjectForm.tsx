@@ -43,7 +43,7 @@ const CreateProjectForm: React.FC = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Stack spacing={3}>
-            {/* Project Type */}
+
             <FormControl fullWidth error={!!errors.projectTypeId}>
               <InputLabel id="project-type-label">Project Type</InputLabel>
               <Controller
@@ -76,7 +76,6 @@ const CreateProjectForm: React.FC = () => {
               )}
             </FormControl>
 
-            {/* Start Date */}
             <Controller
               name="startDate"
               control={control}
@@ -94,7 +93,6 @@ const CreateProjectForm: React.FC = () => {
               )}
             />
 
-            {/* End Date */}
             <Controller
               name="endDate"
               control={control}
@@ -112,7 +110,6 @@ const CreateProjectForm: React.FC = () => {
               )}
             />
 
-            {/* Comment */}
             <Controller
               name="comment"
               control={control}
@@ -126,7 +123,6 @@ const CreateProjectForm: React.FC = () => {
               )}
             />
 
-            {/* Status */}
             <FormControl fullWidth>
               <InputLabel id="status-label">Status</InputLabel>
               <Controller
@@ -147,7 +143,6 @@ const CreateProjectForm: React.FC = () => {
               />
             </FormControl>
 
-            {/* Submit */}
             <Button type="submit" variant="contained" size="large" fullWidth>
               Create
             </Button>
