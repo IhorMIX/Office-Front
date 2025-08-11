@@ -1,3 +1,4 @@
+import { Project } from "./Project";
 import { Selection } from "./Selection";
 import { UserType } from "./User";
 
@@ -12,6 +13,7 @@ export interface Employee extends BaseEmployee {
     status: boolean;
     outOfOfficeBalance: number;
     hrManager: BaseManager | null;
+    projects: Project[]
 }
 
 export interface BaseManager extends BaseEmployee{
@@ -19,11 +21,11 @@ export interface BaseManager extends BaseEmployee{
 }
 
 export interface HrManager extends BaseManager{
-
+    workers: Employee[]
 }
 
 export interface ProjectManager extends BaseManager{
-
+    projects: Project[]
 }
 
 export interface CreateEmployee{
