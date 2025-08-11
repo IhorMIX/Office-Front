@@ -12,14 +12,15 @@ import ProjectsPage from './pages/General/ProjectsPage';
 import { UserType } from './types/User';
 import CreateEmployeePage from './pages/Create/CreateEmployeePage';
 import CreateManagerPage from './pages/Create/CreateManagerPage';
-import CreateAbsenceReason from './pages/Create/CreateAbsenceReason';
+import CreateAbsenceReason from './pages/Create/CreateAbsenceReasonPage';
 import CreatePositionPage from './pages/Create/CreatePositionPage';
-import CreateSubdivisionPage from './pages/Create/CreateSubdivision';
-import CreateProjectTypePage from './pages/Create/CreateProjectType';
+import CreateSubdivisionPage from './pages/Create/CreateSubdivisionPage';
+import CreateProjectTypePage from './pages/Create/CreateProjectTypePage';
 import CreateProjectPage from './pages/Create/CreateProjectPage';
 import LeaveRequestPage from './pages/General/LeaveRequestPage';
 import CreateLeaveRequestPage from './pages/Create/CreateLeaveRequestPage';
 import ApprovalRequestsPage from './pages/General/ApprovalRequestPage';
+import EmployeeInfoPage from './pages/Info/EmployeeInfoPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -35,6 +36,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
               <CreateEmployeePage />
+            </ProtectedRoute>
+          }
+        />
+          <Route
+          path="/employee/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.ProjectManager]}>
+              <EmployeeInfoPage />
             </ProtectedRoute>
           }
         />
