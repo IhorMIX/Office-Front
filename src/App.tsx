@@ -23,6 +23,7 @@ import ApprovalRequestsPage from './pages/General/ApprovalRequestPage';
 import EmployeeInfoPage from './pages/Info/EmployeeInfoPage';
 import ManagerInfoPage from './pages/Info/ManagerInfoPage';
 import ProjectInfoPage from './pages/Info/ProjectInfoPage';
+import LeaveRequestInfoPage from './pages/Info/LeaveRequestInfoPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -89,6 +90,14 @@ function App() {
         />
 
         <Route path="/leave-requests" element={<LeaveRequestPage />} />
+        <Route
+          path="/leaverequest/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.Employee, UserType.ProjectManager]}>
+              <LeaveRequestInfoPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/create-leave-request" element={<CreateLeaveRequestPage  />} />
         <Route path="/approval-requests" element={<ApprovalRequestsPage   />} />
 
