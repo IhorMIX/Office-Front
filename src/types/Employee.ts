@@ -16,6 +16,11 @@ export interface Employee extends BaseEmployee {
     projects: Project[]
 }
 
+export interface InfoManager extends BaseManager{
+    workers: Employee[]
+    projects: Project[]
+}
+
 export interface BaseManager extends BaseEmployee{
     role:UserType
 }
