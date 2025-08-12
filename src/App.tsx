@@ -21,6 +21,7 @@ import LeaveRequestPage from './pages/General/LeaveRequestPage';
 import CreateLeaveRequestPage from './pages/Create/CreateLeaveRequestPage';
 import ApprovalRequestsPage from './pages/General/ApprovalRequestPage';
 import EmployeeInfoPage from './pages/Info/EmployeeInfoPage';
+import ManagerInfoPage from './pages/Info/ManagerInfoPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -44,6 +45,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.ProjectManager]}>
               <EmployeeInfoPage />
+            </ProtectedRoute>
+          }
+        />
+
+          <Route
+          path="/manager/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
+              <ManagerInfoPage />
             </ProtectedRoute>
           }
         />
