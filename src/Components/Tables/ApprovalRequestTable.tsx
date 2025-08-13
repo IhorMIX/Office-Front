@@ -148,7 +148,7 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
               <TableCell>{approvalRequest.approver.fullName}</TableCell>
               <TableCell>{approvalRequest.approvalRequestStatus}</TableCell>
               <TableCell>
-                <Link to={`/leave-request-details/${approvalRequest.leaveRequest.id}`}>
+                <Link to={`/leaverequest/${approvalRequest.leaveRequest.id}`}>
                   {approvalRequest.leaveRequest.id}
                 </Link>
               </TableCell>

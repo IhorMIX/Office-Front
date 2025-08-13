@@ -11,6 +11,10 @@ import {
   Box,
 } from "@mui/material";
 import { Employee } from "../../types/Employee";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { UserType } from "../../types/User";
+import { Link } from "react-router-dom";
 
 interface TableProps {
   employees: Employee[];
@@ -31,6 +35,7 @@ enum SortField {
 const EmployeeTable: React.FC<TableProps> = ({ employees, onEdit, onDelete }) => {
   const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const role = useSelector((state: RootState) => state.auth.role);
 
   const getFieldByPath = (obj: any, path: string): any => {
     return path.split(".").reduce((acc, key) => acc?.[key], obj);
@@ -56,6 +61,10 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onEdit, onDelete }) =>
       setSortBy(field);
       setSortDirection("asc");
     }
+  };
+
+  const canEditOrDelete = (role: string) => {
+    return role === UserType.Admin || role === UserType.HrManager;
   };
 
   const cellStyle = {
@@ -94,7 +103,11 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onEdit, onDelete }) =>
         <TableBody>
           {sortedEmployees.map((employee) => (
             <TableRow key={employee.id}>
-              <TableCell>{employee.id}</TableCell>
+              <TableCell>
+                <Link to={`/employee/${employee.id}`}>
+                    {employee.id}
+                </Link>
+              </TableCell>
               <TableCell>{employee.fullName}</TableCell>
               <TableCell>{employee.subdivision?.name}</TableCell>
               <TableCell>{employee.position?.name}</TableCell>

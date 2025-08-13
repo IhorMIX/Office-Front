@@ -11,6 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import { BaseEmployee } from "../../types/Employee";
+import { Link } from "react-router-dom";
 
 interface TableProps {
   managers: BaseEmployee[];
@@ -83,8 +84,12 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onEdit, onDelete }) => {
 
         <TableBody>
           {sortedManagers.map((manager) => (
-            <TableRow key={manager.id} hover>
-              <TableCell>{manager.id}</TableCell>
+            <TableRow key={manager.id} >
+              <TableCell>
+                <Link to={`/manager/${manager.id}`}>
+                    {manager.id}
+                </Link>
+              </TableCell>
               <TableCell>{manager.fullName}</TableCell>
               <TableCell>
                 <Box sx={{ display: "flex", gap: 1 }}>

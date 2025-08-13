@@ -163,7 +163,11 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
         <TableBody>
           {sortedLeaveRequests.map((leaveRequest) => (
             <TableRow key={leaveRequest.id}>
-              <TableCell>{leaveRequest.id}</TableCell>
+              <TableCell>
+                <Link to={`/leaverequest/${leaveRequest.id}`}>
+                    {leaveRequest.id}
+                </Link>
+              </TableCell>
               <TableCell>{leaveRequest.employee.fullName}</TableCell>
               <TableCell>{new Date(leaveRequest.startDate).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(leaveRequest.endDate).toLocaleDateString()}</TableCell>

@@ -19,7 +19,7 @@ export interface CreateProject {
     status: boolean
 }
 
-export interface ProjectDetail {
+export interface ProjectInfo {
     id: number
     projectManager: ProjectManager
     projectType: Selection

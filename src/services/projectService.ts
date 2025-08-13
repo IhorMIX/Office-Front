@@ -1,6 +1,6 @@
 import { api } from "../api/api";
 import { HttpMethodType } from "../types/HttpInfo";
-import { CreateProject, Project, ProjectDetail } from "../types/Project";
+import { CreateProject, Project, ProjectInfo } from "../types/Project";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +17,7 @@ export const Api = api.injectEndpoints({
           },
         }),
     }),
-    getProject: builder.query<ProjectDetail, number>({
+    getProject: builder.query<ProjectInfo, number>({
       query: (projectId:number) => ({
         url: `/api/project/${projectId}`,
         method: HttpMethodType.GET,
