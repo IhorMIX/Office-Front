@@ -142,9 +142,7 @@ const CreateUserForm: React.FC = () => {
             </FormControl>
 
             <TextField
-              {...register("outOfOfficeBalance", {
-                required: "Out of Office Balance is required",
-              })}
+              {...register("outOfOfficeBalance")}
               label="Out of Office Balance"
               type="number"
               fullWidth
