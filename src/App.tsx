@@ -24,7 +24,8 @@ import EmployeeInfoPage from './pages/Info/EmployeeInfoPage';
 import ManagerInfoPage from './pages/Info/ManagerInfoPage';
 import ProjectInfoPage from './pages/Info/ProjectInfoPage';
 import LeaveRequestInfoPage from './pages/Info/LeaveRequestInfoPage';
-import UpdateAddEmployee from './pages/Update/UpdateAddEmployee';
+import UpdateAddEmployeePage from './pages/Update/UpdateAddEmployeePage';
+import UpdateEmployeePage from './pages/Update/UpdateEmployeePage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -43,6 +44,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/update-employee/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.ProjectManager]}>
+              <UpdateEmployeePage />
+            </ProtectedRoute>
+          }
+        />
+
           <Route
           path="/employee/:id"
           element={
@@ -85,7 +96,7 @@ function App() {
           path="/project-add-employees/:id"
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.ProjectManager]}>
-              <UpdateAddEmployee />
+              <UpdateAddEmployeePage />
             </ProtectedRoute>
           }
         />
