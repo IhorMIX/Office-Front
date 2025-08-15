@@ -76,7 +76,6 @@ const ManagersPage: React.FC = () => {
 
         <ManagerTable
           managers={managers}
-          onEdit={handleEdit}
           onDelete={handleDelete}
         />
       </Paper>
