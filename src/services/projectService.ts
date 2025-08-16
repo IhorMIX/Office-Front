@@ -1,6 +1,6 @@
 import { api } from "../api/api";
 import { HttpMethodType } from "../types/HttpInfo";
-import { CreateProject, Project, ProjectInfo } from "../types/Project";
+import { AddEmployees, CreateProject, Project, ProjectInfo, UpdateProject } from "../types/Project";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -44,7 +44,36 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
+    AddEmployees: builder.mutation({
+      query: (employees: AddEmployees) => ({
+        url: `/api/project/employees`,
+        body: employees,
+        method: HttpMethodType.PUT,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          const text = await response.text();
+          return text ? JSON.parse(text) : null;
+        },
+      }),
+    }),
+    updateProject: builder.mutation({
+      query: (project:UpdateProject) => ({
+        url: `/api/project`,
+        body: project,
+        method: HttpMethodType.PUT,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          return response.json();
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProjetsQuery, useGetProjectQuery, useCreateProjectMutation} = Api;
+export const { useGetAllProjetsQuery, useGetProjectQuery, useCreateProjectMutation, useAddEmployeesMutation, useUpdateProjectMutation} = Api;

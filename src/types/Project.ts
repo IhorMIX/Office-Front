@@ -29,3 +29,18 @@ export interface ProjectInfo {
     status: boolean
     employees: Employee[]
 }
+
+export interface AddEmployees{
+    projectId: number
+    employeesIds: number[]
+}
+
+export interface UpdateProject {
+    id: number
+    projectManagerId: number
+    projectTypeId: number
+    startDate: string
+    endDate: string
+    comment: string
+    status: boolean
+}

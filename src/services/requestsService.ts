@@ -1,6 +1,6 @@
 import { api } from "../api/api";
 import { HttpMethodType } from "../types/HttpInfo";
-import { ApprovalRequest, ApprovalUpdateRequest, CreateLeaveRequest, LeaveRequest } from "../types/Requests";
+import { ApprovalRequest, ApprovalUpdateRequest, CreateLeaveRequest, LeaveRequest, UpdateLeaveRequest } from "../types/Requests";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -58,6 +58,21 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
+    updateLeaveRequest: builder.mutation<null, UpdateLeaveRequest>({
+      query: (data) => ({
+        url: `/api/leaverequest`,
+        method: HttpMethodType.PUT,
+        body: data,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+          }
+          const text = await response.text();
+          return text ? JSON.parse(text) : null;
+        },
+      }),
+    }),
     //AR
     getAllApprovalRequest: builder.query<ApprovalRequest[], null>({
       query: () => ({
@@ -103,6 +118,6 @@ export const Api = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllLeaveRequestsQuery, useGetLeaveRequestQuery, useDelLeaveRequestMutation, useCreateLeaveRequestMutation,
+export const { useGetAllLeaveRequestsQuery, useGetLeaveRequestQuery, useDelLeaveRequestMutation, useCreateLeaveRequestMutation, useUpdateLeaveRequestMutation,
   useGetAllApprovalRequestQuery, useApproveRequestMutation, useRejectRequestMutation
 } = Api;

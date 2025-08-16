@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 
 interface TableProps {
   managers: BaseEmployee[];
-  onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
@@ -24,7 +23,7 @@ enum SortField {
   FULL_NAME = "fullName",
 }
 
-const ManagerTable: React.FC<TableProps> = ({ managers, onEdit, onDelete }) => {
+const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
   const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
@@ -91,27 +90,38 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onEdit, onDelete }) => {
                 </Link>
               </TableCell>
               <TableCell>{manager.fullName}</TableCell>
-              <TableCell>
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => onEdit(manager.id)}
-                    sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    color="error"
-                    onClick={() => onDelete(manager.id)}
-                    sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              </TableCell>
+                  <TableCell>
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        component={Link}
+                        to={`/update-manager/${manager.id}`}
+                        sx={{
+                          minWidth: 90,
+                          height: 36,
+                          textAlign: "center",
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="error"
+                        onClick={() => onDelete(manager.id)}
+                        sx={{
+                          minWidth: 90,
+                          height: 36,
+                          textAlign: "center",
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
+                  </TableCell>
             </TableRow>
           ))}
         </TableBody>

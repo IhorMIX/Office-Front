@@ -44,3 +44,13 @@ export interface ApprovalUpdateRequest {
     id: number
     comment: string | null
 }
+
+export interface UpdateLeaveRequest {
+    id: number
+    absenceReasonId: number
+    approverId : number
+    startDate: string
+    endDate: string
+    status: LeaveRequestStatus
+    comment: string | null
+}

@@ -24,6 +24,11 @@ import EmployeeInfoPage from './pages/Info/EmployeeInfoPage';
 import ManagerInfoPage from './pages/Info/ManagerInfoPage';
 import ProjectInfoPage from './pages/Info/ProjectInfoPage';
 import LeaveRequestInfoPage from './pages/Info/LeaveRequestInfoPage';
+import UpdateAddEmployeePage from './pages/Update/UpdateAddEmployeePage';
+import UpdateEmployeePage from './pages/Update/UpdateEmployeePage';
+import UpdateManagerPage from './pages/Update/UpdateManagerPage';
+import UpdateProjectPage from './pages/Update/UpdateProjectPage';
+import UpdateLeaveRequestPage from './pages/Update/UpdateLeaveRequestPage';
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -42,6 +47,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/update-employee/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.ProjectManager]}>
+              <UpdateEmployeePage />
+            </ProtectedRoute>
+          }
+        />
+
           <Route
           path="/employee/:id"
           element={
@@ -51,11 +66,29 @@ function App() {
           }
         />
 
+        <Route
+          path="/update-manager/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
+              <UpdateManagerPage />
+            </ProtectedRoute>
+          }
+        />
+
           <Route
           path="/manager/:id"
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
               <ManagerInfoPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/update-project/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.ProjectManager]}>
+              <UpdateProjectPage />
             </ProtectedRoute>
           }
         />
@@ -81,6 +114,15 @@ function App() {
         />
 
         <Route
+          path="/project-add-employees/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.ProjectManager]}>
+              <UpdateAddEmployeePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/project/:id"
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.Employee, UserType.ProjectManager]}>
@@ -98,6 +140,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+                <Route
+          path="/update-leave-request/:id"
+          element={
+            <ProtectedRoute allowedRoles={[UserType.Employee]}>
+              <UpdateLeaveRequestPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/create-leave-request" element={<CreateLeaveRequestPage  />} />
         <Route path="/approval-requests" element={<ApprovalRequestsPage   />} />
 

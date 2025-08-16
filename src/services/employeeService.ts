@@ -45,17 +45,11 @@ export const Api = api.injectEndpoints({
       }),
     }),
     UpdateEmployee: builder.mutation({
-      query: (employee:UpdateEmployee) => ({
+      query: (employee: UpdateEmployee) => ({
         url: `/api/employee`,
-        body: employee,
         method: HttpMethodType.PUT,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
-          }
-          return response.json();
-        },
+        body: employee,
+        responseHandler: async () => null,
       }),
     }),
   }),
