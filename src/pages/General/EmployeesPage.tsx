@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllEmployeesQuery } from "../../services/employeeService";
+import { useDeactivateEmployeeMutation, useGetAllEmployeesQuery } from "../../services/employeeService";
 import { Employee } from "../../types/Employee";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -10,6 +10,7 @@ import EmployeeTable from "../../Components/Tables/EmployeeTable";
 
 const EmployeesPage: React.FC = () => {
   const { data: employeesList } = useGetAllEmployeesQuery(null);
+  const [deactivateEmployee] = useDeactivateEmployeeMutation();
   const role = useSelector((state: RootState) => state.auth.role);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
@@ -19,12 +20,13 @@ const EmployeesPage: React.FC = () => {
     }
   }, [employeesList]);
 
-  const handleEdit = (id: number) => {
-    console.log(`Edit employee with id: ${id}`);
-  };
-
-  const handleDelete = (id: number) => {
-    setEmployees((prev) => prev.filter((employee) => employee.id !== id));
+  const handleDelete = async (id: number) => {
+    try {
+      await deactivateEmployee(id).unwrap();
+    } catch (error: any) {
+      console.error('Failed to approve request:', error.data || error.message);
+    }
+    window.location.reload();
   };
 
   return (
@@ -70,7 +72,6 @@ const EmployeesPage: React.FC = () => {
 
         <EmployeeTable
           employees={employees}
-          onEdit={handleEdit}
           onDelete={handleDelete}
         />
       </Paper>

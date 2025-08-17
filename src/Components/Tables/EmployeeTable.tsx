@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 
 interface TableProps {
   employees: Employee[];
-  onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
@@ -32,7 +31,7 @@ enum SortField {
   HR_MANAGER = "hrManager.fullName",
 }
 
-const EmployeeTable: React.FC<TableProps> = ({ employees, onEdit, onDelete }) => {
+const EmployeeTable: React.FC<TableProps> = ({ employees, onDelete }) => {
   const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const role = useSelector((state: RootState) => state.auth.role);
