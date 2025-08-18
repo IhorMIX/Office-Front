@@ -141,14 +141,12 @@ function App() {
           }
         />
 
-        <Route
-          path="/update-leave-request/:id"
-          element={
-            <ProtectedRoute allowedRoles={[UserType.Employee]}>
-              <UpdateLeaveRequestPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/update-leave-request/:id" element={
+          <ProtectedRoute allowedRoles={[UserType.Admin, UserType.Employee]}>
+            <UpdateLeaveRequestPage />
+          </ProtectedRoute>
+        } />
+
 
         <Route path="/create-leave-request" element={<CreateLeaveRequestPage />} />
         <Route path="/approval-requests" element={<ApprovalRequestsPage />} />
