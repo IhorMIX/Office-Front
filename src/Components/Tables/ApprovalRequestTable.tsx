@@ -154,7 +154,7 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
               </TableCell>
 
               {approvalRequest.approvalRequestStatus === Status.New &&
-              role !== UserType.Employee ? (
+                role !== UserType.Employee ? (
                 <TableCell>
                   <TextField
                     variant="outlined"

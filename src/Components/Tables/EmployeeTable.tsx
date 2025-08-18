@@ -104,7 +104,7 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDelete }) => {
             <TableRow key={employee.id}>
               <TableCell>
                 <Link to={`/employee/${employee.id}`}>
-                    {employee.id}
+                  {employee.id}
                 </Link>
               </TableCell>
               <TableCell>{employee.fullName}</TableCell>
@@ -113,40 +113,40 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDelete }) => {
               <TableCell>{employee.status ? "Active" : "Inactive"}</TableCell>
               <TableCell>{employee.outOfOfficeBalance}</TableCell>
               <TableCell>{employee.hrManager?.fullName}</TableCell>
-                {canEditOrDelete(role) && (
-                  <TableCell>
-                    <Box sx={{ display: "flex", gap: 1 }}>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        component={Link}
-                        to={`/update-employee/${employee.id}`}
-                        sx={{
-                          minWidth: 90,
-                          height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap"
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="error"
-                        onClick={() => onDelete(employee.id)}
-                        sx={{
-                          minWidth: 90,
-                          height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap"
-                        }}
-                      >
-                        Deactivate
-                      </Button>
-                    </Box>
-                  </TableCell>
-                )}
+              {canEditOrDelete(role) && (
+                <TableCell>
+                  <Box sx={{ display: "flex", gap: 1 }}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      component={Link}
+                      to={`/update-employee/${employee.id}`}
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        textAlign: "center",
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      color="error"
+                      onClick={() => onDelete(employee.id)}
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        textAlign: "center",
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      Deactivate
+                    </Button>
+                  </Box>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

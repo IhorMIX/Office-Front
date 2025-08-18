@@ -1,6 +1,12 @@
 import { api } from "../api/api";
 import { HttpMethodType } from "../types/HttpInfo";
-import { ApprovalRequest, ApprovalUpdateRequest, CreateLeaveRequest, LeaveRequest, UpdateLeaveRequest } from "../types/Requests";
+import {
+  ApprovalRequest,
+  ApprovalUpdateRequest,
+  CreateLeaveRequest,
+  LeaveRequest,
+  UpdateLeaveRequest,
+} from "../types/Requests";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,7 +18,9 @@ export const Api = api.injectEndpoints({
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
@@ -25,34 +33,40 @@ export const Api = api.injectEndpoints({
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
       }),
     }),
     delLeaveRequest: builder.mutation({
-      query: (requestId:number) => ({
+      query: (requestId: number) => ({
         url: `/api/leaverequest/${requestId}`,
         method: HttpMethodType.DELETE,
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
       }),
     }),
     createLeaveRequest: builder.mutation({
-      query: (data:CreateLeaveRequest) => ({
+      query: (data: CreateLeaveRequest) => ({
         url: `/api/leaverequest`,
-        body:data,
+        body: data,
         method: HttpMethodType.POST,
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
@@ -66,7 +80,9 @@ export const Api = api.injectEndpoints({
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           const text = await response.text();
           return text ? JSON.parse(text) : null;
@@ -81,7 +97,9 @@ export const Api = api.injectEndpoints({
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
@@ -95,7 +113,9 @@ export const Api = api.injectEndpoints({
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
@@ -109,7 +129,9 @@ export const Api = api.injectEndpoints({
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
@@ -118,6 +140,13 @@ export const Api = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllLeaveRequestsQuery, useGetLeaveRequestQuery, useDelLeaveRequestMutation, useCreateLeaveRequestMutation, useUpdateLeaveRequestMutation,
-  useGetAllApprovalRequestQuery, useApproveRequestMutation, useRejectRequestMutation
+export const {
+  useGetAllLeaveRequestsQuery,
+  useGetLeaveRequestQuery,
+  useDelLeaveRequestMutation,
+  useCreateLeaveRequestMutation,
+  useUpdateLeaveRequestMutation,
+  useGetAllApprovalRequestQuery,
+  useApproveRequestMutation,
+  useRejectRequestMutation,
 } = Api;

@@ -1,6 +1,6 @@
 export interface IReduxAuthModel {
-    isAuth : boolean;
-    accessKey : string;
-    refreshToken : string;
-    role: string
+  isAuth: boolean;
+  accessKey: string;
+  refreshToken: string;
+  role: string;
 }

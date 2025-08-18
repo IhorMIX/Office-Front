@@ -59,7 +59,7 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
-            
+
             <FormControl fullWidth>
               <InputLabel id="reason-label" shrink>Absence Reason</InputLabel>
               <Select
@@ -84,7 +84,7 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
                 onChange={(e) => setValue("approverId", Number(e.target.value))}
                 label="Approver"
               >
-{admin && (
+                {admin && (
                   <MenuItem key={admin.id} value={admin.id}>
                     {admin.fullName}
                   </MenuItem>
@@ -106,7 +106,7 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
               fullWidth
               slotProps={{ inputLabel: { shrink: true } }}
             />
-            
+
             <FormControl fullWidth>
               <InputLabel id="status-label" shrink>Status</InputLabel>
               <Select

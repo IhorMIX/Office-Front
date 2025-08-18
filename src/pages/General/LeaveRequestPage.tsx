@@ -27,9 +27,9 @@ const LeaveRequestsPage: React.FC = () => {
   }, [leaveRequestList]);
 
   const handleDelete = async (id: number) => {
-      setLeaveRequests((prev) => prev.filter((req) => req.id !== id));
+    setLeaveRequests((prev) => prev.filter((req) => req.id !== id));
   };
-  
+
   return (
     <Container maxWidth="lg">
       <Paper

@@ -4,54 +4,62 @@ import { HttpMethodType } from "../types/HttpInfo";
 
 export const Api = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAllEmployees: builder.query<Employee[],null>({
-        query: () => ({
-          url: "/api/employee/get-all-employees",
-          method: HttpMethodType.GET,
-          responseHandler: async (response) => {
-              if (!response.ok) {
-                  const errorText = await response.text();
-                  throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
-              }
-              return response.json();
-          },
-        }),
+    getAllEmployees: builder.query<Employee[], null>({
+      query: () => ({
+        url: "/api/employee/get-all-employees",
+        method: HttpMethodType.GET,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
+          }
+          return response.json();
+        },
+      }),
     }),
-    getEmployee: builder.query<Employee,number>({
+    getEmployee: builder.query<Employee, number>({
       query: (employeeId) => ({
         url: `/api/employee/${employeeId}`,
         method: HttpMethodType.GET,
         responseHandler: async (response) => {
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
-            }
-            return response.json();
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
+          }
+          return response.json();
         },
       }),
-  }),
+    }),
     CreateEmployee: builder.mutation({
-      query: (employee:CreateEmployee) => ({
+      query: (employee: CreateEmployee) => ({
         url: `/api/employee`,
         body: employee,
         method: HttpMethodType.POST,
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
       }),
     }),
     deactivateEmployee: builder.mutation({
-      query: (requestId:number) => ({
+      query: (requestId: number) => ({
         url: `/api/employee/${requestId}`,
         method: HttpMethodType.PUT,
         responseHandler: async (response) => {
           if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
           }
           return response.json();
         },
@@ -66,7 +74,12 @@ export const Api = api.injectEndpoints({
       }),
     }),
   }),
-  
 });
 
-export const { useGetAllEmployeesQuery, useGetEmployeeQuery, useCreateEmployeeMutation,useDeactivateEmployeeMutation, useUpdateEmployeeMutation} = Api;
+export const {
+  useGetAllEmployeesQuery,
+  useGetEmployeeQuery,
+  useCreateEmployeeMutation,
+  useDeactivateEmployeeMutation,
+  useUpdateEmployeeMutation,
+} = Api;

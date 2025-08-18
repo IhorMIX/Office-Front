@@ -2,45 +2,45 @@ import { Employee, ProjectManager } from "./Employee";
 import { Selection } from "./Selection";
 
 export interface Project {
-    id: number,
-    projectManager: ProjectManager,
-    projectType: Selection,
-    startDate: Date,
-    endDate: Date,
-    comment: string,
-    status: boolean
+  id: number;
+  projectManager: ProjectManager;
+  projectType: Selection;
+  startDate: Date;
+  endDate: Date;
+  comment: string;
+  status: boolean;
 }
 
 export interface CreateProject {
-    projectTypeId: number
-    startDate: string
-    endDate: string
-    comment: string
-    status: boolean
+  projectTypeId: number;
+  startDate: string;
+  endDate: string;
+  comment: string;
+  status: boolean;
 }
 
 export interface ProjectInfo {
-    id: number
-    projectManager: ProjectManager
-    projectType: Selection
-    startDate: Date
-    endDate: Date
-    comment: string
-    status: boolean
-    employees: Employee[]
+  id: number;
+  projectManager: ProjectManager;
+  projectType: Selection;
+  startDate: Date;
+  endDate: Date;
+  comment: string;
+  status: boolean;
+  employees: Employee[];
 }
 
-export interface AddEmployees{
-    projectId: number
-    employeesIds: number[]
+export interface AddEmployees {
+  projectId: number;
+  employeesIds: number[];
 }
 
 export interface UpdateProject {
-    id: number
-    projectManagerId: number
-    projectTypeId: number
-    startDate: string
-    endDate: string
-    comment: string
-    status: boolean
+  id: number;
+  projectManagerId: number;
+  projectTypeId: number;
+  startDate: string;
+  endDate: string;
+  comment: string;
+  status: boolean;
 }

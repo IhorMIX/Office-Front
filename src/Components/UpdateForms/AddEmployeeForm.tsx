@@ -81,19 +81,19 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
-        Edit Employees for Project:
-        <Link
+          Edit Employees for Project:
+          <Link
             to={`/projects/${project?.id}`}
             style={{
-            color: "#000",
-            textDecoration: "none",
-            marginLeft: "6px",
+              color: "#000",
+              textDecoration: "none",
+              marginLeft: "6px",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-        >
+          >
             {project?.projectType.name}
-        </Link>
+          </Link>
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>

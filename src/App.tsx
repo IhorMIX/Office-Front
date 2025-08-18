@@ -57,7 +57,7 @@ function App() {
           }
         />
 
-          <Route
+        <Route
           path="/employee/:id"
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.ProjectManager]}>
@@ -75,7 +75,7 @@ function App() {
           }
         />
 
-          <Route
+        <Route
           path="/manager/:id"
           element={
             <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
@@ -141,7 +141,7 @@ function App() {
           }
         />
 
-                <Route
+        <Route
           path="/update-leave-request/:id"
           element={
             <ProtectedRoute allowedRoles={[UserType.Employee]}>
@@ -150,8 +150,8 @@ function App() {
           }
         />
 
-        <Route path="/create-leave-request" element={<CreateLeaveRequestPage  />} />
-        <Route path="/approval-requests" element={<ApprovalRequestsPage   />} />
+        <Route path="/create-leave-request" element={<CreateLeaveRequestPage />} />
+        <Route path="/approval-requests" element={<ApprovalRequestsPage />} />
 
         <Route
           path="/create-absenceReason"
