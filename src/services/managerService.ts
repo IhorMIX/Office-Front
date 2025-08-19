@@ -72,18 +72,9 @@ export const Api = api.injectEndpoints({
       }),
     }),
     delManager: builder.mutation({
-      query: (requestId: number) => ({
-        url: `/api/manager/${requestId}`,
+      query: (managerId: number) => ({
+        url: `/api/manager/${managerId}`,
         method: HttpMethodType.DELETE,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(
-              `HTTP error! Status: ${response.status}, ${errorText}`
-            );
-          }
-          return response.json();
-        },
       }),
     }),
     createProjectManager: builder.mutation({

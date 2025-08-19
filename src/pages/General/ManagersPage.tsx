@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllManagersQuery } from "../../services/managerService";
+import { useDelManagerMutation, useGetAllManagersQuery } from "../../services/managerService";
 import { BaseManager } from "../../types/Employee";
 import ManagerTable from "../../Components/Tables/ManagerTable";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const ManagersPage: React.FC = () => {
   const { data: managersList } = useGetAllManagersQuery(null);
   const [managers, setManagers] = useState<BaseManager[]>([]);
   const role = useSelector((state: RootState) => state.auth.role);
+  const [deleteProject] = useDelManagerMutation();
 
   useEffect(() => {
     if (managersList) {
@@ -25,12 +26,14 @@ const ManagersPage: React.FC = () => {
     }
   }, [managersList]);
 
-  const handleEdit = (id: number) => {
-    console.log(`Edit manager with id: ${id}`);
-  };
-
-  const handleDelete = (id: number) => {
-    setManagers((prev) => prev.filter((manager) => manager.id !== id));
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteProject(id).unwrap();
+      setManagers(managers.filter((manager) => manager.id !== id));
+      console.log(`Manager deleted successfully`);
+    } catch (error: any) {
+      console.error('Delete failed:', error.data || error.message);
+    }
   };
 
   return (
