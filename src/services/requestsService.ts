@@ -45,15 +45,6 @@ export const Api = api.injectEndpoints({
       query: (requestId: number) => ({
         url: `/api/leaverequest/${requestId}`,
         method: HttpMethodType.DELETE,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(
-              `HTTP error! Status: ${response.status}, ${errorText}`
-            );
-          }
-          return response.json();
-        },
       }),
     }),
     createLeaveRequest: builder.mutation({
