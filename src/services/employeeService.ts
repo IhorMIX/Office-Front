@@ -50,19 +50,16 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
-    deactivateEmployee: builder.mutation({
-      query: (requestId: number) => ({
+    deleteEmployee: builder.mutation({
+      query: (employeeId: number) => ({
+        url: `/api/employee/${employeeId}`,
+        method: HttpMethodType.DELETE,
+      }),
+    }),
+    deactivateEmployee: builder.mutation<void, number>({
+      query: (requestId) => ({
         url: `/api/employee/${requestId}`,
         method: HttpMethodType.PUT,
-        responseHandler: async (response) => {
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(
-              `HTTP error! Status: ${response.status}, ${errorText}`
-            );
-          }
-          return response.json();
-        },
       }),
     }),
     UpdateEmployee: builder.mutation({
@@ -80,6 +77,7 @@ export const {
   useGetAllEmployeesQuery,
   useGetEmployeeQuery,
   useCreateEmployeeMutation,
+  useDeleteEmployeeMutation,
   useDeactivateEmployeeMutation,
   useUpdateEmployeeMutation,
 } = Api;

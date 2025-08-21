@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 
 interface TableProps {
   employees: Employee[];
+  onDeactivate: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
@@ -31,7 +32,7 @@ enum SortField {
   HR_MANAGER = "hrManager.fullName",
 }
 
-const EmployeeTable: React.FC<TableProps> = ({ employees, onDelete }) => {
+const EmployeeTable: React.FC<TableProps> = ({ employees,onDeactivate, onDelete }) => {
   const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const role = useSelector((state: RootState) => state.auth.role);
@@ -176,7 +177,7 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDelete }) => {
                       variant="outlined"
                       size="small"
                       color="error"
-                      onClick={() => onDelete(employee.id)}
+                      onClick={() => onDeactivate(employee.id)}
                       sx={{
                         minWidth: 90,
                         height: 36,
@@ -185,6 +186,20 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDelete }) => {
                       }}
                     >
                       Deactivate
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      color="error"
+                      onClick={() => onDelete(employee.id)}
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        textAlign: "center",
+                        whiteSpace: "nowrap"
+                      }}
+                    >
+                      Delete
                     </Button>
                   </Box>
                 </TableCell>
