@@ -7,7 +7,7 @@ const ProjectInfoPage: React.FC = () => {
 
     return (
         <>
-            <ProjectDetails id={id!}  />
+            <ProjectDetails id={id!} />
         </>
     );
 };

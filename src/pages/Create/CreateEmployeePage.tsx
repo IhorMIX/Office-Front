@@ -5,7 +5,7 @@ const CreateEmployeePage = () => {
 
     return (
         <div>
-            <CreateEmployeeForm/>
+            <CreateEmployeeForm />
         </div>
     );
 };

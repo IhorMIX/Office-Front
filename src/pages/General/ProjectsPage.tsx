@@ -10,7 +10,7 @@ import { useGetAllProjetsQuery } from "../../services/projectService";
 
 const ProjectsPage: React.FC = () => {
 
-  const {data: projectsList } = useGetAllProjetsQuery(null);
+  const { data: projectsList } = useGetAllProjetsQuery(null);
   const [projects, setProjects] = useState<Project[]>([])
   const role = useSelector((state: RootState) => state.auth.role);
 
@@ -27,7 +27,7 @@ const ProjectsPage: React.FC = () => {
   const handleDelete = (id: number) => {
     setProjects((prev) => prev.filter((project) => project.id !== id));
   };
-  
+
   return (
     <Container maxWidth="lg">
       <Paper

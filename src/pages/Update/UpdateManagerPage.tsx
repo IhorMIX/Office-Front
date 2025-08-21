@@ -7,7 +7,7 @@ const UpdateManagerPage: React.FC = () => {
 
     return (
         <>
-            <UpdateManagerForm id={id!}  />
+            <UpdateManagerForm id={id!} />
         </>
     );
 };

@@ -3,11 +3,11 @@ import UpdateLeaveRequestForm from "../../Components/UpdateForms/UpdateLeaveRequ
 import React from "react";
 
 const UpdateLeaveRequestPage: React.FC = () => {
-    const { id } = useParams<string>(); 
+    const { id } = useParams<string>();
 
     return (
         <>
-            <UpdateLeaveRequestForm id={id!}  />
+            <UpdateLeaveRequestForm id={id!} />
         </>
     );
 };

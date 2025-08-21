@@ -165,7 +165,7 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
             <TableRow key={leaveRequest.id}>
               <TableCell>
                 <Link to={`/leaverequest/${leaveRequest.id}`}>
-                    {leaveRequest.id}
+                  {leaveRequest.id}
                 </Link>
               </TableCell>
               <TableCell>{leaveRequest.employee.fullName}</TableCell>

@@ -3,11 +3,11 @@ import UpdateEmployeeForm from "../../Components/UpdateForms/UpdateEmployeeForm"
 import React from "react";
 
 const UpdateEmployeePage: React.FC = () => {
-    const { id } = useParams<string>(); 
+    const { id } = useParams<string>();
 
     return (
         <>
-            <UpdateEmployeeForm id={id!}  />
+            <UpdateEmployeeForm id={id!} />
         </>
     );
 };
