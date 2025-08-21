@@ -6,13 +6,15 @@ import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { UserType } from "../../types/User";
-import { useGetAllProjetsQuery } from "../../services/projectService";
+import { useGetAllProjetsQuery, useDelProjectMutation, useDeactivateProjectMutation } from "../../services/projectService";
 
 const ProjectsPage: React.FC = () => {
-
   const { data: projectsList } = useGetAllProjetsQuery(null);
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<Project[]>([]);
   const role = useSelector((state: RootState) => state.auth.role);
+
+  const [delProject] = useDelProjectMutation();
+  const [deactivateProject] = useDeactivateProjectMutation();
 
   useEffect(() => {
     if (projectsList) {
@@ -20,12 +22,26 @@ const ProjectsPage: React.FC = () => {
     }
   }, [projectsList]);
 
-  const handleEdit = (id: number) => {
-    console.log(`Edit project with id: ${id}`);
+  const handleDelete = async (id: number) => {
+    try {
+      await delProject(id).unwrap();
+      setProjects((prev) => prev.filter((p) => p.id !== id));
+      console.log(`Project deleted successfully`);
+    } catch (err) {
+      console.error("Failed to delete project:", err);
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setProjects((prev) => prev.filter((project) => project.id !== id));
+  const handleDeactivate = async (id: number) => {
+    try {
+      await deactivateProject(id).unwrap();
+      setProjects((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, status: false } : p))
+      );
+      console.log(`Project deactivated successfully`);
+    } catch (err) {
+      console.error("Failed to deactivate project:", err);
+    }
   };
 
   return (
@@ -72,6 +88,7 @@ const ProjectsPage: React.FC = () => {
         <ProjectTable
           projects={projects}
           onDelete={handleDelete}
+          onDeactivate={handleDeactivate}
         />
       </Paper>
     </Container>

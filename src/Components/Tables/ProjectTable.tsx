@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 interface TableProps {
     projects: Project[];
     onDelete: (id: number) => void;
+    onDeactivate: (id: number) => void;
 }
 
 enum SortField {
@@ -20,7 +21,7 @@ enum SortField {
     STATUS = 'status',
 }
 
-const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
+const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }) => {
     const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
     const role = useSelector((state: RootState) => state.auth.role);
@@ -143,15 +144,27 @@ const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
                                         >
                                             Edit
                                         </Button>
-                                        <Button
-                                            variant="outlined"
-                                            size="small"
-                                            color="error"
-                                            sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
-                                            onClick={() => onDelete(project.id)}
-                                        >
-                                            Deactivate
-                                        </Button>
+                                        {project.status ? (
+                                            <Button
+                                                variant="outlined"
+                                                size="small"
+                                                color="error"
+                                                sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
+                                                onClick={() => onDeactivate(project.id)}
+                                            >
+                                                Deactivate
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="outlined"
+                                                size="small"
+                                                color="error"
+                                                sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
+                                                onClick={() => onDelete(project.id)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        )}
                                         <Button
                                             variant="outlined"
                                             size="small"

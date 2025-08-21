@@ -40,6 +40,18 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
+    delProject: builder.mutation({
+      query: (projectId: number) => ({
+        url: `/api/project/${projectId}`,
+        method: HttpMethodType.DELETE,
+      }),
+    }),
+    deactivateProject: builder.mutation<void, number>({
+      query: (projectId) => ({
+        url: `/api/project/${projectId}`,
+        method: HttpMethodType.PUT,
+      }),
+    }),
     CreateProject: builder.mutation({
       query: (project: CreateProject) => ({
         url: `/api/project/create-project`,
@@ -95,6 +107,8 @@ export const Api = api.injectEndpoints({
 export const {
   useGetAllProjetsQuery,
   useGetProjectQuery,
+  useDelProjectMutation,
+  useDeactivateProjectMutation,
   useCreateProjectMutation,
   useAddEmployeesMutation,
   useUpdateProjectMutation,
