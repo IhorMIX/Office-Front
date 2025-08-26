@@ -8,7 +8,6 @@ import Footer from "./Footer";
 import styles from "../scss/layout.module.scss";
 import { UserType } from "../types/User";
 
-// Универсальный контент с хедером, футером и контейнером
 const MainContent = () => (
   <>
     <Header />
@@ -23,23 +22,11 @@ const MainContent = () => (
   </>
 );
 
-// Лейаут для авторизованных пользователей
 export const AuthLayout: React.FC = () => {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
   if (!isAuth) {
     return <Navigate to="/auth" replace />;
-  }
-
-  return <MainContent />;
-};
-
-// Лейаут для НЕавторизованных (напр. страница логина)
-export const Layout: React.FC = () => {
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-
-  if (isAuth) {
-    return <Navigate to="/" replace />;
   }
 
   return <MainContent />;
@@ -64,6 +51,5 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, ch
 
   return <>{children}</>;
 };
-
 
 export default ProtectedRoute;
