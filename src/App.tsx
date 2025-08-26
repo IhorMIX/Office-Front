@@ -51,7 +51,7 @@ function App() {
         <Route
           path="/update-employee/:id"
           element={
-            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager, UserType.ProjectManager]}>
+            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
               <UpdateEmployeePage />
             </ProtectedRoute>
           }
@@ -69,7 +69,7 @@ function App() {
         <Route
           path="/update-manager/:id"
           element={
-            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
+            <ProtectedRoute allowedRoles={[UserType.Admin]}>
               <UpdateManagerPage />
             </ProtectedRoute>
           }
@@ -97,7 +97,7 @@ function App() {
         <Route
           path="/create-manager"
           element={
-            <ProtectedRoute allowedRoles={[UserType.Admin, UserType.HrManager]}>
+            <ProtectedRoute allowedRoles={[UserType.Admin]}>
               <CreateManagerPage />
             </ProtectedRoute>
           }
@@ -148,8 +148,17 @@ function App() {
         } />
 
 
-        <Route path="/create-leave-request" element={<CreateLeaveRequestPage />} />
-        <Route path="/approval-requests" element={<ApprovalRequestsPage />} />
+        <Route path="/create-leave-request" element={
+          <ProtectedRoute allowedRoles={[UserType.Admin, UserType.Employee]}>
+            <CreateLeaveRequestPage />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/approval-requests" element={
+          <ProtectedRoute allowedRoles={[UserType.Admin, UserType.Employee]}>
+            <ApprovalRequestsPage />
+          </ProtectedRoute>
+        } />
 
         <Route
           path="/create-absenceReason"
