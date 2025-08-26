@@ -32,7 +32,7 @@ enum SortField {
   HR_MANAGER = "hrManager.fullName",
 }
 
-const EmployeeTable: React.FC<TableProps> = ({ employees,onDeactivate, onDelete }) => {
+const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete }) => {
   const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const role = useSelector((state: RootState) => state.auth.role);
@@ -173,37 +173,42 @@ const EmployeeTable: React.FC<TableProps> = ({ employees,onDeactivate, onDelete 
                     >
                       Edit
                     </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      color="error"
-                      onClick={() => onDeactivate(employee.id)}
-                      sx={{
-                        minWidth: 90,
-                        height: 36,
-                        textAlign: "center",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      Deactivate
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      color="error"
-                      onClick={() => onDelete(employee.id)}
-                      sx={{
-                        minWidth: 90,
-                        height: 36,
-                        textAlign: "center",
-                        whiteSpace: "nowrap"
-                      }}
-                    >
-                      Delete
-                    </Button>
+
+                    {employee.status ? (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="error"
+                        onClick={() => onDeactivate(employee.id)}
+                        sx={{
+                          minWidth: 90,
+                          height: 36,
+                          textAlign: "center",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Deactivate
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        color="error"
+                        onClick={() => onDelete(employee.id)}
+                        sx={{
+                          minWidth: 90,
+                          height: 36,
+                          textAlign: "center",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    )}
                   </Box>
                 </TableCell>
               )}
+
             </TableRow>
           ))}
         </TableBody>
