@@ -140,6 +140,21 @@ export const Api = api.injectEndpoints({
         },
       }),
     }),
+    getApprovers: builder.query<BaseManager[], null>({
+      query: () => ({
+        url: "/api/manager/approvers",
+        method: HttpMethodType.GET,
+        responseHandler: async (response) => {
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, ${errorText}`
+            );
+          }
+          return response.json();
+        },
+      }),
+    }),
   }),
 });
 
@@ -153,4 +168,5 @@ export const {
   useCreateProjectManagerMutation,
   useUpdateManagerMutation,
   useGetAdminQuery,
+  useGetApproversQuery,
 } = Api;
