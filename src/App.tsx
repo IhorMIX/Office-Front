@@ -10,6 +10,7 @@ import ProjectsPage from "./pages/General/ProjectsPage";
 import LeaveRequestPage from "./pages/General/LeaveRequestPage";
 import React from "react";
 import { protectedRoutes} from "./routes/routesConfig";
+import ApprovalRequestsPage from "./pages/General/ApprovalRequestPage";
 
 function App() {
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -22,6 +23,7 @@ function App() {
         <Route path="/managers" element={<ManagersPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/leave-requests" element={<LeaveRequestPage />} />
+        <Route path="/approval-requests" element={<ApprovalRequestsPage />} />
 
         {protectedRoutes.map(({ path, element, roles }) => (
           <Route
