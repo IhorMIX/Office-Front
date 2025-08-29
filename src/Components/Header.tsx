@@ -8,7 +8,7 @@ import { useActions } from "../Hooks/StoreHook";
 const Header = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuth);
   const { userLogout } = useActions();
-  
+
   const handleLogout = async () => {
     try {
       console.log("Logout successful");
@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header>
       <div className={style.headerContent}>
-        {isAuthenticated ? <NavigateButtons/> : null}
+        {isAuthenticated ? <NavigateButtons /> : null}
         {isAuthenticated && (
           <button className={style.logoutButton} onClick={handleLogout}>
             Logout

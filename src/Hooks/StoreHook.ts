@@ -15,5 +15,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const useActions = () => {
   const dispatch = useDispatch();
-  return useMemo(() => bindActionCreators(rootActions, dispatch) as typeof rootActions, [dispatch]);
+  return useMemo(
+    () => bindActionCreators(rootActions, dispatch) as typeof rootActions,
+    [dispatch]
+  );
 };

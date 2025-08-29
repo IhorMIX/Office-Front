@@ -3,11 +3,11 @@ import ManagerDetails from "../../Components/Info/ManagerInfo";
 import React from "react";
 
 const ManagerInfoPage: React.FC = () => {
-    const { id } = useParams<string>(); 
+    const { id } = useParams<string>();
 
     return (
         <>
-            <ManagerDetails id={id!}  />
+            <ManagerDetails id={id!} />
         </>
     );
 };

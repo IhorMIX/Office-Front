@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllEmployeesQuery } from "../../services/employeeService";
+import { 
+  useDeactivateEmployeeMutation, 
+  useDeleteEmployeeMutation, 
+  useGetAllEmployeesQuery 
+} from "../../services/employeeService";
 import { Employee } from "../../types/Employee";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -10,6 +14,8 @@ import EmployeeTable from "../../Components/Tables/EmployeeTable";
 
 const EmployeesPage: React.FC = () => {
   const { data: employeesList } = useGetAllEmployeesQuery(null);
+  const [deactivateEmployee] = useDeactivateEmployeeMutation();
+  const [deleteEmployee] = useDeleteEmployeeMutation();
   const role = useSelector((state: RootState) => state.auth.role);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
@@ -19,12 +25,25 @@ const EmployeesPage: React.FC = () => {
     }
   }, [employeesList]);
 
-  const handleEdit = (id: number) => {
-    console.log(`Edit employee with id: ${id}`);
+  const handleDeactivate = async (id: number) => {
+    try {
+      await deactivateEmployee(id).unwrap();
+      setEmployees((prev) =>
+        prev.map((e) => (e.id === id ? { ...e, status: false } : e))
+      );
+      console.log(`Employee deactivated successfully`);
+    } catch (error: any) {
+      console.error("Failed to deactivate employee:", error.data || error.message);
+    }
   };
 
-  const handleDelete = (id: number) => {
-    setEmployees((prev) => prev.filter((employee) => employee.id !== id));
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteEmployee(id).unwrap();
+      setEmployees((prev) => prev.filter((e) => e.id !== id));
+    } catch (error: any) {
+      console.error("Failed to delete employee:", error.data || error.message);
+    }
   };
 
   return (
@@ -70,7 +89,7 @@ const EmployeesPage: React.FC = () => {
 
         <EmployeeTable
           employees={employees}
-          onEdit={handleEdit}
+          onDeactivate={handleDeactivate}
           onDelete={handleDelete}
         />
       </Paper>

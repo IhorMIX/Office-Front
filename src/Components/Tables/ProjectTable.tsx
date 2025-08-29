@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 interface TableProps {
     projects: Project[];
     onDelete: (id: number) => void;
+    onDeactivate: (id: number) => void;
 }
 
 enum SortField {
@@ -20,7 +21,7 @@ enum SortField {
     STATUS = 'status',
 }
 
-const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
+const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }) => {
     const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
     const role = useSelector((state: RootState) => state.auth.role);
@@ -135,41 +136,53 @@ const EmployeeTable: React.FC<TableProps> = ({ projects, onDelete }) => {
                                 <TableCell>
                                     <Box sx={{ display: "flex", gap: 1 }}>
                                         <Button
-                                        variant="outlined"
-                                        size="small"
-                                        sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
-                                        component={Link}
-                                        to={`/update-project/${project.id}`}
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
+                                            component={Link}
+                                            to={`/update-project/${project.id}`}
                                         >
-                                        Edit
+                                            Edit
                                         </Button>
+                                        {project.status ? (
+                                            <Button
+                                                variant="outlined"
+                                                size="small"
+                                                color="error"
+                                                sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
+                                                onClick={() => onDeactivate(project.id)}
+                                            >
+                                                Deactivate
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="outlined"
+                                                size="small"
+                                                color="error"
+                                                sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
+                                                onClick={() => onDelete(project.id)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        )}
                                         <Button
-                                        variant="outlined"
-                                        size="small"
-                                        color="error"
-                                        sx={{ minWidth: 90, textAlign: "center", whiteSpace: "nowrap" }}
-                                        onClick={() => onDelete(project.id)}
+                                            variant="outlined"
+                                            size="small"
+                                            color="success"
+                                            sx={{
+                                                minWidth: 90,
+                                                textAlign: "center",
+                                                whiteSpace: "normal",
+                                                lineHeight: 1.2,
+                                                padding: "4px 8px"
+                                            }}
+                                            component={Link}
+                                            to={`/project-add-employees/${project.id}`}
                                         >
-                                        Deactivate
-                                        </Button>
-                                        <Button
-                                        variant="outlined"
-                                        size="small"
-                                        color="success"
-                                        sx={{
-                                            minWidth: 90,
-                                            textAlign: "center",
-                                            whiteSpace: "normal",
-                                            lineHeight: 1.2,
-                                            padding: "4px 8px"
-                                        }}
-                                        component={Link}
-                                        to={`/project-add-employees/${project.id}`}
-                                        >
-                                        Edit employees
+                                            Edit employees
                                         </Button>
                                     </Box>
-                                    </TableCell>
+                                </TableCell>
                             )}
                         </TableRow>
                     ))}

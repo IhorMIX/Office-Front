@@ -7,18 +7,18 @@
 header {
     display: flex;
     align-items: center;
-    background-color: rgb(0, 80, 184); /* Darker background color */
+    background-color: rgb(0, 80, 184);
     height: 100px;
 
     .headerContent {
         height: 100%;
         display: flex;
         max-width: 1200px;
-        width: 100%; /* Changed to 100% to fill the header */
+        width: 100%;
         justify-content: space-between;
         margin: 0 auto;
         color: white;
-        padding: 0 20px; /* Added padding for spacing */
+        padding: 0 20px;
     }
 
     .logoutButton {
@@ -32,7 +32,7 @@ header {
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
+            background-color: rgba(255, 255, 255, 0.1);
         }
     }
 }

@@ -1,20 +1,23 @@
 import { IsNullOrEmpty } from "./StringHelper";
 
 export const getValue = (key: string): string => {
-    const value = localStorage.getItem(key);
+  const value = localStorage.getItem(key);
 
-    return IsNullOrEmpty(value) ? '' : value!;
+  return IsNullOrEmpty(value) ? "" : value!;
 };
-export const setValue = (key: string, value: string, isThrowIfEmpty: Boolean = false): void => {
+export const setValue = (
+  key: string,
+  value: string,
+  isThrowIfEmpty: Boolean = false
+): void => {
+  if (IsNullOrEmpty(value) && isThrowIfEmpty) {
+    throw new Error("value must not be empty");
+  }
 
-    if (IsNullOrEmpty(value) && isThrowIfEmpty) {
-        throw new Error("value must not be empty");
-    }
+  if (IsNullOrEmpty(key) && isThrowIfEmpty) {
+    throw new Error("key must not be empty");
+  }
 
-    if (IsNullOrEmpty(key) && isThrowIfEmpty) {
-        throw new Error("key must not be empty");
-    }
-
-    localStorage.setItem(key, value)
+  localStorage.setItem(key, value);
 };
-export const removeItem = (key : string): void => localStorage.removeItem(key);
+export const removeItem = (key: string): void => localStorage.removeItem(key);

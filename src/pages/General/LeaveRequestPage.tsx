@@ -27,9 +27,16 @@ const LeaveRequestsPage: React.FC = () => {
   }, [leaveRequestList]);
 
   const handleDelete = async (id: number) => {
+    try {
+      await deleteLeaveRequest(id).unwrap();
       setLeaveRequests((prev) => prev.filter((req) => req.id !== id));
+      console.log(`Leave Request deleted successfully`);
+    } catch (error: any) {
+      console.error("Delete failed:", error?.data || error?.message);
+    }
   };
-  
+
+
   return (
     <Container maxWidth="lg">
       <Paper

@@ -15,12 +15,18 @@ import {
 import { useGetAbsenceReasonQuery } from "../../services/selectionService";
 import { useCreateLeaveRequestMutation } from "../../services/requestsService";
 import { CreateLeaveRequest } from "../../types/Requests";
-import { useGetAdminQuery } from "../../services/managerService";
+import { useGetAdminQuery, useGetApproversQuery } from "../../services/managerService";
 
 const CreateLeaveRequestForm: React.FC = () => {
-  const { data: admin, isLoading: loadingApprovers } = useGetAdminQuery(null);
+  const { data: approvers, isLoading: loadingApprovers } = useGetApproversQuery(null);
+  const { data: admin, isLoading: loadingAdmin } = useGetAdminQuery(null);
   const { data: reasons, isLoading: loadingReasons } = useGetAbsenceReasonQuery(null);
   const [createLeaveRequest] = useCreateLeaveRequestMutation();
+
+  const combinedApprovers = React.useMemo(() => {
+    if (!approvers) return admin ? [admin] : [];
+    return admin ? [...approvers, admin] : approvers;
+  }, [approvers, admin]);
 
   const {
     handleSubmit,
@@ -38,7 +44,7 @@ const CreateLeaveRequestForm: React.FC = () => {
     }
   };
 
-  if (loadingApprovers || loadingReasons) {
+  if (loadingApprovers || loadingReasons || loadingAdmin) {
     return <Typography>Loading...</Typography>;
   }
 
@@ -91,11 +97,11 @@ const CreateLeaveRequestForm: React.FC = () => {
                   setValue("approverId", Number(e.target.value));
                 }}
               >
-                {admin && (
-                  <MenuItem key={admin.id} value={admin.id}>
-                    {admin.fullName}
+                {combinedApprovers.map((approver) => (
+                  <MenuItem key={approver.id} value={approver.id}>
+                    {approver.fullName} - {approver.role}
                   </MenuItem>
-                )}
+                ))}
               </Select>
               {errors.approverId && (
                 <Typography variant="caption" color="error">

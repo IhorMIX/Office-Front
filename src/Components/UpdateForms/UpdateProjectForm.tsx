@@ -59,37 +59,37 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
             <FormControl fullWidth variant="outlined">
-            <InputLabel id="project-manager-label" shrink>
+              <InputLabel id="project-manager-label" shrink>
                 Project Manager
-            </InputLabel>
-            <Select
+              </InputLabel>
+              <Select
                 labelId="project-manager-label"
                 value={selectedManagerId || ""}
                 onChange={(e) => setValue("projectManagerId", Number(e.target.value))}
                 label="Project Manager"
-            >
+              >
                 {projectManagers?.map((manager) => (
-                <MenuItem key={manager.id} value={manager.id}>
+                  <MenuItem key={manager.id} value={manager.id}>
                     {manager.fullName}
-                </MenuItem>
+                  </MenuItem>
                 ))}
-            </Select>
+              </Select>
             </FormControl>
 
             <FormControl fullWidth variant="outlined">
-            <InputLabel id="project-type-label" shrink>Project Type</InputLabel>
-            <Select
+              <InputLabel id="project-type-label" shrink>Project Type</InputLabel>
+              <Select
                 labelId="project-type-label"
                 value={selectedTypeId || ""}
                 onChange={(e) => setValue("projectTypeId", Number(e.target.value))}
                 label="Project Type"
-            >
+              >
                 {types?.map((type) => (
-                <MenuItem key={type.id} value={type.id}>
+                  <MenuItem key={type.id} value={type.id}>
                     {type.name}
-                </MenuItem>
+                  </MenuItem>
                 ))}
-            </Select>
+              </Select>
             </FormControl>
 
             <TextField
@@ -114,16 +114,16 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
             />
 
             <FormControl fullWidth variant="outlined">
-            <InputLabel id="status-label" shrink>Status</InputLabel>
-            <Select
+              <InputLabel id="status-label" shrink>Status</InputLabel>
+              <Select
                 labelId="status-label"
                 value={selectedStatus ? "true" : "false"}
                 onChange={(e) => setValue("status", e.target.value === "true")}
                 label="Status"
-            >
+              >
                 <MenuItem value="true">Active</MenuItem>
                 <MenuItem value="false">Inactive</MenuItem>
-            </Select>
+              </Select>
             </FormControl>
 
             <Button type="submit" size="large" variant="contained" fullWidth>

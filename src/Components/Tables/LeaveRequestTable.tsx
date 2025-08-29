@@ -165,7 +165,7 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
             <TableRow key={leaveRequest.id}>
               <TableCell>
                 <Link to={`/leaverequest/${leaveRequest.id}`}>
-                    {leaveRequest.id}
+                  {leaveRequest.id}
                 </Link>
               </TableCell>
               <TableCell>{leaveRequest.employee.fullName}</TableCell>
@@ -181,9 +181,18 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
                     <Button
                       variant="outlined"
                       size="small"
-                      sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        textAlign: "center",
+                        whiteSpace: "nowrap",
+                      }}
                       component={Link}
                       to={`/update-leave-request/${leaveRequest.id}`}
+                      disabled={
+                        leaveRequest.approvalRequest?.approvalRequestStatus === "Rejected" ||
+                        leaveRequest.approvalRequest?.approvalRequestStatus === "Approved"
+                      }
                     >
                       Edit
                     </Button>
@@ -191,14 +200,24 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
                       variant="outlined"
                       size="small"
                       color="error"
-                      sx={{ minWidth: 90, height: 36, textAlign: "center", whiteSpace: "nowrap" }}
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        textAlign: "center",
+                        whiteSpace: "nowrap",
+                      }}
                       onClick={() => onDelete(leaveRequest.id)}
+                      disabled={
+                        leaveRequest.approvalRequest?.approvalRequestStatus === "Rejected" ||
+                        leaveRequest.approvalRequest?.approvalRequestStatus === "Approved"
+                      }
                     >
                       Delete
                     </Button>
                   </Box>
                 </TableCell>
               )}
+
             </TableRow>
           ))}
         </TableBody>

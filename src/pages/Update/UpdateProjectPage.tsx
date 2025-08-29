@@ -7,7 +7,7 @@ const UpdateProjectPage: React.FC = () => {
 
     return (
         <>
-            <UpdateProjectForm id={id!}  />
+            <UpdateProjectForm id={id!} />
         </>
     );
 };

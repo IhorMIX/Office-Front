@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { ApprovalRequest, Status } from "../../types/Requests";
-import { RootState } from "../../redux/store";
-import { useSelector } from "react-redux";
 import { UserType } from "../../types/User";
 import {
   Button,
@@ -17,6 +15,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useGetCurrentUserQuery } from "../../services/userService";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface TableProps {
   approvalRequests: ApprovalRequest[];
@@ -28,10 +29,11 @@ interface TableProps {
 
 enum SortField {
   ID = "id",
-  STATUS = "approvalRequest.approvalRequestStatus",
-  COMMENT = "approvalRequest.comment",
-  APPROVER_NAME = "approvalRequest.approver.fullname",
-  LEAVE_REQUEST_ID = "approvalRequest.leaveRequest.id",
+  STATUS = "approvalRequestStatus",
+  COMMENT = "comment",
+  APPROVER_NAME = "approver.fullName",
+  LEAVE_REQUEST_EMPLOYEE = "leaveRequest.employee.fullName",
+  LEAVE_REQUEST_ID = "leaveRequest.id",
 }
 
 const ApprovalRequestTable: React.FC<TableProps> = ({
@@ -43,31 +45,29 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
 }) => {
   const [sortBy, setSortBy] = useState<SortField>(SortField.ID);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
-  const role: string = useSelector((state: RootState) => state.auth.role);
+  const role = useSelector((state: RootState) => state.auth.role);
+  const { data: user } = useGetCurrentUserQuery(null);
 
   const getFieldByPath = (obj: any, path: string): any => {
-    const keys: string[] = path.split(".");
-    return keys.reduce(
+    return path.split(".").reduce(
       (acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined),
       obj
     );
   };
 
-  const sortedApprovalRequest: ApprovalRequest[] = [...approvalRequests].sort(
-    (a, b) => {
-      const aValue: any = getFieldByPath(a, sortBy);
-      const bValue: any = getFieldByPath(b, sortBy);
+  const sortedApprovalRequests = [...approvalRequests].sort((a, b) => {
+    const aValue = getFieldByPath(a, sortBy);
+    const bValue = getFieldByPath(b, sortBy);
 
-      if (aValue === undefined) return 1;
-      if (bValue === undefined) return -1;
+    if (aValue === undefined) return 1;
+    if (bValue === undefined) return -1;
 
-      if (sortDirection === "asc") {
-        return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
-      } else {
-        return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
-      }
+    if (sortDirection === "asc") {
+      return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+    } else {
+      return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
     }
-  );
+  });
 
   const handleSort = (field: SortField): void => {
     if (field === sortBy) {
@@ -78,16 +78,18 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
     }
   };
 
-  const canEditOrDelete = (role: string): boolean => {
-    return (
-      role === UserType.Admin ||
-      role === UserType.HrManager ||
-      role === UserType.ProjectManager
-    );
+  const handleCommentChange = (id: number, comment: string): void => {
+    setComments((prev) => ({ ...prev, [id]: comment }));
   };
 
-  const handleCommentChange = (id: number, comment: string): void => {
-    setComments((prevComments) => ({ ...prevComments, [id]: comment }));
+  const canEditOrDelete = (approvalRequest: ApprovalRequest): boolean => {
+    if (!user) return false;
+
+    if ([UserType.Admin, UserType.HrManager, UserType.ProjectManager].includes(role as UserType)) {
+      return true;
+    }
+
+    return false;
   };
 
   return (
@@ -104,89 +106,64 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
                 ID
               </TableSortLabel>
             </TableCell>
+
             <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              <TableSortLabel
-                active={sortBy === SortField.APPROVER_NAME}
-                direction={sortBy === SortField.APPROVER_NAME ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.APPROVER_NAME)}
-              >
-                Approver
-              </TableSortLabel>
+              Approver
             </TableCell>
+
             <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              <TableSortLabel
-                active={sortBy === SortField.STATUS}
-                direction={sortBy === SortField.STATUS ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.STATUS)}
-              >
-                Status
-              </TableSortLabel>
+              Status
             </TableCell>
+
             <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              <TableSortLabel
-                active={sortBy === SortField.LEAVE_REQUEST_ID}
-                direction={sortBy === SortField.LEAVE_REQUEST_ID ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.LEAVE_REQUEST_ID)}
-              >
-                Leave Request Id
-              </TableSortLabel>
+              Leave Request Id
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              Comment
-            </TableCell>
-            {canEditOrDelete(role) && (
-              <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-                Actions
-              </TableCell>
-            )}
+
+            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>Comment</TableCell>
+            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>Actions</TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
-          {sortedApprovalRequest.map((approvalRequest: ApprovalRequest) => (
-            <TableRow key={approvalRequest.id}>
-              <TableCell>{approvalRequest.id}</TableCell>
-              <TableCell>{approvalRequest.approver.fullName}</TableCell>
-              <TableCell>{approvalRequest.approvalRequestStatus}</TableCell>
-              <TableCell>
-                <Link to={`/leaverequest/${approvalRequest.leaveRequest.id}`}>
-                  {approvalRequest.leaveRequest.id}
-                </Link>
-              </TableCell>
+          {sortedApprovalRequests.map((approvalRequest) => {
+            const editable =
+              canEditOrDelete(approvalRequest) &&
+              approvalRequest.approvalRequestStatus === Status.New;
 
-              {approvalRequest.approvalRequestStatus === Status.New &&
-              role !== UserType.Employee ? (
+            return (
+              <TableRow key={approvalRequest.id}>
+                <TableCell>{approvalRequest.id}</TableCell>
+                <TableCell>{approvalRequest.approver.fullName}</TableCell>
+                <TableCell>{approvalRequest.approvalRequestStatus}</TableCell>
                 <TableCell>
-                  <TextField
-                    variant="outlined"
-                    size="small"
-                    placeholder="Enter comment"
-                    value={comments[approvalRequest.id] || ""}
-                    onChange={(e) =>
-                      handleCommentChange(approvalRequest.id, e.target.value)
-                    }
-                  />
+                  <Link to={`/leaverequest/${approvalRequest.leaveRequest.id}`}>
+                    {approvalRequest.leaveRequest.id}
+                  </Link>
                 </TableCell>
-              ) : (
-                <TableCell>{approvalRequest.comment}</TableCell>
-              )}
 
-              <TableCell>
-                {canEditOrDelete(role) &&
-                  approvalRequest.approvalRequestStatus === Status.New && (
+                <TableCell>
+                  {editable ? (
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      placeholder="Enter comment"
+                      value={comments[approvalRequest.id] || ""}
+                      onChange={(e) => handleCommentChange(approvalRequest.id, e.target.value)}
+                    />
+                  ) : (
+                    approvalRequest.comment
+                  )}
+                </TableCell>
+
+                <TableCell>
+                  {editable && (
                     <Box sx={{ display: "flex", gap: 1 }}>
                       <Button
                         variant="outlined"
                         size="small"
                         color="success"
-                        sx={{
-                          minWidth: 90,
-                          height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap",
-                        }}
-                        onClick={() =>
-                          onApprove(approvalRequest.id, comments[approvalRequest.id] || "")
-                        }
+                        sx={{ minWidth: 90, height: 36 }}
+                        onClick={() => onApprove(approvalRequest.id, comments[approvalRequest.id] || "")}
                       >
                         Approve
                       </Button>
@@ -194,23 +171,17 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
                         variant="outlined"
                         size="small"
                         color="error"
-                        sx={{
-                          minWidth: 90,
-                          height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap",
-                        }}
-                        onClick={() =>
-                          onReject(approvalRequest.id, comments[approvalRequest.id] || "")
-                        }
+                        sx={{ minWidth: 90, height: 36 }}
+                        onClick={() => onReject(approvalRequest.id, comments[approvalRequest.id] || "")}
                       >
                         Reject
                       </Button>
                     </Box>
                   )}
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

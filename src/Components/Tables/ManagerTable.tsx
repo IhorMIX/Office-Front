@@ -86,42 +86,42 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
             <TableRow key={manager.id} >
               <TableCell>
                 <Link to={`/manager/${manager.id}`}>
-                    {manager.id}
+                  {manager.id}
                 </Link>
               </TableCell>
               <TableCell>{manager.fullName}</TableCell>
-                  <TableCell>
-                    <Box sx={{ display: "flex", gap: 1 }}>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        component={Link}
-                        to={`/update-manager/${manager.id}`}
-                        sx={{
-                          minWidth: 90,
-                          height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap"
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        color="error"
-                        onClick={() => onDelete(manager.id)}
-                        sx={{
-                          minWidth: 90,
-                          height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap"
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  </TableCell>
+              <TableCell>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    component={Link}
+                    to={`/update-manager/${manager.id}`}
+                    sx={{
+                      minWidth: 90,
+                      height: 36,
+                      textAlign: "center",
+                      whiteSpace: "nowrap"
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="error"
+                    onClick={() => onDelete(manager.id)}
+                    sx={{
+                      minWidth: 90,
+                      height: 36,
+                      textAlign: "center",
+                      whiteSpace: "nowrap"
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
