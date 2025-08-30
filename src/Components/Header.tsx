@@ -1,9 +1,9 @@
 import React from "react";
-import NavigateButtons from "./NavigateButtons";
-import style from "../scss/layout.module.scss"
+import { Link as RouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useActions } from "../Hooks/StoreHook";
+import styles from "../scss/layout.module.scss";
 
 const Header = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuth);
@@ -11,7 +11,6 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("Logout successful");
       userLogout();
       window.location.reload();
     } catch (error) {
@@ -20,16 +19,23 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <div className={style.headerContent}>
-        {isAuthenticated ? <NavigateButtons /> : null}
-        {isAuthenticated && (
-          <button className={style.logoutButton} onClick={handleLogout}>
+    <header className={styles.header}>
+      <div className={styles.headerLeft}>
+        ⏱ <span>MTime</span>
+      </div>
+
+      {isAuthenticated && (
+        <div className={styles.headerRight}>
+          <RouterLink to="/" className={styles.button}>
+            Home
+          </RouterLink>
+          <button className={styles.button} onClick={handleLogout}>
             Logout
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 };
+
 export default Header;

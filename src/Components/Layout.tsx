@@ -4,22 +4,20 @@ import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Header from "./Header";
-import Footer from "./Footer";
 import styles from "../scss/layout.module.scss";
 import { UserType } from "../types/User";
+import Sidebar from "./Sidebar";
 
 const MainContent = () => (
-  <>
+  <div className={styles.appLayout}>
     <Header />
-    <Container
-      disableGutters
-      maxWidth={false}
-      classes={{ root: styles.mainContainer }}
-    >
-      <Outlet />
-    </Container>
-    <Footer />
-  </>
+    <div className={styles.main}>
+      <Sidebar />
+      <main className={styles.content}>
+        <Outlet />
+      </main>
+    </div>
+  </div>
 );
 
 export const AuthLayout: React.FC = () => {
