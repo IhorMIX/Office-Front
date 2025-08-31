@@ -28,26 +28,15 @@ interface Props {
 }
 
 const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
-  const { data: employee, isLoading: isLoadingEmployee } = useGetEmployeeQuery(
-    Number(id)
-  );
-  const { data: subdivisions, isLoading: isLoadingSubdivisions } =
-    useGetSubdivisionsQuery(null);
-  const { data: positions, isLoading: isLoadingPositions } =
-    useGetPositionsQuery(null);
-  const { data: hrManagers, isLoading: isLoadingHrManagers } =
-    useGetHrManagersQuery(null);
+  const { data: employee, isLoading: isLoadingEmployee } = useGetEmployeeQuery(Number(id));
+  const { data: subdivisions, isLoading: isLoadingSubdivisions } = useGetSubdivisionsQuery(null);
+  const { data: positions, isLoading: isLoadingPositions } = useGetPositionsQuery(null);
+  const { data: hrManagers, isLoading: isLoadingHrManagers } = useGetHrManagersQuery(null);
 
   const [updateEmployee] = useUpdateEmployeeMutation();
 
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm<UpdateEmployee>();
+  const { handleSubmit, register, setValue, reset, watch, formState: { errors } } =
+    useForm<UpdateEmployee>();
 
   useEffect(() => {
     if (employee) {
@@ -67,7 +56,6 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
   const onSubmit: SubmitHandler<UpdateEmployee> = async (data) => {
     if (!data.login) delete (data as any).login;
     if (!data.password) delete (data as any).password;
-
     try {
       await updateEmployee(data).unwrap();
       console.log("Employee updated successfully", data);
@@ -90,6 +78,16 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
     return <Typography>Loading...</Typography>;
   }
 
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+    "& .MuiSelect-icon": { color: "#fff" },
+  };
+
   return (
     <Container maxWidth="sm">
       <Paper
@@ -98,21 +96,22 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
           mt: 5,
           p: 4,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#424242",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
           Update Employee
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
-            <TextField {...register("login")} label="Login" fullWidth />
+            <TextField {...register("login")} label="Login" fullWidth sx={fieldStyle} />
             <TextField
               {...register("password")}
               label="Password"
               type="password"
               fullWidth
+              sx={fieldStyle}
             />
             <TextField
               {...register("fullName", { required: "Full Name is required" })}
@@ -120,15 +119,17 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
               fullWidth
               error={!!errors.fullName}
               helperText={errors.fullName?.message}
+              sx={fieldStyle}
             />
 
-            <FormControl fullWidth error={!!errors.hrManagerId}>
+            <FormControl fullWidth error={!!errors.hrManagerId} sx={fieldStyle}>
               <InputLabel id="hr-manager-label">HR Manager</InputLabel>
               <Select
                 labelId="hr-manager-label"
                 label="HR Manager"
                 value={selectedHrManagerId ?? ""}
                 onChange={(e) => setValue("hrManagerId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
               >
                 {hrManagers?.map((hr) => (
                   <MenuItem key={hr.id} value={hr.id}>
@@ -136,19 +137,16 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
                   </MenuItem>
                 ))}
               </Select>
-              {errors.hrManagerId && (
-                <Typography variant="caption" color="error">
-                  {errors.hrManagerId.message}
-                </Typography>
-              )}
             </FormControl>
 
-            <FormControl fullWidth error={!!errors.subdivisionId}>
-              <InputLabel>Subdivision</InputLabel>
+            <FormControl fullWidth error={!!errors.subdivisionId} sx={fieldStyle}>
+              <InputLabel id="subdivision-label">Subdivision</InputLabel>
               <Select
+                labelId="subdivision-label"
                 label="Subdivision"
                 value={selectedSubdivisionId || ""}
                 onChange={(e) => setValue("subdivisionId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
               >
                 {subdivisions?.map((s) => (
                   <MenuItem key={s.id} value={s.id}>
@@ -156,19 +154,16 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
                   </MenuItem>
                 ))}
               </Select>
-              {errors.subdivisionId && (
-                <Typography variant="caption" color="error">
-                  {errors.subdivisionId.message}
-                </Typography>
-              )}
             </FormControl>
 
-            <FormControl fullWidth error={!!errors.positionId}>
-              <InputLabel>Position</InputLabel>
+            <FormControl fullWidth error={!!errors.positionId} sx={fieldStyle}>
+              <InputLabel id="position-label">Position</InputLabel>
               <Select
+                labelId="position-label"
                 label="Position"
                 value={selectedPositionId || ""}
                 onChange={(e) => setValue("positionId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
               >
                 {positions?.map((p) => (
                   <MenuItem key={p.id} value={p.id}>
@@ -176,28 +171,20 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
                   </MenuItem>
                 ))}
               </Select>
-              {errors.positionId && (
-                <Typography variant="caption" color="error">
-                  {errors.positionId.message}
-                </Typography>
-              )}
             </FormControl>
 
-            <FormControl fullWidth error={!!errors.status}>
-              <InputLabel>Status</InputLabel>
+            <FormControl fullWidth error={!!errors.status} sx={fieldStyle}>
+              <InputLabel id="status-label">Status</InputLabel>
               <Select
+                labelId="status-label"
                 label="Status"
                 value={selectedStatus !== undefined ? String(selectedStatus) : ""}
                 onChange={(e) => setValue("status", e.target.value === "true")}
+                sx={{ color: "#fff" }}
               >
                 <MenuItem value="true">Active</MenuItem>
                 <MenuItem value="false">Inactive</MenuItem>
               </Select>
-              {errors.status && (
-                <Typography variant="caption" color="error">
-                  {errors.status.message}
-                </Typography>
-              )}
             </FormControl>
 
             <TextField
@@ -207,9 +194,21 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
               fullWidth
               error={!!errors.outOfOfficeBalance}
               helperText={errors.outOfOfficeBalance?.message}
+              sx={fieldStyle}
             />
 
-            <Button type="submit" variant="contained" size="large" fullWidth>
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+              }}
+            >
               Update Employee
             </Button>
           </Box>
