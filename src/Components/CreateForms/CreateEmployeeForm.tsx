@@ -101,59 +101,59 @@ const CreateUserForm: React.FC = () => {
               sx={fieldStyle}
             />
 
-<FormControl fullWidth error={!!errors.subdivisionId} sx={fieldStyle}>
-  <InputLabel id="subdivision-label">Subdivision</InputLabel>
-  <Select
-    labelId="subdivision-label"
-    label="Subdivision"
-    defaultValue=""
-    onChange={(e) => setValue("subdivisionId", Number(e.target.value))}
-    sx={{ color: "#fff" }}
-  >
-    <MenuItem value="">
-      <em>Choose subdivision</em>
-    </MenuItem>
-    {subdivisions?.map((s) => (
-      <MenuItem key={s.id} value={s.id}>
-        {s.name}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
+            <FormControl fullWidth error={!!errors.subdivisionId} sx={fieldStyle}>
+              <InputLabel id="subdivision-label">Subdivision</InputLabel>
+              <Select
+                labelId="subdivision-label"
+                label="Subdivision"
+                defaultValue=""
+                onChange={(e) => setValue("subdivisionId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
+              >
+                <MenuItem value="">
+                  <em>Choose subdivision</em>
+                </MenuItem>
+                {subdivisions?.map((s) => (
+                  <MenuItem key={s.id} value={s.id}>
+                    {s.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-<FormControl fullWidth error={!!errors.positionId} sx={fieldStyle}>
-  <InputLabel id="position-label">Position</InputLabel>
-  <Select
-    labelId="position-label"
-    label="Position"
-    defaultValue=""
-    onChange={(e) => setValue("positionId", Number(e.target.value))}
-    sx={{ color: "#fff" }}
-  >
-    <MenuItem value="">
-      <em>Choose position</em>
-    </MenuItem>
-    {positions?.map((p) => (
-      <MenuItem key={p.id} value={p.id}>
-        {p.name}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
+            <FormControl fullWidth error={!!errors.positionId} sx={fieldStyle}>
+              <InputLabel id="position-label">Position</InputLabel>
+              <Select
+                labelId="position-label"
+                label="Position"
+                defaultValue=""
+                onChange={(e) => setValue("positionId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
+              >
+                <MenuItem value="">
+                  <em>Choose position</em>
+                </MenuItem>
+                {positions?.map((p) => (
+                  <MenuItem key={p.id} value={p.id}>
+                    {p.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-<FormControl fullWidth sx={fieldStyle}>
-  <InputLabel id="status-label">Status</InputLabel>
-  <Select
-    labelId="status-label"
-    label="Status"
-    defaultValue="true"
-    onChange={(e) => setValue("status", e.target.value === "true")}
-    sx={{ color: "#fff" }}
-  >
-    <MenuItem value="true">Active</MenuItem>
-    <MenuItem value="false">Inactive</MenuItem>
-  </Select>
-</FormControl>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="status-label">Status</InputLabel>
+              <Select
+                labelId="status-label"
+                label="Status"
+                defaultValue="true"
+                onChange={(e) => setValue("status", e.target.value === "true")}
+                sx={{ color: "#fff" }}
+              >
+                <MenuItem value="true">Active</MenuItem>
+                <MenuItem value="false">Inactive</MenuItem>
+              </Select>
+            </FormControl>
 
 
 
