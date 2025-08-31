@@ -9,6 +9,7 @@ import {
   TableSortLabel,
   Button,
   Box,
+  Paper,
 } from "@mui/material";
 import { Employee } from "../../types/Employee";
 import { useSelector } from "react-redux";
@@ -68,96 +69,73 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
   };
 
   const cellStyle = {
+    color: "#fff",
     fontWeight: "bold",
-    color: "rgb(0, 80, 184)",
+    fontSize: "0.95rem",
   };
 
   return (
-    <TableContainer>
-      <Table sx={{ backgroundColor: "white", borderRadius: "10px" }}>
+    <TableContainer component={Paper} sx={{ borderRadius: 3, overflow: "hidden" }}>
+      <Table>
+
         <TableHead>
-          <TableRow>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.ID}
-                direction={sortBy === SortField.ID ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.ID)}
-              >
-                ID
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.FULL_NAME}
-                direction={sortBy === SortField.FULL_NAME ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.FULL_NAME)}
-              >
-                Full Name
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.SUBDIVISION}
-                direction={sortBy === SortField.SUBDIVISION ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.SUBDIVISION)}
-              >
-                Subdivision
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.POSITION}
-                direction={sortBy === SortField.POSITION ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.POSITION)}
-              >
-                Position
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.STATUS}
-                direction={sortBy === SortField.STATUS ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.STATUS)}
-              >
-                Status
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.OUT_OF_OFFICE_BALANCE}
-                direction={sortBy === SortField.OUT_OF_OFFICE_BALANCE ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.OUT_OF_OFFICE_BALANCE)}
-              >
-                Out Of Office Balance
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.HR_MANAGER}
-                direction={sortBy === SortField.HR_MANAGER ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.HR_MANAGER)}
-              >
-                HR Manager
-              </TableSortLabel>
-            </TableCell>
+          <TableRow sx={{ backgroundColor: "#424242" }}>
+            {[
+              { field: SortField.ID, label: "ID" },
+              { field: SortField.FULL_NAME, label: "Full Name" },
+              { field: SortField.SUBDIVISION, label: "Subdivision" },
+              { field: SortField.POSITION, label: "Position" },
+              { field: SortField.STATUS, label: "Status" },
+              { field: SortField.OUT_OF_OFFICE_BALANCE, label: "Out Of Office Balance" },
+              { field: SortField.HR_MANAGER, label: "HR Manager" },
+            ].map(({ field, label }) => (
+              <TableCell key={field} sx={cellStyle}>
+                <TableSortLabel
+                  active={sortBy === field}
+                  direction={sortBy === field ? sortDirection : "asc"}
+                  onClick={() => handleSort(field)}
+                  sx={{
+                    color: "#fff",
+                    "&.Mui-active": { color: "#fff" },
+                    "& .MuiTableSortLabel-icon": { color: "#fff !important" },
+                  }}
+                >
+                  {label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
             <TableCell sx={cellStyle}>Actions</TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
-          {sortedEmployees.map((employee) => (
-            <TableRow key={employee.id}>
-              <TableCell>
-                <Link to={`/employee/${employee.id}`}>{employee.id}</Link>
+          {sortedEmployees.map((employee, index) => (
+            <TableRow
+              key={employee.id}
+              sx={{
+                backgroundColor: index % 2 === 0 ? "#424242" : "#3a3a3a",
+                "&:hover": { backgroundColor: "#555" },
+              }}
+            >
+              <TableCell sx={{ color: "#fff" }}>
+                <Link
+                  to={`/employee/${employee.id}`}
+                  style={{ color: "#fff", fontWeight: 500, textDecoration: "none" }}
+                >
+                  {employee.id}
+                </Link>
               </TableCell>
-              <TableCell>{employee.fullName}</TableCell>
-              <TableCell>{employee.subdivision?.name}</TableCell>
-              <TableCell>{employee.position?.name}</TableCell>
-              <TableCell>{employee.status ? "Active" : "Inactive"}</TableCell>
-              <TableCell>{employee.outOfOfficeBalance}</TableCell>
-              <TableCell>{employee.hrManager?.fullName}</TableCell>
+              <TableCell sx={{ color: "#fff" }}>{employee.fullName}</TableCell>
+              <TableCell sx={{ color: "#fff" }}>{employee.subdivision?.name}</TableCell>
+              <TableCell sx={{ color: "#fff" }}>{employee.position?.name}</TableCell>
+              <TableCell sx={{ color: "#fff" }}>
+                {employee.status ? "Active" : "Inactive"}
+              </TableCell>
+              <TableCell sx={{ color: "#fff" }}>{employee.outOfOfficeBalance}</TableCell>
+              <TableCell sx={{ color: "#fff" }}>{employee.hrManager?.fullName}</TableCell>
+
               {canEditOrDelete(role) && (
-                <TableCell>
+                <TableCell sx={{ color: "#fff" }}>
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <Button
                       variant="outlined"
@@ -167,8 +145,13 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                       sx={{
                         minWidth: 90,
                         height: 36,
-                        textAlign: "center",
-                        whiteSpace: "nowrap",
+                        color: "#fff",
+                        borderColor: "#fff",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          borderColor: "#aaa",
+                          backgroundColor: "rgba(255,255,255,0.08)",
+                        },
                       }}
                     >
                       Edit
@@ -183,8 +166,13 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                         sx={{
                           minWidth: 90,
                           height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap",
+                          color: "#fff",
+                          borderColor: "#f44336",
+                          fontWeight: "bold",
+                          "&:hover": {
+                            borderColor: "#ff7961",
+                            backgroundColor: "rgba(244,67,54,0.1)",
+                          },
                         }}
                       >
                         Deactivate
@@ -198,8 +186,13 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                         sx={{
                           minWidth: 90,
                           height: 36,
-                          textAlign: "center",
-                          whiteSpace: "nowrap",
+                          color: "error",
+                          borderColor: "#f44336",
+                          fontWeight: "bold",
+                          "&:hover": {
+                            borderColor: "#ff7961",
+                            backgroundColor: "rgba(244,67,54,0.1)",
+                          },
                         }}
                       >
                         Delete
@@ -208,7 +201,6 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                   </Box>
                 </TableCell>
               )}
-
             </TableRow>
           ))}
         </TableBody>

@@ -46,6 +46,15 @@ const EmployeesPage: React.FC = () => {
     }
   };
 
+  const buttonStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    borderRadius: 2,
+    textTransform: "none",
+    "&:hover": { backgroundColor: "#555", color: "#fff" },
+    "&:active": { transform: "scale(0.97)" },
+  };
+
   return (
     <Container maxWidth="lg">
       <Paper
@@ -54,7 +63,7 @@ const EmployeesPage: React.FC = () => {
           p: 4,
           mt: 5,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#2F2F2F",
         }}
       >
         <Box
@@ -69,7 +78,7 @@ const EmployeesPage: React.FC = () => {
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", color: "black" }}
+            sx={{ fontWeight: "bold", color: "#fff" }}
           >
             Employees
           </Typography>
@@ -79,8 +88,8 @@ const EmployeesPage: React.FC = () => {
               component={Link}
               to="/create-employee"
               variant="contained"
-              color="primary"
-              sx={{ textTransform: "none", borderRadius: 2 }}
+              fullWidth={false}
+              sx={buttonStyle}
             >
               + Create Employee
             </Button>
