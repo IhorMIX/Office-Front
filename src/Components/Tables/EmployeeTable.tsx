@@ -113,7 +113,7 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
             <TableRow
               key={employee.id}
               sx={{
-                backgroundColor: index % 2 === 0 ? "#424242" : "#3a3a3a",
+                backgroundColor: index % 2 === 0 ? "#424242" : "#333333",
                 "&:hover": { backgroundColor: "#555" },
               }}
             >
