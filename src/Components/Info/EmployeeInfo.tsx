@@ -68,6 +68,7 @@ const EmployeeInfo: React.FC<Props> = ({ id }) => {
                   to={`/project/${project.id}`}
                   sx={{
                     color: "#fff",
+                    fontWeight: "bold",
                     textDecoration: "none",
                     "&:hover": { textDecoration: "underline", color: "#aaa" },
                   }}
