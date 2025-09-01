@@ -18,7 +18,7 @@ const ManagersPage: React.FC = () => {
   const { data: managersList } = useGetAllManagersQuery(null);
   const [managers, setManagers] = useState<BaseManager[]>([]);
   const role = useSelector((state: RootState) => state.auth.role);
-  const [deleteProject] = useDelManagerMutation();
+  const [deleteManager] = useDelManagerMutation();
 
   useEffect(() => {
     if (managersList) {
@@ -28,12 +28,21 @@ const ManagersPage: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await deleteProject(id).unwrap();
-      setManagers(managers.filter((manager) => manager.id !== id));
+      await deleteManager(id).unwrap();
+      setManagers((prev) => prev.filter((manager) => manager.id !== id));
       console.log(`Manager deleted successfully`);
     } catch (error: any) {
-      console.error('Delete failed:', error.data || error.message);
+      console.error("Delete failed:", error.data || error.message);
     }
+  };
+
+  const buttonStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    borderRadius: 2,
+    textTransform: "none",
+    "&:hover": { backgroundColor: "#555", color: "#fff" },
+    "&:active": { transform: "scale(0.97)" },
   };
 
   return (
@@ -44,7 +53,7 @@ const ManagersPage: React.FC = () => {
           p: 4,
           mt: 5,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#2F2F2F",
         }}
       >
         <Box
@@ -59,7 +68,7 @@ const ManagersPage: React.FC = () => {
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", color: "black" }}
+            sx={{ fontWeight: "bold", color: "#fff" }}
           >
             Managers
           </Typography>
@@ -69,18 +78,14 @@ const ManagersPage: React.FC = () => {
               component={Link}
               to="/create-manager"
               variant="contained"
-              color="primary"
-              sx={{ textTransform: "none", borderRadius: 2 }}
+              sx={buttonStyle}
             >
               + Create Manager
             </Button>
           )}
         </Box>
 
-        <ManagerTable
-          managers={managers}
-          onDelete={handleDelete}
-        />
+        <ManagerTable managers={managers} onDelete={handleDelete} />
       </Paper>
     </Container>
   );
