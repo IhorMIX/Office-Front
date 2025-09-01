@@ -165,7 +165,7 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
                       sx={{
                         minWidth: 90,
                         height: 36,
-                        color: "#fff",
+                        color: "error",
                         borderColor: "#f44336",
                         fontWeight: "bold",
                         "&:hover": {
