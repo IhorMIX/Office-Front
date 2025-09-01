@@ -77,9 +77,8 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
   return (
     <TableContainer component={Paper} sx={{ borderRadius: 3, overflow: "hidden" }}>
       <Table>
-
         <TableHead>
-          <TableRow sx={{ backgroundColor: "#424242" }}>
+          <TableRow sx={{ backgroundColor: "#424242", height: 48 }}>
             {[
               { field: SortField.ID, label: "ID" },
               { field: SortField.FULL_NAME, label: "Full Name" },
@@ -89,7 +88,16 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
               { field: SortField.OUT_OF_OFFICE_BALANCE, label: "Out Of Office Balance" },
               { field: SortField.HR_MANAGER, label: "HR Manager" },
             ].map(({ field, label }) => (
-              <TableCell key={field} sx={cellStyle}>
+              <TableCell
+                key={field}
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: "0.95rem",
+                  py: 1,   // одинаковый padding по вертикали
+                  height: 48, // фиксированная высота
+                }}
+              >
                 <TableSortLabel
                   active={sortBy === field}
                   direction={sortBy === field ? sortDirection : "asc"}
@@ -104,7 +112,9 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                 </TableSortLabel>
               </TableCell>
             ))}
-            <TableCell sx={cellStyle}>Actions</TableCell>
+            <TableCell sx={{ color: "#fff", fontWeight: "bold", fontSize: "0.95rem", py: 1, height: 48 }}>
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
 
@@ -115,9 +125,10 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
               sx={{
                 backgroundColor: index % 2 === 0 ? "#424242" : "#333333",
                 "&:hover": { backgroundColor: "#555" },
+                height: 48, // одинаковая высота строки body
               }}
             >
-              <TableCell sx={{ color: "#fff" }}>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>
                 <Link
                   to={`/employee/${employee.id}`}
                   style={{ color: "#fff", fontWeight: 500, textDecoration: "none" }}
@@ -125,17 +136,17 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                   {employee.id}
                 </Link>
               </TableCell>
-              <TableCell sx={{ color: "#fff" }}>{employee.fullName}</TableCell>
-              <TableCell sx={{ color: "#fff" }}>{employee.subdivision?.name}</TableCell>
-              <TableCell sx={{ color: "#fff" }}>{employee.position?.name}</TableCell>
-              <TableCell sx={{ color: "#fff" }}>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{employee.fullName}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{employee.subdivision?.name}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{employee.position?.name}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>
                 {employee.status ? "Active" : "Inactive"}
               </TableCell>
-              <TableCell sx={{ color: "#fff" }}>{employee.outOfOfficeBalance}</TableCell>
-              <TableCell sx={{ color: "#fff" }}>{employee.hrManager?.fullName}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{employee.outOfOfficeBalance}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{employee.hrManager?.fullName}</TableCell>
 
               {canEditOrDelete(role) && (
-                <TableCell sx={{ color: "#fff" }}>
+                <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <Button
                       variant="outlined"
@@ -206,6 +217,7 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
         </TableBody>
       </Table>
     </TableContainer>
+
   );
 };
 
