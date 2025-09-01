@@ -14,8 +14,11 @@ const ProjectInfo: React.FC<Props> = ({ id }) => {
   if (!project) return <Typography>Project data not found</Typography>;
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-      <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "black" }}>
+    <Paper
+      elevation={3}
+      sx={{ p: 3, mt: 3, backgroundColor: "#424242", color: "#fff", borderRadius: 3 }}
+    >
+      <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#fff" }}>
         Project Details — ID: {project.id}
       </Typography>
 
@@ -44,43 +47,43 @@ const ProjectInfo: React.FC<Props> = ({ id }) => {
         )}
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider sx={{ my: 2, borderColor: "#555" }} />
+
+      <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", color: "#fff" }}>
+        Employees
+      </Typography>
 
       {project.employees && project.employees.length > 0 ? (
-        <>
-          <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", color: "black" }}>
-            Employees
-          </Typography>
-
-          <Box display="flex" flexWrap="wrap" gap={2}>
-            {project.employees.map((employee) => (
-              <Card key={employee.id} sx={{ width: 280 }}>
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    component={Link}
-                    to={`/employee/${employee.id}`}
-                    sx={{
-                      color: "black",
-                      textDecoration: "none",
-                      "&:hover": { textDecoration: "underline" },
-                    }}
-                    gutterBottom
-                  >
-                    {employee.fullName}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Status: {employee.status ? "Active" : "Inactive"}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
-        </>
+        <Box display="flex" flexWrap="wrap" gap={2}>
+          {project.employees.map((employee) => (
+            <Card
+              key={employee.id}
+              sx={{ width: 280, backgroundColor: "#3a3a3a", color: "#fff" }}
+            >
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  component={Link}
+                  to={`/employee/${employee.id}`}
+                  sx={{
+                    color: "#fff",
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                    "&:hover": { textDecoration: "underline", color: "#aaa" },
+                  }}
+                  gutterBottom
+                >
+                  {employee.fullName}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  Status: {employee.status ? "Active" : "Inactive"}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
       ) : (
-        <Typography variant="body2" color="textSecondary">
-          No employees assigned to this project.
-        </Typography>
+        <Typography variant="body2">No employees assigned to this project.</Typography>
       )}
     </Paper>
   );
