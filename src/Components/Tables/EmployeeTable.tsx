@@ -94,8 +94,8 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
                   color: "#fff",
                   fontWeight: "bold",
                   fontSize: "0.95rem",
-                  py: 1,   // одинаковый padding по вертикали
-                  height: 48, // фиксированная высота
+                  py: 1,
+                  height: 48,
                 }}
               >
                 <TableSortLabel
@@ -125,7 +125,7 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
               sx={{
                 backgroundColor: index % 2 === 0 ? "#424242" : "#333333",
                 "&:hover": { backgroundColor: "#555" },
-                height: 48, // одинаковая высота строки body
+                height: 48,
               }}
             >
               <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>
