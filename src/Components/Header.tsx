@@ -21,7 +21,10 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.headerLeft}>
-        ⏱ <span>MTime</span>
+        <RouterLink to="/" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "4px" }}>
+          ⏱ <span>MTime</span>
+        </RouterLink>
+
       </div>
 
       {isAuthenticated && (
