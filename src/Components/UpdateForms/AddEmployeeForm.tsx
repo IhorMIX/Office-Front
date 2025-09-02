@@ -66,7 +66,7 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
   };
 
   if (isLoadingProject || isLoadingEmployees) {
-    return <Typography>Loading...</Typography>;
+    return <Typography sx={{ color: "#fff" }}>Loading...</Typography>;
   }
 
   return (
@@ -77,17 +77,19 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
           mt: 5,
           p: 4,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#424242",
+          color: "#fff",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
           Edit Employees for Project:
           <Link
             to={`/projects/${project?.id}`}
             style={{
-              color: "#000",
+              color: "#fff",
               textDecoration: "none",
               marginLeft: "6px",
+              fontWeight: "bold",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
@@ -106,20 +108,34 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
                     <Checkbox
                       checked={employeesIds.includes(employee.id)}
                       onChange={() => handleEmployeeChange(employee.id)}
-                      color="primary"
+                      sx={{
+                        color: "#fff",
+                        "&.Mui-checked": { color: "#fff" },
+                      }}
                     />
                   }
                   label={employee.fullName}
+                  sx={{ color: "#fff" }}
                 />
               ))}
             </FormGroup>
 
             <Button
-              variant="contained"
+              variant="outlined"
               size="large"
               type="submit"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                backgroundColor: "#424242",
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": {
+                  backgroundColor: "#505050",
+                  borderColor: "#fff",
+                },
+              }}
             >
               Save Changes
             </Button>
