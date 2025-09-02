@@ -1,5 +1,16 @@
 import React, { useEffect } from "react";
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography, Container, Box } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+  Container,
+  Box,
+} from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useGetProjectQuery, useUpdateProjectMutation } from "../../services/projectService";
 import { UpdateProject } from "../../types/Project";
@@ -50,23 +61,40 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
     return <Typography>Loading...</Typography>;
   }
 
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+    "& .MuiSelect-icon": { color: "#fff" },
+  };
+
   return (
     <Container maxWidth="sm">
-      <Paper elevation={4} sx={{ mt: 5, p: 4, borderRadius: 3, backgroundColor: "#f9fbfc" }}>
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+      <Paper
+        elevation={4}
+        sx={{
+          mt: 5,
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "#424242",
+        }}
+      >
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
           Update Project
         </Typography>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="project-manager-label" shrink>
-                Project Manager
-              </InputLabel>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="project-manager-label">Project Manager</InputLabel>
               <Select
                 labelId="project-manager-label"
+                label="Project Manager"
                 value={selectedManagerId || ""}
                 onChange={(e) => setValue("projectManagerId", Number(e.target.value))}
-                label="Project Manager"
               >
                 {projectManagers?.map((manager) => (
                   <MenuItem key={manager.id} value={manager.id}>
@@ -76,13 +104,13 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="project-type-label" shrink>Project Type</InputLabel>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="project-type-label">Project Type</InputLabel>
               <Select
                 labelId="project-type-label"
+                label="Project Type"
                 value={selectedTypeId || ""}
                 onChange={(e) => setValue("projectTypeId", Number(e.target.value))}
-                label="Project Type"
               >
                 {types?.map((type) => (
                   <MenuItem key={type.id} value={type.id}>
@@ -97,37 +125,53 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
               label="Start Date"
               type="date"
               fullWidth
-              slotProps={{ inputLabel: { shrink: true } }}
+              sx={fieldStyle}
+              InputLabelProps={{ shrink: true }}
             />
+
             <TextField
               {...register("endDate")}
               label="End Date"
               type="date"
               fullWidth
-              slotProps={{ inputLabel: { shrink: true } }}
+              sx={fieldStyle}
+              InputLabelProps={{ shrink: true }}
             />
+
             <TextField
               {...register("comment")}
               label="Comment"
               fullWidth
-              slotProps={{ inputLabel: { shrink: true } }}
+              sx={fieldStyle}
+              InputLabelProps={{ shrink: true }}
             />
 
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="status-label" shrink>Status</InputLabel>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="status-label">Status</InputLabel>
               <Select
                 labelId="status-label"
+                label="Status"
                 value={selectedStatus ? "true" : "false"}
                 onChange={(e) => setValue("status", e.target.value === "true")}
-                label="Status"
               >
                 <MenuItem value="true">Active</MenuItem>
                 <MenuItem value="false">Inactive</MenuItem>
               </Select>
             </FormControl>
 
-            <Button type="submit" size="large" variant="contained" fullWidth>
-              Update
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+              }}
+            >
+              Update Project
             </Button>
           </Box>
         </form>
