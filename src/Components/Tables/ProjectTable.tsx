@@ -66,8 +66,15 @@ const ProjectTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }
     role === UserType.Admin || role === UserType.ProjectManager;
 
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: 3, overflow: "hidden" }}>
-      <Table>
+    <TableContainer
+      component={Paper}
+      sx={{
+        borderRadius: 3,
+        overflow: "auto",
+        maxHeight: 500,
+      }}
+    >
+      <Table stickyHeader>
         <TableHead>
           <TableRow sx={{ backgroundColor: "#424242", height: 48 }}>
             {[
@@ -86,6 +93,7 @@ const ProjectTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }
                   fontSize: "0.95rem",
                   py: 1,
                   height: 48,
+                  backgroundColor: "#424242",
                 }}
               >
                 <TableSortLabel
@@ -109,6 +117,7 @@ const ProjectTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }
                 fontSize: "0.95rem",
                 py: 1,
                 height: 48,
+                backgroundColor: "#424242",
               }}
             >
               Comment
@@ -121,6 +130,7 @@ const ProjectTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }
                   fontSize: "0.95rem",
                   py: 1,
                   height: 48,
+                  backgroundColor: "#424242",
                 }}
               >
                 Actions
@@ -134,7 +144,7 @@ const ProjectTable: React.FC<TableProps> = ({ projects, onDelete, onDeactivate }
             <TableRow
               key={project.id}
               sx={{
-                backgroundColor: index % 2 === 0 ? "#424242" : "#333333",
+                backgroundColor: index % 2 === 1 ? "#424242" : "#333333",
                 "&:hover": { backgroundColor: "#555" },
                 height: 48,
               }}

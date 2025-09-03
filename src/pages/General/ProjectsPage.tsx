@@ -51,6 +51,7 @@ const ProjectsPage: React.FC = () => {
   const buttonStyle = {
     backgroundColor: "#424242",
     color: "#fff",
+    minHeight: 36,
     borderRadius: 2,
     textTransform: "none",
     "&:hover": { backgroundColor: "#555", color: "#fff" },
@@ -80,22 +81,38 @@ const ProjectsPage: React.FC = () => {
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", color: "#fff" }}
+            sx={{
+              fontWeight: "bold",
+              color: "#fff",
+              whiteSpace: "normal",
+              overflowWrap: "break-word",
+              wordBreak: "break-all",
+              flexGrow: 1,
+              minWidth: 0,
+            }}
           >
             Projects
           </Typography>
+
 
           {(role === UserType.Admin || role === UserType.ProjectManager) && (
             <Button
               component={Link}
               to="/create-project"
               variant="contained"
-              fullWidth={false}
-              sx={buttonStyle}
+              sx={{
+                ...buttonStyle,
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                wordBreak: "break-all",
+                textAlign: "center",
+                lineHeight: 1.2,
+              }}
             >
               + Create Project
             </Button>
           )}
+
         </Box>
 
         <ProjectTable
