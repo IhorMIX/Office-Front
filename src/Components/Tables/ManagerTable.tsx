@@ -61,12 +61,6 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
   const canEditOrDelete = (role: string) =>
     role === UserType.Admin || role === UserType.HrManager;
 
-  const cellStyle = {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: "0.95rem",
-  };
-
   return (
     <TableContainer
       component={Paper}

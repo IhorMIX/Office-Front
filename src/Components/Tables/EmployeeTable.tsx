@@ -68,12 +68,6 @@ const EmployeeTable: React.FC<TableProps> = ({ employees, onDeactivate, onDelete
     return role === UserType.Admin || role === UserType.HrManager;
   };
 
-  const cellStyle = {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: "0.95rem",
-  };
-
   return (
     <TableContainer
       component={Paper}
