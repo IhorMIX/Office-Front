@@ -79,7 +79,8 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
       <Table>
         <TableHead>
           <TableRow sx={{ backgroundColor: "#424242", height: 48 }}>
-            {[{ label: "ID", field: SortField.ID }, { label: "Full Name", field: SortField.FULL_NAME }].map(
+            {[{ label: "ID", field: SortField.ID },
+              { label: "Full Name", field: SortField.FULL_NAME }].map(
               ({ label, field }) => (
                 <TableCell
                   key={field}
