@@ -12,6 +12,7 @@ import {
   TableRow,
   TableSortLabel,
   Box,
+  Paper,
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -38,26 +39,14 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const role = useSelector((state: RootState) => state.auth.role);
 
-  const getFieldByPath = (obj: any, path: string): any => {
-    const keys = path.split(".");
-    return keys.reduce(
-      (acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined),
-      obj
-    );
-  };
+  const getFieldByPath = (obj: any, path: string): any =>
+    path.split(".").reduce((acc, key) => acc?.[key], obj);
 
   const sortedLeaveRequests = [...leaveRequests].sort((a, b) => {
-    const aValue: any = getFieldByPath(a, sortBy);
-    const bValue: any = getFieldByPath(b, sortBy);
-
-    if (aValue === undefined) return 1;
-    if (bValue === undefined) return -1;
-
-    if (sortDirection === "asc") {
-      return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
-    } else {
-      return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
-    }
+    const aValue = getFieldByPath(a, sortBy);
+    const bValue = getFieldByPath(b, sortBy);
+    if (aValue === undefined || bValue === undefined) return 0;
+    return sortDirection === "asc" ? (aValue > bValue ? 1 : -1) : aValue < bValue ? 1 : -1;
   });
 
   const handleSort = (field: SortField) => {
@@ -69,155 +58,143 @@ const LeaveRequestTable: React.FC<TableProps> = ({ leaveRequests, onDelete }) =>
     }
   };
 
-  const canEditOrDelete = (role: string) => {
-    return role === UserType.Admin || role === UserType.Employee;
-  };
-
-  const cellStyle = {
-    fontWeight: "bold",
-    color: "rgb(0, 80, 184)",
-  };
+  const canEditOrDelete = (role: string) =>
+    role === UserType.Admin || role === UserType.Employee;
 
   return (
-    <TableContainer>
-      <Table sx={{ backgroundColor: "white", borderRadius: "10px" }}>
+    <TableContainer component={Paper} sx={{ borderRadius: 3, backgroundColor: "#424242" }}>
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.ID}
-                direction={sortBy === SortField.ID ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.ID)}
+            {[
+              { label: "ID", field: SortField.ID },
+              { label: "Employee Name", field: SortField.EMPLOYEE_NAME },
+              { label: "Start Date", field: SortField.START_DATE },
+              { label: "End Date", field: SortField.END_DATE },
+              { label: "Reason", field: SortField.REASON },
+              { label: "Comment", field: SortField.COMMENT },
+              { label: "Status", field: SortField.STATUS },
+              { label: "Approval Status", field: SortField.APPROVAL_STATUS },
+            ].map(({ field, label }) => (
+              <TableCell
+                key={field}
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: "0.95rem",
+                  py: 1,
+                  height: 48,
+                }}
               >
-                ID
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.EMPLOYEE_NAME}
-                direction={sortBy === SortField.EMPLOYEE_NAME ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.EMPLOYEE_NAME)}
-              >
-                Employee Name
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.START_DATE}
-                direction={sortBy === SortField.START_DATE ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.START_DATE)}
-              >
-                Start Date
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.END_DATE}
-                direction={sortBy === SortField.END_DATE ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.END_DATE)}
-              >
-                End Date
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.REASON}
-                direction={sortBy === SortField.REASON ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.REASON)}
-              >
-                Reason
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.COMMENT}
-                direction={sortBy === SortField.COMMENT ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.COMMENT)}
-              >
-                Comment
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.STATUS}
-                direction={sortBy === SortField.STATUS ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.STATUS)}
-              >
-                Status
-              </TableSortLabel>
-            </TableCell>
-            <TableCell sx={cellStyle}>
-              <TableSortLabel
-                active={sortBy === SortField.APPROVAL_STATUS}
-                direction={sortBy === SortField.APPROVAL_STATUS ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.APPROVAL_STATUS)}
-              >
-                Approval Status
-              </TableSortLabel>
-            </TableCell>
+                <TableSortLabel
+                  active={sortBy === field}
+                  direction={sortBy === field ? sortDirection : "asc"}
+                  onClick={() => handleSort(field)}
+                  sx={{
+                    color: "#fff",
+                    "&.Mui-active": { color: "#fff" },
+                    "& .MuiTableSortLabel-icon": { color: "#fff !important" },
+                  }}
+                >
+                  {label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
             {canEditOrDelete(role) && (
-              <TableCell sx={cellStyle}>Actions</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold", fontSize: "0.95rem", py: 1, height: 48 }}>
+                Actions
+              </TableCell>
             )}
           </TableRow>
         </TableHead>
+
         <TableBody>
-          {sortedLeaveRequests.map((leaveRequest) => (
-            <TableRow key={leaveRequest.id}>
-              <TableCell>
-                <Link to={`/leaverequest/${leaveRequest.id}`}>
+          {sortedLeaveRequests.map((leaveRequest, index) => (
+            <TableRow
+              key={leaveRequest.id}
+              sx={{
+                backgroundColor: index % 2 === 1 ? "#424242" : "#333333",
+                "&:hover": { backgroundColor: "#555" },
+                height: 48,
+              }}
+            >
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>
+                <Link to={`/leaverequest/${leaveRequest.id}`} style={{ color: "#fff", textDecoration: "none" }}>
                   {leaveRequest.id}
                 </Link>
               </TableCell>
-              <TableCell>{leaveRequest.employee.fullName}</TableCell>
-              <TableCell>{new Date(leaveRequest.startDate).toLocaleDateString()}</TableCell>
-              <TableCell>{new Date(leaveRequest.endDate).toLocaleDateString()}</TableCell>
-              <TableCell>{leaveRequest.absenceReason.reasonDescription}</TableCell>
-              <TableCell>{leaveRequest.comment}</TableCell>
-              <TableCell>{leaveRequest.status}</TableCell>
-              <TableCell>{leaveRequest.approvalRequest?.approvalRequestStatus}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{leaveRequest.employee.fullName}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{new Date(leaveRequest.startDate).toLocaleDateString()}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{new Date(leaveRequest.endDate).toLocaleDateString()}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{leaveRequest.absenceReason.reasonDescription}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{leaveRequest.comment}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{leaveRequest.status}</TableCell>
+              <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>{leaveRequest.approvalRequest?.approvalRequestStatus}</TableCell>
+
               {canEditOrDelete(role) && (
-                <TableCell>
+                <TableCell sx={{ color: "#fff", py: 1, height: 48 }}>
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <Button
                       variant="outlined"
                       size="small"
-                      sx={{
-                        minWidth: 90,
-                        height: 36,
-                        textAlign: "center",
-                        whiteSpace: "nowrap",
-                      }}
                       component={Link}
                       to={`/update-leave-request/${leaveRequest.id}`}
                       disabled={
                         leaveRequest.approvalRequest?.approvalRequestStatus === "Rejected" ||
                         leaveRequest.approvalRequest?.approvalRequestStatus === "Approved"
                       }
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        color: "#fff",
+                        borderColor: "#fff",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          borderColor: "#aaa",
+                          backgroundColor: "rgba(255,255,255,0.08)",
+                        },
+                        "&.Mui-disabled": {
+                          color: "rgba(255,255,255,0.5)",
+                          borderColor: "rgba(255,255,255,0.3)",
+                          backgroundColor: "rgba(255,255,255,0.05)",
+                        },
+                      }}
                     >
                       Edit
                     </Button>
+
                     <Button
                       variant="outlined"
                       size="small"
                       color="error"
-                      sx={{
-                        minWidth: 90,
-                        height: 36,
-                        textAlign: "center",
-                        whiteSpace: "nowrap",
-                      }}
                       onClick={() => onDelete(leaveRequest.id)}
                       disabled={
                         leaveRequest.approvalRequest?.approvalRequestStatus === "Rejected" ||
                         leaveRequest.approvalRequest?.approvalRequestStatus === "Approved"
                       }
+                      sx={{
+                        minWidth: 90,
+                        height: 36,
+                        color: "#f44336",
+                        borderColor: "#f44336",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          borderColor: "#ff7961",
+                          backgroundColor: "rgba(244,67,54,0.1)",
+                        },
+                        "&.Mui-disabled": {
+                          color: "rgba(244,67,54,0.5)",
+                          borderColor: "rgba(244,67,54,0.3)",
+                          backgroundColor: "rgba(244,67,54,0.05)",
+                        },
+                      }}
                     >
                       Delete
                     </Button>
+
                   </Box>
                 </TableCell>
               )}
-
             </TableRow>
           ))}
         </TableBody>

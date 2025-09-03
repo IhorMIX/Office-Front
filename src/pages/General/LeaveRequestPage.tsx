@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-  Paper,
-} from "@mui/material";
+import { Box, Button, Container, Typography, Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDelLeaveRequestMutation, useGetAllLeaveRequestsQuery } from "../../services/requestsService";
 import { RootState } from "../../redux/store";
@@ -36,16 +30,25 @@ const LeaveRequestsPage: React.FC = () => {
     }
   };
 
+  const buttonStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    minHeight: 36,
+    borderRadius: 2,
+    textTransform: "none",
+    "&:hover": { backgroundColor: "#555", color: "#fff" },
+    "&:active": { transform: "scale(0.97)" },
+  };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Paper
         elevation={3}
         sx={{
           p: 4,
           mt: 5,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#2F2F2F",
         }}
       >
         <Box
@@ -60,7 +63,15 @@ const LeaveRequestsPage: React.FC = () => {
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", color: "black" }}
+            sx={{
+              fontWeight: "bold",
+              color: "#fff",
+              whiteSpace: "normal",
+              overflowWrap: "break-word",
+              wordBreak: "break-all",
+              flexGrow: 1,
+              minWidth: 0,
+            }}
           >
             Leave Requests
           </Typography>
@@ -70,18 +81,21 @@ const LeaveRequestsPage: React.FC = () => {
               component={Link}
               to="/create-leave-request"
               variant="contained"
-              color="primary"
-              sx={{ textTransform: "none", borderRadius: 2 }}
+              sx={{
+                ...buttonStyle,
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                wordBreak: "break-all",
+                textAlign: "center",
+                lineHeight: 1.2,
+              }}
             >
               + Create Leave Request
             </Button>
           )}
         </Box>
 
-        <LeaveRequestTable
-          leaveRequests={leaveRequests}
-          onDelete={handleDelete}
-        />
+        <LeaveRequestTable leaveRequests={leaveRequests} onDelete={handleDelete} />
       </Paper>
     </Container>
   );
