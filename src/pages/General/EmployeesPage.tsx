@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { 
-  useDeactivateEmployeeMutation, 
-  useDeleteEmployeeMutation, 
-  useGetAllEmployeesQuery 
+import {
+  useDeactivateEmployeeMutation,
+  useDeleteEmployeeMutation,
+  useGetAllEmployeesQuery
 } from "../../services/employeeService";
 import { Employee } from "../../types/Employee";
 import { useSelector } from "react-redux";
@@ -49,6 +49,7 @@ const EmployeesPage: React.FC = () => {
   const buttonStyle = {
     backgroundColor: "#424242",
     color: "#fff",
+    minHeight: 36,
     borderRadius: 2,
     textTransform: "none",
     "&:hover": { backgroundColor: "#555", color: "#fff" },
@@ -78,7 +79,15 @@ const EmployeesPage: React.FC = () => {
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", color: "#fff" }}
+            sx={{
+              fontWeight: "bold",
+              color: "#fff",
+              whiteSpace: "normal",
+              overflowWrap: "break-word",
+              wordBreak: "break-all",
+              flexGrow: 1,
+              minWidth: 0,
+            }}
           >
             Employees
           </Typography>
@@ -89,7 +98,14 @@ const EmployeesPage: React.FC = () => {
               to="/create-employee"
               variant="contained"
               fullWidth={false}
-              sx={buttonStyle}
+              sx={{
+                ...buttonStyle,
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                wordBreak: "break-all",
+                textAlign: "center",
+                lineHeight: 1.2,
+              }}
             >
               + Create Employee
             </Button>
