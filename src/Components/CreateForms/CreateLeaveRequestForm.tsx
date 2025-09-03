@@ -48,6 +48,16 @@ const CreateLeaveRequestForm: React.FC = () => {
     return <Typography>Loading...</Typography>;
   }
 
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+    "& .MuiSelect-icon": { color: "#fff" },
+  };
+
   return (
     <Container maxWidth="sm">
       <Paper
@@ -56,59 +66,64 @@ const CreateLeaveRequestForm: React.FC = () => {
           mt: 5,
           p: 4,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#424242",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
           Create Leave Request
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
-
-            <FormControl fullWidth error={!!errors.absenceReasonId}>
-              <InputLabel>Absence Reason</InputLabel>
+            <FormControl fullWidth error={!!errors.absenceReasonId} sx={fieldStyle}>
+              <InputLabel id="absence-reason-label">Absence Reason</InputLabel>
               <Select
-                defaultValue=""
+                labelId="absence-reason-label"
                 label="Absence Reason"
-                onChange={(e) => {
-                  setValue("absenceReasonId", Number(e.target.value));
-                }}
+                defaultValue=""
+                onChange={(e) => setValue("absenceReasonId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
               >
+                <MenuItem value="">
+                  <em>Select reason</em>
+                </MenuItem>
                 {reasons?.map((reason) => (
                   <MenuItem key={reason.id} value={reason.id}>
                     {reason.reasonDescription}
                   </MenuItem>
                 ))}
               </Select>
-              {errors.absenceReasonId && (
-                <Typography variant="caption" color="error">
-                  {errors.absenceReasonId.message}
-                </Typography>
-              )}
             </FormControl>
+            {errors.absenceReasonId && (
+              <Typography variant="caption" color="error">
+                {errors.absenceReasonId.message}
+              </Typography>
+            )}
 
-            <FormControl fullWidth error={!!errors.approverId}>
-              <InputLabel>Approver</InputLabel>
+            <FormControl fullWidth error={!!errors.approverId} sx={fieldStyle}>
+              <InputLabel id="approver-label">Approver</InputLabel>
               <Select
-                defaultValue=""
+                labelId="approver-label"
                 label="Approver"
-                onChange={(e) => {
-                  setValue("approverId", Number(e.target.value));
-                }}
+                defaultValue=""
+                onChange={(e) => setValue("approverId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
               >
+                <MenuItem value="">
+                  <em>Select approver</em>
+                </MenuItem>
                 {combinedApprovers.map((approver) => (
                   <MenuItem key={approver.id} value={approver.id}>
                     {approver.fullName} - {approver.role}
                   </MenuItem>
                 ))}
               </Select>
-              {errors.approverId && (
-                <Typography variant="caption" color="error">
-                  {errors.approverId.message}
-                </Typography>
-              )}
             </FormControl>
+            {errors.approverId && (
+              <Typography variant="caption" color="error">
+                {errors.approverId.message}
+              </Typography>
+            )}
 
             <TextField
               {...register("startDate", { required: "Start date is required" })}
@@ -118,6 +133,7 @@ const CreateLeaveRequestForm: React.FC = () => {
               fullWidth
               error={!!errors.startDate}
               helperText={errors.startDate?.message}
+              sx={fieldStyle}
             />
 
             <TextField
@@ -128,6 +144,7 @@ const CreateLeaveRequestForm: React.FC = () => {
               fullWidth
               error={!!errors.endDate}
               helperText={errors.endDate?.message}
+              sx={fieldStyle}
             />
 
             <TextField
@@ -137,9 +154,21 @@ const CreateLeaveRequestForm: React.FC = () => {
               multiline
               minRows={2}
               InputLabelProps={{ shrink: true }}
+              sx={fieldStyle}
             />
 
-            <Button type="submit" variant="contained" size="large" fullWidth>
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+              }}
+            >
               Create Leave Request
             </Button>
           </Box>
