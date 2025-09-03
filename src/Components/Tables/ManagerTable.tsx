@@ -68,7 +68,14 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
   };
 
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: 3, overflow: "hidden" }}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        borderRadius: 3,
+        overflow: "auto",
+        maxHeight: 500,
+      }}
+    >
       <Table>
         <TableHead>
           <TableRow sx={{ backgroundColor: "#424242", height: 48 }}>
@@ -118,7 +125,7 @@ const ManagerTable: React.FC<TableProps> = ({ managers, onDelete }) => {
             <TableRow
               key={manager.id}
               sx={{
-                backgroundColor: index % 2 === 0 ? "#424242" : "#333333",
+                backgroundColor: index % 2 === 1 ? "#424242" : "#333333",
                 "&:hover": { backgroundColor: "#555" },
                 height: 48,
               }}
