@@ -41,7 +41,7 @@ const LeaveRequestsPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <Paper
         elevation={3}
         sx={{
