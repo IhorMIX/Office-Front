@@ -13,11 +13,20 @@ const LeaveRequestInfo: React.FC<Props> = ({ id }) => {
   if (!request) return <Typography>Leave request not found</Typography>;
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+    <Paper
+      elevation={3}
+      sx={{
+        p: 3,
+        mt: 3,
+        backgroundColor: "#424242",
+        color: "#fff",
+        borderRadius: 3,
+      }}
+    >
       <Typography
         variant="h5"
         gutterBottom
-        sx={{ fontWeight: "bold", color: "black" }}
+        sx={{ fontWeight: "bold", color: "#fff" }}
       >
         Leave Request Details — ID: {request.id}
       </Typography>
@@ -27,7 +36,8 @@ const LeaveRequestInfo: React.FC<Props> = ({ id }) => {
           <strong>Employee:</strong> {request.employee.fullName}
         </Typography>
         <Typography variant="body1" sx={{ mb: 1 }}>
-          <strong>Absence Reason:</strong> {request.absenceReason.reasonDescription}
+          <strong>Absence Reason:</strong>{" "}
+          {request.absenceReason.reasonDescription}
         </Typography>
         <Typography variant="body1" sx={{ mb: 1 }}>
           <strong>Start Date:</strong>{" "}
@@ -45,7 +55,7 @@ const LeaveRequestInfo: React.FC<Props> = ({ id }) => {
         </Typography>
       </Box>
 
-      <Divider sx={{ my: 2 }} />
+      <Divider sx={{ my: 2, borderColor: "#555" }} />
     </Paper>
   );
 };
