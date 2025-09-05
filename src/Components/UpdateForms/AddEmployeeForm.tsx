@@ -121,19 +121,17 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
             </FormGroup>
 
             <Button
+              type="submit"
               variant="outlined"
               size="large"
-              type="submit"
               fullWidth
               sx={{
-                mt: 2,
-                backgroundColor: "#424242",
                 color: "#fff",
                 borderColor: "#fff",
                 fontWeight: "bold",
                 "&:hover": {
-                  backgroundColor: "#505050",
-                  borderColor: "#fff",
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  borderColor: "#aaa",
                 },
               }}
             >
