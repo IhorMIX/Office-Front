@@ -99,9 +99,21 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
           backgroundColor: "#424242",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "center",
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+          }}
+        >
           Update Employee
         </Typography>
+
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
@@ -206,11 +218,21 @@ const UpdateEmployeeForm: React.FC<Props> = ({ id }) => {
                 color: "#fff",
                 borderColor: "#fff",
                 fontWeight: "bold",
-                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+                textAlign: "center",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
+                lineHeight: 1.3,
+                p: 2,
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  borderColor: "#aaa"
+                },
               }}
             >
               Update Employee
             </Button>
+
           </Box>
         </form>
       </Paper>
