@@ -90,7 +90,16 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
       >
         <Typography
           variant="h5"
-          sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "center",
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+            lineHeight: 1.3,
+          }}
         >
           Update Leave Request
         </Typography>
@@ -187,13 +196,15 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
                 color: "#fff",
                 borderColor: "#fff",
                 fontWeight: "bold",
+                textAlign: "center",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
+                lineHeight: 1.3,
+                p: 2,
                 "&:hover": {
                   backgroundColor: "rgba(255,255,255,0.08)",
                   borderColor: "#aaa",
-                },
-                "&.Mui-disabled": {
-                  color: "rgba(255,255,255,0.3)",
-                  borderColor: "rgba(255,255,255,0.3)",
                 },
               }}
             >
