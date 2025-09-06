@@ -81,7 +81,18 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
           color: "#fff",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "center",
+            whiteSpace: "normal",
+            overflowWrap: "break-word",
+            wordBreak: "break-word",
+          }}
+        >
           Edit Employees for Project:
           <Link
             to={`/projects/${project?.id}`}
@@ -90,6 +101,9 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
               textDecoration: "none",
               marginLeft: "6px",
               fontWeight: "bold",
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
@@ -115,7 +129,11 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
                     />
                   }
                   label={employee.fullName}
-                  sx={{ color: "#fff" }}
+                  sx={{
+                    color: "#fff",
+                    wordBreak: "break-word",
+                    whiteSpace: "normal",
+                  }}
                 />
               ))}
             </FormGroup>
@@ -129,6 +147,12 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
                 color: "#fff",
                 borderColor: "#fff",
                 fontWeight: "bold",
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                wordBreak: "break-word",
+                textAlign: "center",
+                lineHeight: 1.3,
+                p: 1,
                 "&:hover": {
                   backgroundColor: "rgba(255,255,255,0.08)",
                   borderColor: "#aaa",
