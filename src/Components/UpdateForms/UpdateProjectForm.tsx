@@ -82,7 +82,19 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
           backgroundColor: "#424242",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "center",
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+            lineHeight: 1.3,
+          }}
+        >
           Update Project
         </Typography>
 
@@ -168,7 +180,16 @@ const UpdateProjectForm: React.FC<Props> = ({ id }) => {
                 color: "#fff",
                 borderColor: "#fff",
                 fontWeight: "bold",
-                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+                textAlign: "center",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
+                lineHeight: 1.3,
+                p: 2,
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  borderColor: "#aaa",
+                },
               }}
             >
               Update Project
