@@ -1,5 +1,13 @@
 import React from "react";
-import { Paper, Typography, Card, CardContent, Box, Divider } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Card,
+  CardContent,
+  Box,
+  Divider,
+  Container,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGetManagerInfoQuery } from "../../services/managerService";
 
@@ -14,44 +22,77 @@ const ManagerDetails: React.FC<Props> = ({ id }) => {
   if (!manager) return <Typography>Manager data not found</Typography>;
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ p: 3, mt: 3, backgroundColor: "#424242", color: "#fff", borderRadius: 3 }}
-    >
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{ fontWeight: "bold", color: "#fff" }}
+    <Container maxWidth="sm">
+      <Paper
+        elevation={4}
+        sx={{
+          mt: 5,
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "#424242",
+          color: "#fff",
+        }}
       >
-        Manager Details — ID: {manager.id}
-      </Typography>
-
-      <Box mb={2}>
-        <Typography variant="body1" sx={{ mb: 1 }}>
-          <strong>Full name:</strong> {manager.fullName}
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "normal",
+            wordBreak: "break-word",
+            lineHeight: 1.3,
+          }}
+        >
+          Manager Details — ID: {manager.id}
         </Typography>
-        <Typography variant="body1">
-          <strong>Role:</strong> {manager.role ?? "—"}
-        </Typography>
-      </Box>
 
-      <Divider sx={{ my: 2, borderColor: "#555" }} />
-
-      {manager.workers && manager.workers.length > 0 && (
-        <>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{ fontWeight: "bold", color: "#fff" }}
-          >
-            Workers
+        <Box mb={3}>
+          <Typography variant="body1" sx={{ mb: 1 }}>
+            <strong>Full name:</strong> {manager.fullName}
           </Typography>
+          <Typography variant="body1">
+            <strong>Role:</strong> {manager.role ?? "—"}
+          </Typography>
+        </Box>
 
-          <Box display="flex" flexWrap="wrap" gap={2} mb={3}>
+        <Divider sx={{ my: 3, borderColor: "#555" }} />
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            mb: 2,
+            color: "#fff",
+            wordBreak: "break-word",
+            textAlign: "center",
+          }}
+        >
+          Workers
+        </Typography>
+
+        {manager.workers && manager.workers.length > 0 ? (
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            gap={2}
+            justifyContent="center"
+            mb={3}
+          >
             {manager.workers.map((worker) => (
               <Card
                 key={worker.id}
-                sx={{ width: 280, backgroundColor: "#3a3a3a", color: "#fff" }}
+                sx={{
+                  width: 230,
+                  backgroundColor: "#3a3a3a",
+                  color: "#fff",
+                  borderRadius: 2,
+                  boxShadow: 3,
+                  "&:hover": {
+                    boxShadow: 6,
+                    backgroundColor: "#444",
+                  },
+                }}
               >
                 <CardContent>
                   <Typography
@@ -81,71 +122,16 @@ const ManagerDetails: React.FC<Props> = ({ id }) => {
               </Card>
             ))}
           </Box>
-
-          <Divider sx={{ my: 2, borderColor: "#555" }} />
-        </>
-      )}
-
-      {manager.projects && manager.projects.length > 0 && (
-        <>
+        ) : (
           <Typography
-            variant="h6"
-            gutterBottom
-            sx={{ fontWeight: "bold", color: "#fff" }}
+            variant="body2"
+            sx={{ textAlign: "center", color: "#fff", wordBreak: "break-word", mt: 2 }}
           >
-            Projects
+            No Workers assigned to this Manager.
           </Typography>
-
-          <Box display="flex" flexWrap="wrap" gap={2}>
-            {manager.projects.map((project) => (
-              <Card
-                key={project.id}
-                sx={{ width: 280, backgroundColor: "#3a3a3a", color: "#fff" }}
-              >
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    component={Link}
-                    to={`/project/${project.id}`}
-                    sx={{
-                      color: "#fff",
-                      textDecoration: "none",
-                      "&:hover": { textDecoration: "underline", color: "#aaa" },
-                    }}
-                    gutterBottom
-                  >
-                    {project.projectType?.name ?? "Unknown Project"}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    Manager: {project.projectManager?.fullName ?? "—"}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    Start Date:{" "}
-                    {project.startDate
-                      ? new Date(project.startDate).toLocaleDateString()
-                      : "—"}
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    End Date:{" "}
-                    {project.endDate
-                      ? new Date(project.endDate).toLocaleDateString()
-                      : "—"}
-                  </Typography>
-                  {project.comment && (
-                    <Typography variant="body2" gutterBottom>
-                      Comment: {project.comment}
-                    </Typography>
-                  )}
-                  <Typography variant="body2">
-                    Status: {project.status ? "Active" : "Inactive"}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
-        </>
-      )}
-    </Paper>
+        )}
+      </Paper>
+    </Container>
   );
 };
 
