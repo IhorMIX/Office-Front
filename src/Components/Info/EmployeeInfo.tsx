@@ -76,6 +76,7 @@ const EmployeeInfo: React.FC<Props> = ({ id }) => {
             fontWeight: "bold",
             mb: 2,
             color: "#fff",
+            wordBreak: "break-word",
             textAlign: "center",
           }}
         >
@@ -89,7 +90,7 @@ const EmployeeInfo: React.FC<Props> = ({ id }) => {
                 key={project.id}
                 sx={{
                   width: 230,
-                  backgroundColor: "#424242",
+                  backgroundColor: "#3a3a3a",
                   color: "#fff",
                   borderRadius: 2,
                   boxShadow: 3,
@@ -106,6 +107,7 @@ const EmployeeInfo: React.FC<Props> = ({ id }) => {
                     to={`/project/${project.id}`}
                     sx={{
                       color: "#fff",
+                      wordBreak: "break-word",
                       fontWeight: "bold",
                       textDecoration: "none",
                       "&:hover": { textDecoration: "underline", color: "#aaa" },
@@ -144,7 +146,7 @@ const EmployeeInfo: React.FC<Props> = ({ id }) => {
         ) : (
           <Typography
             variant="body2"
-            sx={{ textAlign: "center", color: "#fff", mt: 2 }}
+            sx={{ textAlign: "center", color: "#fff", wordBreak: "break-word", mt: 2 }}
           >r
             No Projects assigned to this Employee.
           </Typography>
