@@ -12,6 +12,7 @@ import {
   TableSortLabel,
   TextField,
   Box,
+  Paper,
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -32,7 +33,6 @@ enum SortField {
   STATUS = "approvalRequestStatus",
   COMMENT = "comment",
   APPROVER_NAME = "approver.fullName",
-  LEAVE_REQUEST_EMPLOYEE = "leaveRequest.employee.fullName",
   LEAVE_REQUEST_ID = "leaveRequest.id",
 }
 
@@ -59,8 +59,7 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
     const aValue = getFieldByPath(a, sortBy);
     const bValue = getFieldByPath(b, sortBy);
 
-    if (aValue === undefined) return 1;
-    if (bValue === undefined) return -1;
+    if (aValue === undefined || bValue === undefined) return 0;
 
     if (sortDirection === "asc") {
       return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
@@ -69,7 +68,7 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
     }
   });
 
-  const handleSort = (field: SortField): void => {
+  const handleSort = (field: SortField) => {
     if (field === sortBy) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -78,70 +77,103 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
     }
   };
 
-  const handleCommentChange = (id: number, comment: string): void => {
+  const handleCommentChange = (id: number, comment: string) => {
     setComments((prev) => ({ ...prev, [id]: comment }));
   };
 
   const canEditOrDelete = (approvalRequest: ApprovalRequest): boolean => {
     if (!user) return false;
-
-    if ([UserType.Admin, UserType.HrManager, UserType.ProjectManager].includes(role as UserType)) {
-      return true;
-    }
-
-    return false;
+    return [UserType.Admin, UserType.HrManager, UserType.ProjectManager].includes(role as UserType);
   };
 
   return (
-    <TableContainer>
-      <Table sx={{ backgroundColor: "white", borderRadius: "10px" }}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        borderRadius: 3,
+        overflowX: "auto",
+        width: "100%", 
+      }}
+    >
+      <Table>
         <TableHead>
-          <TableRow>
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              <TableSortLabel
-                active={sortBy === SortField.ID}
-                direction={sortBy === SortField.ID ? sortDirection : "asc"}
-                onClick={() => handleSort(SortField.ID)}
+          <TableRow sx={{ backgroundColor: "#424242", height: 48 }}>
+            {[
+              { label: "ID", field: SortField.ID },
+              { label: "Approver", field: SortField.APPROVER_NAME },
+              { label: "Status", field: SortField.STATUS },
+              { label: "Leave Request Id", field: SortField.LEAVE_REQUEST_ID },
+              { label: "Comment", field: SortField.COMMENT },
+            ].map(({ label, field }) => (
+              <TableCell
+                key={field}
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  fontSize: "0.95rem",
+                  py: 1,
+                  height: 48,
+                }}
               >
-                ID
-              </TableSortLabel>
+                <TableSortLabel
+                  active={sortBy === field}
+                  direction={sortBy === field ? sortDirection : "asc"}
+                  onClick={() => handleSort(field)}
+                  sx={{
+                    color: "#fff",
+                    "&.Mui-active": { color: "#fff" },
+                    "& .MuiTableSortLabel-icon": { color: "#fff !important" },
+                  }}
+                >
+                  {label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
+            <TableCell
+              sx={{
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "0.95rem",
+                py: 1,
+                height: 48,
+              }}
+            >
+              Actions
             </TableCell>
-
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              Approver
-            </TableCell>
-
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              Status
-            </TableCell>
-
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>
-              Leave Request Id
-            </TableCell>
-
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>Comment</TableCell>
-            <TableCell sx={{ fontWeight: "bold", color: "rgb(0, 80, 184)" }}>Actions</TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
-          {sortedApprovalRequests.map((approvalRequest) => {
+          {sortedApprovalRequests.map((approvalRequest, index) => {
             const editable =
               canEditOrDelete(approvalRequest) &&
               approvalRequest.approvalRequestStatus === Status.New;
 
             return (
-              <TableRow key={approvalRequest.id}>
-                <TableCell>{approvalRequest.id}</TableCell>
-                <TableCell>{approvalRequest.approver.fullName}</TableCell>
-                <TableCell>{approvalRequest.approvalRequestStatus}</TableCell>
-                <TableCell>
-                  <Link to={`/leaverequest/${approvalRequest.leaveRequest.id}`}>
+              <TableRow
+                key={approvalRequest.id}
+                sx={{
+                  backgroundColor: index % 2 === 1 ? "#424242" : "#333333",
+                  "&:hover": { backgroundColor: "#555" },
+                  height: 48,
+                }}
+              >
+                <TableCell sx={{ color: "#fff", py: 1 }}>{approvalRequest.id}</TableCell>
+                <TableCell sx={{ color: "#fff", py: 1 }}>
+                  {approvalRequest.approver.fullName}
+                </TableCell>
+                <TableCell sx={{ color: "#fff", py: 1 }}>
+                  {approvalRequest.approvalRequestStatus}
+                </TableCell>
+                <TableCell sx={{ color: "#fff", py: 1 }}>
+                  <Link
+                    to={`/leaverequest/${approvalRequest.leaveRequest.id}`}
+                    style={{ color: "#fff", fontWeight: 500, textDecoration: "none" }}
+                  >
                     {approvalRequest.leaveRequest.id}
                   </Link>
                 </TableCell>
-
-                <TableCell>
+                <TableCell sx={{ color: "#fff", py: 1 }}>
                   {editable ? (
                     <TextField
                       variant="outlined"
@@ -149,30 +181,59 @@ const ApprovalRequestTable: React.FC<TableProps> = ({
                       placeholder="Enter comment"
                       value={comments[approvalRequest.id] || ""}
                       onChange={(e) => handleCommentChange(approvalRequest.id, e.target.value)}
+                      sx={{
+                        input: { color: "#fff" },
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": { borderColor: "#fff" },
+                          "&:hover fieldset": { borderColor: "#aaa" },
+                          "&.Mui-focused fieldset": { borderColor: "#fff" },
+                        },
+                      }}
                     />
                   ) : (
                     approvalRequest.comment
                   )}
                 </TableCell>
-
-                <TableCell>
+                <TableCell sx={{ color: "#fff", py: 1 }}>
                   {editable && (
                     <Box sx={{ display: "flex", gap: 1 }}>
                       <Button
                         variant="outlined"
                         size="small"
-                        color="success"
-                        sx={{ minWidth: 90, height: 36 }}
-                        onClick={() => onApprove(approvalRequest.id, comments[approvalRequest.id] || "")}
+                        sx={{
+                          minWidth: 90,
+                          height: 36,
+                          color: "#4caf50",
+                          borderColor: "#4caf50",
+                          fontWeight: "bold",
+                          "&:hover": {
+                            borderColor: "#66bb6a",
+                            backgroundColor: "rgba(76,175,80,0.1)",
+                          },
+                        }}
+                        onClick={() =>
+                          onApprove(approvalRequest.id, comments[approvalRequest.id] || "")
+                        }
                       >
                         Approve
                       </Button>
                       <Button
                         variant="outlined"
                         size="small"
-                        color="error"
-                        sx={{ minWidth: 90, height: 36 }}
-                        onClick={() => onReject(approvalRequest.id, comments[approvalRequest.id] || "")}
+                        sx={{
+                          minWidth: 90,
+                          height: 36,
+                          color: "#f44336",
+                          borderColor: "#f44336",
+                          fontWeight: "bold",
+                          "&:hover": {
+                            borderColor: "#ff7961",
+                            backgroundColor: "rgba(244,67,54,0.1)",
+                          },
+                        }}
+                        onClick={() =>
+                          onReject(approvalRequest.id, comments[approvalRequest.id] || "")
+                        }
                       >
                         Reject
                       </Button>
