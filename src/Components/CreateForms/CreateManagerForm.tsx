@@ -49,6 +49,16 @@ const CreateManagerForm: React.FC = () => {
     }
   };
 
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+    "& .MuiSelect-icon": { color: "#fff" },
+  };
+
   return (
     <Container maxWidth="sm">
       <Paper
@@ -57,10 +67,10 @@ const CreateManagerForm: React.FC = () => {
           mt: 5,
           p: 4,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#424242",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
           Create Manager
         </Typography>
 
@@ -72,6 +82,7 @@ const CreateManagerForm: React.FC = () => {
               fullWidth
               error={!!errors.manager?.login}
               helperText={errors.manager?.login?.message}
+              sx={fieldStyle}
             />
 
             <TextField
@@ -81,6 +92,7 @@ const CreateManagerForm: React.FC = () => {
               fullWidth
               error={!!errors.manager?.password}
               helperText={errors.manager?.password?.message}
+              sx={fieldStyle}
             />
 
             <TextField
@@ -89,14 +101,16 @@ const CreateManagerForm: React.FC = () => {
               fullWidth
               error={!!errors.manager?.fullName}
               helperText={errors.manager?.fullName?.message}
+              sx={fieldStyle}
             />
 
-            <FormControl fullWidth error={!!errors.role}>
+            <FormControl fullWidth error={!!errors.role} sx={fieldStyle}>
               <InputLabel>Role</InputLabel>
               <Select
                 defaultValue=""
                 label="Role"
                 onChange={(e) => setValue("role", e.target.value as UserType)}
+                sx={{ color: "#fff" }}
               >
                 <MenuItem value={UserType.HrManager}>HR Manager</MenuItem>
                 <MenuItem value={UserType.ProjectManager}>Project Manager</MenuItem>
@@ -108,7 +122,18 @@ const CreateManagerForm: React.FC = () => {
               )}
             </FormControl>
 
-            <Button type="submit" variant="contained" size="large" fullWidth>
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+              }}
+            >
               Create Manager
             </Button>
           </Box>

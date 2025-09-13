@@ -24,7 +24,6 @@ const ApprovalRequestsPage: React.FC = () => {
   const [approveRequest] = useApproveRequestMutation();
   const [rejectRequest] = useRejectRequestMutation();
   const [comments, setComments] = useState<Record<number, string>>({});
-
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -86,7 +85,7 @@ const ApprovalRequestsPage: React.FC = () => {
           p: 4,
           mt: 5,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#2F2F2F",
         }}
       >
         <Box
@@ -99,7 +98,18 @@ const ApprovalRequestsPage: React.FC = () => {
             mb: 3,
           }}
         >
-          <Typography variant="h4" sx={{ fontWeight: "bold", color: "black" }}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              color: "#fff",
+              whiteSpace: "normal",
+              overflowWrap: "break-word",
+              wordBreak: "break-all",
+              flexGrow: 1,
+              minWidth: 0,
+            }}
+          >
             Approval Requests
           </Typography>
         </Box>

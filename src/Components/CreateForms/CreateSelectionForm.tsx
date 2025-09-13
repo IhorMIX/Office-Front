@@ -52,6 +52,15 @@ const CreateEntityForm: React.FC<CreateEntityFormProps> = ({ entityType }) => {
     }
   };
 
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+  };
+
   return (
     <Container maxWidth="sm">
       <Paper
@@ -60,10 +69,13 @@ const CreateEntityForm: React.FC<CreateEntityFormProps> = ({ entityType }) => {
           mt: 5,
           p: 4,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#424242",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}
+        >
           {getTitle()}
         </Typography>
 
@@ -76,6 +88,7 @@ const CreateEntityForm: React.FC<CreateEntityFormProps> = ({ entityType }) => {
                 fullWidth
                 error={!!errors.name}
                 helperText={errors.name?.message}
+                sx={fieldStyle}
               />
             )}
 
@@ -88,10 +101,25 @@ const CreateEntityForm: React.FC<CreateEntityFormProps> = ({ entityType }) => {
                 fullWidth
                 error={!!errors.reasonDescription}
                 helperText={errors.reasonDescription?.message}
+                sx={fieldStyle}
               />
             )}
 
-            <Button type="submit" variant="contained" size="large" fullWidth>
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  borderColor: "#aaa",
+                },
+              }}
+            >
               {getTitle()}
             </Button>
           </Box>

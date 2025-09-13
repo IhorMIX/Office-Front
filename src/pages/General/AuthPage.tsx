@@ -47,7 +47,7 @@ const AuthPage = () => {
     <div className={styles.container}>
       <div className={styles.authBox}>
         <Typography classes={{ root: styles.title }} variant="h5">
-          Auth
+          Login
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>

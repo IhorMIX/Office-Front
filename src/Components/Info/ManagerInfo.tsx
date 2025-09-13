@@ -1,7 +1,16 @@
 import React from "react";
-import { Paper, Typography, Card, CardContent, Box, Divider } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Card,
+  CardContent,
+  Box,
+  Divider,
+  Container,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGetManagerInfoQuery } from "../../services/managerService";
+
 interface Props {
   id: string;
 }
@@ -13,110 +22,116 @@ const ManagerDetails: React.FC<Props> = ({ id }) => {
   if (!manager) return <Typography>Manager data not found</Typography>;
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-      <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "black" }}>
-        Manager Details — ID: {manager.id}
-      </Typography>
-
-      <Box mb={2}>
-        <Typography variant="body1" sx={{ mb: 1 }}>
-          <strong>Full name:</strong> {manager.fullName}
+    <Container maxWidth="sm">
+      <Paper
+        elevation={4}
+        sx={{
+          mt: 5,
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "#424242",
+          color: "#fff",
+        }}
+      >
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "normal",
+            wordBreak: "break-word",
+            lineHeight: 1.3,
+          }}
+        >
+          Manager Details — ID: {manager.id}
         </Typography>
-        <Typography variant="body1">
-          <strong>Role:</strong> {manager.role ?? "—"}
-        </Typography>
-      </Box>
 
-      <Divider sx={{ my: 2 }} />
-
-      {manager.workers && manager.workers.length > 0 && (
-        <>
-          <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", color: "black" }}>
-            Workers
+        <Box mb={3}>
+          <Typography variant="body1" sx={{ mb: 1 }}>
+            <strong>Full name:</strong> {manager.fullName}
           </Typography>
+          <Typography variant="body1">
+            <strong>Role:</strong> {manager.role ?? "—"}
+          </Typography>
+        </Box>
 
-          <Box display="flex" flexWrap="wrap" gap={2} mb={3}>
-            {manager.workers.map((workers) => (
-              <Card key={workers.id} sx={{ width: 280 }}>
+        <Divider sx={{ my: 3, borderColor: "#555" }} />
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            mb: 2,
+            color: "#fff",
+            wordBreak: "break-word",
+            textAlign: "center",
+          }}
+        >
+          Workers
+        </Typography>
+
+        {manager.workers && manager.workers.length > 0 ? (
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            gap={2}
+            justifyContent="center"
+            mb={3}
+          >
+            {manager.workers.map((worker) => (
+              <Card
+                key={worker.id}
+                sx={{
+                  width: 230,
+                  backgroundColor: "#3a3a3a",
+                  color: "#fff",
+                  borderRadius: 2,
+                  boxShadow: 3,
+                  "&:hover": {
+                    boxShadow: 6,
+                    backgroundColor: "#444",
+                  },
+                }}
+              >
                 <CardContent>
                   <Typography
                     variant="h6"
                     component={Link}
-                    to={`/employee/${workers.id}`}
+                    to={`/employee/${worker.id}`}
                     sx={{
-                      color: "black",
+                      color: "#fff",
+                      fontWeight: "bold",
                       textDecoration: "none",
-                      "&:hover": { textDecoration: "underline" },
+                      "&:hover": { textDecoration: "underline", color: "#aaa" },
                     }}
                     gutterBottom
                   >
-                    {workers.fullName}
+                    {worker.fullName}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Position: {workers.position?.name ?? "—"}
+                  <Typography variant="body2" gutterBottom>
+                    Position: {worker.position?.name ?? "—"}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Status: {workers.status ? "Active" : "Inactive"}
+                  <Typography variant="body2" gutterBottom>
+                    Status: {worker.status ? "Active" : "Inactive"}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Out Of Office Balance: {workers.outOfOfficeBalance}
+                  <Typography variant="body2">
+                    Out Of Office Balance: {worker.outOfOfficeBalance}
                   </Typography>
                 </CardContent>
               </Card>
             ))}
           </Box>
-
-          <Divider sx={{ my: 2 }} />
-        </>
-      )}
-
-      {manager.projects && manager.projects.length > 0 && (
-        <>
-          <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", color: "black" }}>
-            Projects
+        ) : (
+          <Typography
+            variant="body2"
+            sx={{ textAlign: "center", color: "#fff", wordBreak: "break-word", mt: 2 }}
+          >
+            No Workers assigned to this Manager.
           </Typography>
-
-          <Box display="flex" flexWrap="wrap" gap={2}>
-            {manager.projects.map((project) => (
-              <Card key={project.id} sx={{ width: 280 }}>
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    component={Link}
-                    to={`/project/${project.id}`}
-                    sx={{
-                      color: "black",
-                      textDecoration: "none",
-                      "&:hover": { textDecoration: "underline" },
-                    }}
-                    gutterBottom
-                  >
-                    {project.projectType?.name ?? "Unknown Project"}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Manager: {project.projectManager?.fullName ?? "—"}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Start Date: {project.startDate ? new Date(project.startDate).toLocaleDateString() : "—"}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    End Date: {project.endDate ? new Date(project.endDate).toLocaleDateString() : "—"}
-                  </Typography>
-                  {project.comment && (
-                    <Typography variant="body2" color="textSecondary">
-                      Comment: {project.comment}
-                    </Typography>
-                  )}
-                  <Typography variant="body2" color="textSecondary">
-                    Status: {project.status ? "Active" : "Inactive"}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
-        </>
-      )}
-    </Paper>
+        )}
+      </Paper>
+    </Container>
   );
 };
 

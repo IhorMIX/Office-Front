@@ -1,7 +1,18 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
-import { CreateProject } from "../../types/Project";
 import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { CreateProject } from "../../types/Project";
 import { useGetProjectTypeQuery } from "../../services/selectionService";
 import { useCreateProjectMutation } from "../../services/projectService";
 
@@ -11,7 +22,8 @@ const CreateProjectForm: React.FC = () => {
 
   const {
     handleSubmit,
-    control,
+    register,
+    setValue,
     formState: { errors },
   } = useForm<CreateProject>({
     defaultValues: {
@@ -26,130 +38,127 @@ const CreateProjectForm: React.FC = () => {
   const onSubmit: SubmitHandler<CreateProject> = async (data) => {
     try {
       await createProject(data).unwrap();
-      console.log(data);
+      console.log("Project created:", data);
     } catch (error) {
       console.error("Failed to create project:", error);
     }
   };
 
-  if (isLoadingTypes) return <div>Loading...</div>;
+  if (isLoadingTypes) return <Typography>Loading...</Typography>;
+
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+  };
 
   return (
-    <Box maxWidth="sm" mx="auto" mt={4}>
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
-        <Typography variant="h5" mb={3} fontWeight={600}>
+    <Container maxWidth="sm">
+      <Paper
+        elevation={4}
+        sx={{
+          mt: 5,
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "#424242",
+        }}
+      >
+        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3, color: "#fff" }}>
           Create Project
         </Typography>
 
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Stack spacing={3}>
-
-            <FormControl fullWidth error={!!errors.projectTypeId}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box display="flex" flexDirection="column" gap={3}>
+            <FormControl fullWidth error={!!errors.projectTypeId} sx={fieldStyle}>
               <InputLabel id="project-type-label">Project Type</InputLabel>
-              <Controller
-                name="projectTypeId"
-                control={control}
-                rules={{ required: "Project Type is required" }}
-                render={({ field }) => (
-                  <Select
-                    labelId="project-type-label"
-                    label="Project Type"
-                    {...field}
-                    value={field.value || ""}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                  >
-                    <MenuItem value="">
-                      <em>Select project type</em>
-                    </MenuItem>
-                    {types?.map((type) => (
-                      <MenuItem key={type.id} value={type.id}>
-                        {type.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              />
-              {errors.projectTypeId && (
-                <Typography variant="caption" color="error">
-                  {errors.projectTypeId.message}
-                </Typography>
-              )}
+              <Select
+                labelId="project-type-label"
+                label="ProjectType"
+                defaultValue=""
+                onChange={(e) => setValue("projectTypeId", Number(e.target.value))}
+                sx={{ color: "#fff" }}
+              >
+                <MenuItem value="">
+                  <em>Select project type</em>
+                </MenuItem>
+                {types?.map((type) => (
+                  <MenuItem key={type.id} value={type.id}>
+                    {type.name}
+                  </MenuItem>
+                ))}
+              </Select>
             </FormControl>
+            {errors.projectTypeId && (
+              <Typography variant="caption" color="error">
+                {errors.projectTypeId.message}
+              </Typography>
+            )}
 
-            <Controller
-              name="startDate"
-              control={control}
-              rules={{ required: "Start Date is required" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Start Date"
-                  type="date"
-                  InputLabelProps={{ shrink: true }}
-                  error={!!errors.startDate}
-                  helperText={errors.startDate?.message}
-                  fullWidth
-                />
-              )}
+            <TextField
+              {...register("startDate", { required: "Start Date is required" })}
+              label="Start Date"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              error={!!errors.startDate}
+              helperText={errors.startDate?.message}
+              fullWidth
+              sx={fieldStyle}
             />
 
-            <Controller
-              name="endDate"
-              control={control}
-              rules={{ required: "End Date is required" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="End Date"
-                  type="date"
-                  InputLabelProps={{ shrink: true }}
-                  error={!!errors.endDate}
-                  helperText={errors.endDate?.message}
-                  fullWidth
-                />
-              )}
+            <TextField
+              {...register("endDate", { required: "End Date is required" })}
+              label="End Date"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              error={!!errors.endDate}
+              helperText={errors.endDate?.message}
+              fullWidth
+              sx={fieldStyle}
             />
 
-            <Controller
-              name="comment"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Comment"
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                />
-              )}
+            <TextField
+              {...register("comment")}
+              label="Comment"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              sx={fieldStyle}
             />
 
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={fieldStyle}>
               <InputLabel id="status-label">Status</InputLabel>
-              <Controller
-                name="status"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    labelId="status-label"
-                    label="Status"
-                    {...field}
-                    value={field.value ? "true" : "false"}
-                    onChange={(e) => field.onChange(e.target.value === "true")}
-                  >
-                    <MenuItem value="true">Active</MenuItem>
-                    <MenuItem value="false">Inactive</MenuItem>
-                  </Select>
-                )}
-              />
+              <Select
+                labelId="status-label"
+                label="Status"
+                defaultValue="true"
+                onChange={(e) => setValue("status", e.target.value === "true")}
+                sx={{ color: "#fff" }}
+              >
+                <MenuItem value="true">Active</MenuItem>
+                <MenuItem value="false">Inactive</MenuItem>
+              </Select>
             </FormControl>
 
-            <Button type="submit" variant="contained" size="large" fullWidth>
-              Create
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.08)", borderColor: "#aaa" },
+              }}
+            >
+              Create Project
             </Button>
-          </Stack>
+          </Box>
         </form>
       </Paper>
-    </Box>
+    </Container>
   );
 };
 

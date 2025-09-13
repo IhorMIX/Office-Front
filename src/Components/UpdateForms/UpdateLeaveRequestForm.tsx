@@ -1,23 +1,40 @@
 import React, { useEffect } from "react";
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography, Container, Box } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+  Container,
+  Box,
+} from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { formatDate } from "../../Helpers/DateHelper";
 import { useGetAdminQuery } from "../../services/managerService";
 import { useGetAbsenceReasonQuery } from "../../services/selectionService";
 import { LeaveRequestStatus, UpdateLeaveRequest } from "../../types/Requests";
-import { useGetLeaveRequestQuery, useUpdateLeaveRequestMutation } from "../../services/requestsService";
+import {
+  useGetLeaveRequestQuery,
+  useUpdateLeaveRequestMutation,
+} from "../../services/requestsService";
 
 interface Props {
   id: string;
 }
 
 const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
-  const { data: leaveRequest, isLoading: isLoadingRequests } = useGetLeaveRequestQuery(Number(id));
+  const { data: leaveRequest, isLoading: isLoadingRequests } =
+    useGetLeaveRequestQuery(Number(id));
   const { data: admin, isLoading: isLoadingApprovers } = useGetAdminQuery(null);
-  const { data: reasons, isLoading: isLoadingReasons } = useGetAbsenceReasonQuery(null);
+  const { data: reasons, isLoading: isLoadingReasons } =
+    useGetAbsenceReasonQuery(null);
   const [updateLeaveRequest] = useUpdateLeaveRequestMutation();
 
-  const { handleSubmit, register, reset, setValue, watch } = useForm<UpdateLeaveRequest>();
+  const { handleSubmit, register, reset, setValue, watch } =
+    useForm<UpdateLeaveRequest>();
 
   useEffect(() => {
     if (leaveRequest) {
@@ -50,23 +67,55 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
     return <Typography>Loading...</Typography>;
   }
 
+  const fieldStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    "& .MuiInputBase-input": { color: "#fff" },
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#aaa" },
+    "& .MuiInputLabel-root": { color: "#fff" },
+    "& .MuiSelect-icon": { color: "#fff" },
+  };
+
   return (
     <Container maxWidth="sm">
-      <Paper elevation={4} sx={{ mt: 5, p: 4, borderRadius: 3, backgroundColor: "#f9fbfc" }}>
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+      <Paper
+        elevation={4}
+        sx={{
+          mt: 5,
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "#424242",
+        }}
+      >
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "center",
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+            lineHeight: 1.3,
+          }}
+        >
           Update Leave Request
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDirection="column" gap={3}>
-
-            <FormControl fullWidth>
-              <InputLabel id="reason-label" shrink>Absence Reason</InputLabel>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="reason-label">Absence Reason</InputLabel>
               <Select
                 labelId="reason-label"
-                value={selectedReasonId || ""}
-                onChange={(e) => setValue("absenceReasonId", Number(e.target.value))}
                 label="Absence Reason"
+                value={selectedReasonId || ""}
+                onChange={(e) =>
+                  setValue("absenceReasonId", Number(e.target.value))
+                }
+                sx={{ color: "#fff" }}
               >
                 {reasons?.map((reason) => (
                   <MenuItem key={reason.id} value={reason.id}>
@@ -76,13 +125,14 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth>
-              <InputLabel id="approver-label" shrink>Approver</InputLabel>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="approver-label">Approver</InputLabel>
               <Select
                 labelId="approver-label"
+                label="Approver"
                 value={selectedApproverId || ""}
                 onChange={(e) => setValue("approverId", Number(e.target.value))}
-                label="Approver"
+                sx={{ color: "#fff" }}
               >
                 {admin && (
                   <MenuItem key={admin.id} value={admin.id}>
@@ -97,23 +147,29 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
               label="Start Date"
               type="date"
               fullWidth
-              slotProps={{ inputLabel: { shrink: true } }}
+              InputLabelProps={{ shrink: true }}
+              sx={fieldStyle}
             />
+
             <TextField
               {...register("endDate")}
               label="End Date"
               type="date"
               fullWidth
-              slotProps={{ inputLabel: { shrink: true } }}
+              InputLabelProps={{ shrink: true }}
+              sx={fieldStyle}
             />
 
-            <FormControl fullWidth>
-              <InputLabel id="status-label" shrink>Status</InputLabel>
+            <FormControl fullWidth sx={fieldStyle}>
+              <InputLabel id="status-label">Status</InputLabel>
               <Select
                 labelId="status-label"
+                label="status"
                 value={selectedStatus || ""}
-                onChange={(e) => setValue("status", e.target.value as LeaveRequestStatus)}
-                label="Status"
+                onChange={(e) =>
+                  setValue("status", e.target.value as LeaveRequestStatus)
+                }
+                sx={{ color: "#fff" }}
               >
                 {Object.values(LeaveRequestStatus).map((status) => (
                   <MenuItem key={status} value={status}>
@@ -127,11 +183,32 @@ const UpdateLeaveRequestForm: React.FC<Props> = ({ id }) => {
               {...register("comment")}
               label="Comment"
               fullWidth
-              slotProps={{ inputLabel: { shrink: true } }}
+              InputLabelProps={{ shrink: true }}
+              sx={fieldStyle}
             />
 
-            <Button type="submit" size="large" variant="contained" fullWidth>
-              Update
+            <Button
+              type="submit"
+              variant="outlined"
+              size="large"
+              fullWidth
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                textAlign: "center",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+                overflowWrap: "break-word",
+                lineHeight: 1.3,
+                p: 2,
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  borderColor: "#aaa",
+                },
+              }}
+            >
+              Update Leave Request
             </Button>
           </Box>
         </form>

@@ -66,7 +66,7 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
   };
 
   if (isLoadingProject || isLoadingEmployees) {
-    return <Typography>Loading...</Typography>;
+    return <Typography sx={{ color: "#fff" }}>Loading...</Typography>;
   }
 
   return (
@@ -77,17 +77,33 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
           mt: 5,
           p: 4,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#424242",
+          color: "#fff",
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            mb: 3,
+            color: "#fff",
+            textAlign: "center",
+            whiteSpace: "normal",
+            overflowWrap: "break-word",
+            wordBreak: "break-word",
+          }}
+        >
           Edit Employees for Project:
           <Link
             to={`/projects/${project?.id}`}
             style={{
-              color: "#000",
+              color: "#fff",
               textDecoration: "none",
               marginLeft: "6px",
+              fontWeight: "bold",
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
@@ -106,20 +122,42 @@ const AddEmployeesForm: React.FC<Props> = ({ id }) => {
                     <Checkbox
                       checked={employeesIds.includes(employee.id)}
                       onChange={() => handleEmployeeChange(employee.id)}
-                      color="primary"
+                      sx={{
+                        color: "#fff",
+                        "&.Mui-checked": { color: "#fff" },
+                      }}
                     />
                   }
                   label={employee.fullName}
+                  sx={{
+                    color: "#fff",
+                    wordBreak: "break-word",
+                    whiteSpace: "normal",
+                  }}
                 />
               ))}
             </FormGroup>
 
             <Button
-              variant="contained"
-              size="large"
               type="submit"
+              variant="outlined"
+              size="large"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{
+                color: "#fff",
+                borderColor: "#fff",
+                fontWeight: "bold",
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                wordBreak: "break-word",
+                textAlign: "center",
+                lineHeight: 1.3,
+                p: 1,
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  borderColor: "#aaa",
+                },
+              }}
             >
               Save Changes
             </Button>

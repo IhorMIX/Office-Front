@@ -6,7 +6,11 @@ import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { UserType } from "../../types/User";
-import { useGetAllProjetsQuery, useDelProjectMutation, useDeactivateProjectMutation } from "../../services/projectService";
+import {
+  useGetAllProjetsQuery,
+  useDelProjectMutation,
+  useDeactivateProjectMutation,
+} from "../../services/projectService";
 
 const ProjectsPage: React.FC = () => {
   const { data: projectsList } = useGetAllProjetsQuery(null);
@@ -44,6 +48,16 @@ const ProjectsPage: React.FC = () => {
     }
   };
 
+  const buttonStyle = {
+    backgroundColor: "#424242",
+    color: "#fff",
+    minHeight: 36,
+    borderRadius: 2,
+    textTransform: "none",
+    "&:hover": { backgroundColor: "#555", color: "#fff" },
+    "&:active": { transform: "scale(0.97)" },
+  };
+
   return (
     <Container maxWidth="lg">
       <Paper
@@ -52,7 +66,7 @@ const ProjectsPage: React.FC = () => {
           p: 4,
           mt: 5,
           borderRadius: 3,
-          backgroundColor: "#f9fbfc",
+          backgroundColor: "#2F2F2F",
         }}
       >
         <Box
@@ -67,22 +81,38 @@ const ProjectsPage: React.FC = () => {
         >
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", color: "black" }}
+            sx={{
+              fontWeight: "bold",
+              color: "#fff",
+              whiteSpace: "normal",
+              overflowWrap: "break-word",
+              wordBreak: "break-all",
+              flexGrow: 1,
+              minWidth: 0,
+            }}
           >
             Projects
           </Typography>
+
 
           {(role === UserType.Admin || role === UserType.ProjectManager) && (
             <Button
               component={Link}
               to="/create-project"
               variant="contained"
-              color="primary"
-              sx={{ textTransform: "none", borderRadius: 2 }}
+              sx={{
+                ...buttonStyle,
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                wordBreak: "break-all",
+                textAlign: "center",
+                lineHeight: 1.2,
+              }}
             >
               + Create Project
             </Button>
           )}
+
         </Box>
 
         <ProjectTable
